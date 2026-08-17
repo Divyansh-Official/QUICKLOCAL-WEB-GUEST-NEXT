@@ -1,0 +1,27 @@
+{
+  "_source": "Capabilities that exist in the running platform — each maps to a module the backend actually implements.",
+  "customers": [
+    "Vendors are verified against their documents before they can sell",
+    "Live order tracking from acceptance to your door",
+    "Secure payments with refunds tracked end to end",
+    "Rate every order — ratings decide which shops surface first",
+    "Earn ₹50 for every friend who orders",
+    "Complaints escalate rather than disappearing"
+  ],
+  "vendors": [
+    "List up to 25 products free, unlimited on Pro",
+    "Platform fee from 2% — among the lowest for grocery",
+    "Payouts settled to your bank, reconciled automatically",
+    "Sales dashboard and order exports from Growth",
+    "Boost your shop to the top of local results",
+    "Subscription you can change or cancel any month"
+  ],
+  "partners": [
+    "₹30 minimum on every order you deliver",
+    "₹20 base plus ₹5 per kilometre, paid transparently",
+    "Choose the jobs you take — acceptance is yours",
+    "Work inside a 5 km radius by default",
+    "Weekly payouts direct to your bank account",
+    "Document verification once, then you are live"
+  ]
+}

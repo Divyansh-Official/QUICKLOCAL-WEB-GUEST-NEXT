@@ -1,0 +1,46 @@
+{
+  "_source": "categories table as it stands after V34__fixed_categories_platform_fee.sql, which REPLACED the earlier ten-category list with these five and set a per-category platform fee. platform_fee_percent is the real column value.",
+  "_note": "Five, not the six in the marketing mock. These are the categories a vendor can actually register under.",
+  "items": [
+    {
+      "slug": "grocery",
+      "name": "Grocery",
+      "icon": "basket",
+      "blurb": "Daily essentials from shops on your street",
+      "platformFeePercent": 2.0,
+      "displayOrder": 1
+    },
+    {
+      "slug": "hardware",
+      "name": "Hardware",
+      "icon": "tools",
+      "blurb": "Tools, fittings and repairs when you need them",
+      "platformFeePercent": 3.0,
+      "displayOrder": 2
+    },
+    {
+      "slug": "furniture",
+      "name": "Furniture",
+      "icon": "sofa",
+      "blurb": "Home pieces from local makers and stores",
+      "platformFeePercent": 3.0,
+      "displayOrder": 3
+    },
+    {
+      "slug": "fashion",
+      "name": "Fashion",
+      "icon": "shirt",
+      "blurb": "Clothing and accessories from nearby boutiques",
+      "platformFeePercent": 3.0,
+      "displayOrder": 4
+    },
+    {
+      "slug": "others",
+      "name": "Others",
+      "icon": "box",
+      "blurb": "Everything else your neighbourhood sells",
+      "platformFeePercent": 1.0,
+      "displayOrder": 5
+    }
+  ]
+}

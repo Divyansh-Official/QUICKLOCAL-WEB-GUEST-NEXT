@@ -1,0 +1,203 @@
+@import "tailwindcss";
+
+/**
+ * QuickLocal public site — "Cream & Tangerine".
+ *
+ * The same tokens as the admin console and the mobile apps, so somebody who
+ * signs up here and then opens the app is looking at one product rather than
+ * two that share a logo. Values are copied exactly, not re-picked by eye.
+ *
+ * Three-layer logic: CREAM field (warm canvas, never flat white) → CHARCOAL
+ * anchor (footer, app band, primary text) → TANGERINE accent (actions).
+ */
+@theme {
+  --color-cream-50: #fcfaf7;
+  --color-cream-100: #f8f4ef;
+  --color-cream-200: #f1eae1;
+  --color-cream-300: #e6dcce;
+
+  --color-ink-300: #8a8178;
+  --color-ink-500: #575047;
+  --color-ink-700: #3c362f;
+  --color-ink-900: #2f2b26;
+  --color-ink-950: #1a1713;
+
+  --color-tangerine-100: #fdebd7;
+  --color-tangerine-300: #f7bc7c;
+  --color-tangerine-500: #f08626;
+  --color-tangerine-600: #de7314;
+  --color-tangerine-700: #b85c0f;
+
+  --color-butter-400: #f5c645;
+  --color-ok: #3e9f5c;
+  --color-warn: #e09b26;
+  --color-bad: #e25534;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+  --bg: #fdfaf6;
+  --surface: #ffffff;
+  --line: #efe7dc;
+  --text: #2f2b26;
+  --text-muted: #8a8178;
+
+  /* Header height, so anchor links land below it instead of behind it. */
+  --header-h: 72px;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* An id targeted from the nav must clear the fixed header. */
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  /* Nothing on this page may cause a sideways scrollbar; several sections
+     deliberately overhang their container to bleed decoration off the edge. */
+  overflow-x: hidden;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-tangerine-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Motion ──────────────────────────────────────────────────────────────────
+   Hand-rolled rather than pulling in an animation library, which is how the
+   admin console does it too. Everything below animates transform and opacity
+   ONLY, so it runs on the compositor and never forces layout while the page is
+   scrolling — the single biggest cause of janky marketing sites.
+
+   The easing is shared: cubic-bezier(.22,1,.36,1) decelerates hard and settles,
+   which reads as an object arriving rather than a value being interpolated. */
+
+@keyframes ql-rise {
+  from { opacity: 0; transform: translate3d(0, 22px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes ql-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ql-scale-in {
+  from { opacity: 0; transform: scale(.94); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes ql-slide-left {
+  from { opacity: 0; transform: translate3d(28px, 0, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes ql-slide-right {
+  from { opacity: 0; transform: translate3d(-28px, 0, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* The hero's soft colour wash, drifting so the page is never quite static. */
+@keyframes ql-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(2%, -3%, 0) scale(1.06); }
+}
+
+/* A slow shine across the stats band. */
+@keyframes ql-sheen {
+  0%   { transform: translateX(-120%) skewX(-18deg); }
+  100% { transform: translateX(320%)  skewX(-18deg); }
+}
+
+@keyframes ql-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes ql-pulse-ring {
+  0%   { transform: scale(.9); opacity: .55; }
+  70%  { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/**
+ * Scroll reveal.
+ *
+ * The element is hidden by default and gets `.is-in` when it enters the
+ * viewport — see the Reveal component. Being hidden by default is deliberate:
+ * anything that starts visible and then animates flashes at full opacity on
+ * first paint before the observer runs.
+ */
+.reveal {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.reveal.is-in {
+  animation: ql-rise .7s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+
+.reveal[data-anim="fade"].is-in       { animation-name: ql-fade; }
+.reveal[data-anim="scale"].is-in      { animation-name: ql-scale-in; }
+.reveal[data-anim="left"].is-in       { animation-name: ql-slide-left; }
+.reveal[data-anim="right"].is-in      { animation-name: ql-slide-right; }
+
+.ql-drift  { animation: ql-drift 18s ease-in-out infinite; }
+.ql-marquee { animation: ql-marquee 38s linear infinite; }
+
+.ql-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 32%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .28), transparent);
+  animation: ql-sheen 6.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Cards lift toward the pointer. Transform only — no box-shadow transition,
+   which is the expensive one because it repaints on every frame. */
+.ql-lift {
+  transition: transform .3s cubic-bezier(.22, 1, .36, 1), border-color .3s ease;
+}
+
+.ql-lift:hover {
+  transform: translateY(-4px);
+}
+
+/**
+ * Everything above is decoration, so all of it goes when the reader has asked
+ * for less motion. `.reveal` must still end up VISIBLE — turning the animation
+ * off without this would leave the whole page at opacity 0.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .reveal,
+  .reveal.is-in {
+    opacity: 1;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .ql-drift,
+  .ql-marquee,
+  .ql-sheen::after {
+    animation: none !important;
+  }
+
+  .ql-lift:hover { transform: none; }
+
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+  }
+}

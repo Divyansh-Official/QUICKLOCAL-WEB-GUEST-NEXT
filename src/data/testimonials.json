@@ -1,0 +1,5 @@
+{
+  "_source": "reviews table — joined to users for the reviewer's name and city.",
+  "_why_empty": "There are no reviews in the database. The mock shows three named customers with quotes; publishing invented ones would be fabricating a person's endorsement, which is the one thing a testimonial cannot be. The section renders only once this array has entries, so it will appear on its own the day a real review lands.",
+  "items": []
+}
