@@ -14,6 +14,16 @@
  * ── THE CURRENT PAGE IS MARKED ──────────────────────────────────────────────
  * With aria-current, not only an underline, so it is announced and not merely
  * drawn.
+ *
+ * ── THE SHEET IS A SIBLING OF THE BAR, NOT A CHILD ──────────────────────────
+ * It has to be. The bar gains `backdrop-blur` once the page scrolls, and
+ * backdrop-filter makes an element a CONTAINING BLOCK for its position:fixed
+ * descendants. Nested inside, the sheet stopped resolving against the viewport
+ * and started resolving against a 72px-tall bar — collapsing to zero height the
+ * moment you scrolled. The button still opened it and still locked body scroll,
+ * so the page froze with no visible menu and no way to dismiss it.
+ *
+ * The same trap waits for anything else fixed that gets nested in here later.
  */
 'use client';
 
@@ -64,6 +74,7 @@ export function Header() {
     href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
+    <>
     <header
       style={{ height: 'var(--header-h)' }}
       className={`fixed inset-x-0 top-0 z-50 flex items-center transition-all duration-300 ${
@@ -104,7 +115,7 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-2.5 lg:flex">
-          <Button href="/for-business" variant="outline" size="sm">
+          <Button href="/get-the-app" variant="outline" size="sm">
             Become a Partner
           </Button>
           <Button href="/contact" variant="primary" size="sm">
@@ -120,9 +131,12 @@ export function Header() {
           <Icon name={open ? 'close' : 'menu'} size={19} />
         </button>
       </Container>
+    </header>
 
       {/* ── mobile sheet ──────────────────────────────────────────────────── */}
-      {/* overflow-hidden is load-bearing.
+      {/* Outside <header> on purpose — see the note at the top of this file.
+
+          overflow-hidden is load-bearing too.
           The sheet is translated up by its own height when closed, which puts
           its bottom edge exactly on this wrapper's top edge — and with nothing
           clipping it, that edge (the last button in the menu) was left painted
@@ -162,7 +176,7 @@ export function Header() {
             ))}
           </ul>
           <div className="mt-4 grid gap-2.5" onClick={close}>
-            <Button href="/for-business" variant="outline" size="md" className="w-full">
+            <Button href="/get-the-app" variant="outline" size="md" className="w-full">
               Become a Partner
             </Button>
             <Button href="/contact" variant="primary" size="md" className="w-full">
@@ -171,6 +185,6 @@ export function Header() {
           </div>
         </nav>
       </div>
-    </header>
+    </>
   );
 }

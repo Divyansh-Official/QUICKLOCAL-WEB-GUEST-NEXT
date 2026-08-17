@@ -1,0 +1,50 @@
+{
+  "_source": "Store listings and the onboarding each role goes through in the app. The steps are the real sequence — a vendor and a rider both clear document verification before they can take anything.",
+  "_status": "The listings are not published yet. `available: false` is what makes the page say so rather than link to a store page that 404s; flip it and fill in the URLs when they go live.",
+  "android": {
+    "available": false,
+    "url": null,
+    "store": "Google Play"
+  },
+  "ios": {
+    "available": false,
+    "url": null,
+    "store": "App Store"
+  },
+  "roles": [
+    {
+      "key": "vendor",
+      "title": "Sell on QuickLocal",
+      "blurb": "List your shop, take orders from your own neighbourhood, and get paid to your bank.",
+      "icon": "store",
+      "highlights": [
+        "Free to list — up to 25 products, no monthly cost",
+        "Platform fee from 2%, capped at 3%",
+        "Payouts settled to your bank and reconciled automatically"
+      ],
+      "steps": [
+        "Install the app and pick Vendor when you sign up",
+        "Enter your shop details and the category you sell in",
+        "Upload your documents for verification",
+        "Add your products and open the shop"
+      ]
+    },
+    {
+      "key": "partner",
+      "title": "Deliver with QuickLocal",
+      "blurb": "Choose the jobs that suit you inside a 5 km radius, and know what each one pays before you accept it.",
+      "icon": "bike",
+      "highlights": [
+        "₹30 minimum on every order you deliver",
+        "₹20 base plus ₹5 a kilometre, paid transparently",
+        "Weekly payouts straight to your bank account"
+      ],
+      "steps": [
+        "Install the app and pick Delivery Partner when you sign up",
+        "Add your licence and vehicle details",
+        "Upload your documents for verification",
+        "Go online and start accepting jobs"
+      ]
+    }
+  ]
+}

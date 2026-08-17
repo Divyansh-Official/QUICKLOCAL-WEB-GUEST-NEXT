@@ -85,7 +85,7 @@ export default function PricingPage() {
                 </ul>
 
                 <Button
-                  href="/for-business"
+                  href="/get-the-app#vendor"
                   variant={p.popular ? 'primary' : 'ghost'}
                   size="md"
                   className="mt-5 w-full">

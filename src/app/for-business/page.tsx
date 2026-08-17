@@ -44,11 +44,11 @@ export default function ForBusinessPage() {
                 ))}
               </ul>
               <div className="mt-6 flex flex-wrap gap-2.5">
-                <Button href="/pricing" icon="arrow-right">
-                  See vendor plans
+                <Button href="/get-the-app#vendor" icon="arrow-right">
+                  Start selling
                 </Button>
-                <Button href="/contact" variant="ghost">
-                  Talk to us
+                <Button href="/pricing" variant="ghost">
+                  See the plans
                 </Button>
               </div>
             </Card>
@@ -71,7 +71,7 @@ export default function ForBusinessPage() {
                 ))}
               </ul>
               <div className="mt-6 flex flex-wrap gap-2.5">
-                <Button href="/contact" icon="arrow-right">
+                <Button href="/get-the-app#partner" icon="arrow-right">
                   Apply to deliver
                 </Button>
               </div>

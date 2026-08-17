@@ -57,7 +57,7 @@ export default function AboutPage() {
               </Reveal>
             ))}
             <Reveal delay={340}>
-              <Button href="/for-business" icon="arrow-right" className="mt-3">
+              <Button href="/get-the-app" icon="arrow-right" className="mt-3">
                 Partner with us
               </Button>
             </Reveal>
@@ -129,7 +129,7 @@ export default function AboutPage() {
             <p className="max-w-[460px] text-[13.5px] leading-relaxed text-[var(--color-cream-300)]">
               List free, keep up to 98% of every sale, and get paid straight to your bank.
             </p>
-            <Button href="/for-business" icon="arrow-right" className="mt-1">
+            <Button href="/get-the-app#vendor" icon="arrow-right" className="mt-1">
               Become a vendor
             </Button>
           </div>

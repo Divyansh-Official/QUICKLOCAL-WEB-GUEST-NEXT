@@ -53,11 +53,14 @@ export function Logo({
     <span className="inline-flex items-center gap-2.5">
       <LogoMark size={size} priority={priority} />
       <span className="leading-none">
+        {/* QUICK carries the surface's ink, LOCAL carries the brand — the word
+            the product is actually about is the word that gets the colour, and
+            it reads the same on cream and on charcoal. */}
         <span
           className={`block text-[17px] font-extrabold tracking-tight ${
             tone === 'light' ? 'text-[var(--color-cream-50)]' : 'text-[var(--color-ink-950)]'
           }`}>
-          QUICKLOCAL
+          QUICK<span className="text-[var(--color-tangerine-500)]">LOCAL</span>
         </span>
         {withTagline ? (
           <span

@@ -21,6 +21,7 @@
  * is checked against what the components actually need.
  */
 import aboutJson from '@/data/about.json';
+import appJson from '@/data/app.json';
 import categoriesJson from '@/data/categories.json';
 import contactJson from '@/data/contact.json';
 import featuresJson from '@/data/features.json';
@@ -90,6 +91,22 @@ export type Testimonial = {
   body: string;
 };
 
+export type StoreListing = {
+  /** False until the listing is published; the UI must not link to a 404. */
+  available: boolean;
+  url: string | null;
+  store: string;
+};
+
+export type AppRole = {
+  key: string;
+  title: string;
+  blurb: string;
+  icon: string;
+  highlights: string[];
+  steps: string[];
+};
+
 export type NavLink = { label: string; href: string };
 export type FooterColumn = { heading: string; links: NavLink[] };
 
@@ -107,6 +124,12 @@ export const plans: Plan[] = plansJson.items;
 export const featureLabels: Record<string, string> = plansJson.featureLabels;
 export const about = aboutJson;
 export const features = featuresJson;
+export const appStores: { android: StoreListing; ios: StoreListing } = {
+  android: appJson.android,
+  ios: appJson.ios,
+};
+export const appRoles: AppRole[] = appJson.roles;
+
 export const nav: NavLink[] = navJson.primary;
 export const footerColumns: FooterColumn[] = navJson.footer;
 

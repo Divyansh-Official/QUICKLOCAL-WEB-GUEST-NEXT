@@ -10,6 +10,7 @@
  * no reason.
  */
 import { Icon, type IconName } from './Icon';
+import { PhoneScene, RiderScene, ShopScene } from './Scenes';
 import { Reveal } from './Reveal';
 import { Button, Card, Container, IconTile, SectionHeading } from './ui';
 import { about, features, info, stats, steps, testimonials, trust } from '@/lib/data';
@@ -156,6 +157,10 @@ export function WhyAndAbout() {
                 Learn more about us
               </Button>
             </Reveal>
+
+            <Reveal delay={580}>
+              <RiderScene className="mt-8 w-full max-w-[380px]" />
+            </Reveal>
           </div>
 
           {/* about */}
@@ -179,6 +184,10 @@ export function WhyAndAbout() {
               <Button href="/about" variant="outline" size="md" icon="arrow-right" className="mt-7">
                 Know more about us
               </Button>
+            </Reveal>
+
+            <Reveal delay={480}>
+              <ShopScene className="mt-8 w-full max-w-[320px]" />
             </Reveal>
           </div>
         </div>
@@ -250,7 +259,7 @@ export function AppBand() {
             aria-hidden
             className="ql-drift pointer-events-none absolute -right-[8%] -top-[40%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.30),transparent_65%)]"
           />
-          <div className="relative grid items-center gap-8 lg:grid-cols-[1.25fr_1fr]">
+          <div className="relative grid items-center gap-8 lg:grid-cols-[1.1fr_auto_1fr]">
             <div>
               <h2 className="text-[25px] font-extrabold leading-tight tracking-tight text-white sm:text-[30px]">
                 Get the {info.name} app
@@ -268,9 +277,17 @@ export function AppBand() {
               <p className="mt-4 text-[11.5px] text-[var(--color-cream-300)]/70">
                 Version {info.version} · Android and iOS
               </p>
+
+              <Button href="/get-the-app" variant="primary" size="md" icon="arrow-right" className="mt-5">
+                Selling or delivering? Start here
+              </Button>
             </div>
 
-            {/* The three promises, as chips rather than a second phone mock. */}
+            <Reveal anim="scale" delay={120} className="hidden justify-center lg:flex">
+              <PhoneScene className="h-[260px] w-auto" />
+            </Reveal>
+
+            {/* The three promises, beside the handset. */}
             <ul className="grid gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
               {[
                 { icon: 'truck' as const, text: `Delivered within ${info.delivery.maxHours} hours` },

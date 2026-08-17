@@ -72,6 +72,15 @@ body {
   border-radius: 4px;
 }
 
+/**
+ * Every section establishes its own position, so content animating near a
+ * boundary is ordered by the document rather than by whichever box happened to
+ * be painted last.
+ */
+section {
+  position: relative;
+}
+
 /* ── Motion ──────────────────────────────────────────────────────────────────
    Hand-rolled rather than pulling in an animation library, which is how the
    admin console does it too. Everything below animates transform and opacity
@@ -123,6 +132,54 @@ body {
   to   { transform: translate3d(-50%, 0, 0); }
 }
 
+/* ── Scene keyframes ─────────────────────────────────────────────────────────
+   Driving the illustrations in Scenes.tsx. Kept here rather than inline so the
+   reduced-motion block at the bottom can switch all of them off in one place. */
+
+@keyframes ql-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* The rider follows the route: across, up over the crest, then down and off. */
+@keyframes ql-ride {
+  0%   { transform: translate(8px, 118px); opacity: 0; }
+  8%   { opacity: 1; }
+  50%  { transform: translate(116px, 60px); opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translate(232px, 104px); opacity: 0; }
+}
+
+@keyframes ql-draw {
+  0%   { stroke-dashoffset: 300; }
+  55%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes ql-stamp {
+  0%, 12%  { transform: translateY(-16px) scale(.7); opacity: 0; }
+  26%      { transform: translateY(0) scale(1.08); opacity: 1; }
+  34%, 88% { transform: translateY(0) scale(1); opacity: 1; }
+  100%     { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes ql-scroll-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-102px); }
+}
+
+@keyframes ql-lift {
+  0%, 100% { transform: translateY(4px); }
+  50%      { transform: translateY(-9px); }
+}
+
+@keyframes ql-drop {
+  0%   { transform: translateY(-26px); opacity: 0; }
+  35%  { transform: translateY(0); opacity: 1; }
+  75%  { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(6px); opacity: 0; }
+}
+
 @keyframes ql-pulse-ring {
   0%   { transform: scale(.9); opacity: .55; }
   70%  { transform: scale(1.5); opacity: 0; }
@@ -139,7 +196,19 @@ body {
  */
 .reveal {
   opacity: 0;
-  will-change: transform, opacity;
+  /**
+   * NO `will-change` HERE.
+   *
+   * It looks like a free performance win and is the opposite. `will-change:
+   * transform` promotes an element to its own compositor layer AND gives it a
+   * stacking context — permanently, on all forty-odd revealed elements. That is
+   * forty-odd layers the compositor keeps for the life of the page, and forty
+   * odd new stacking contexts whose paint order no longer follows the document,
+   * which is what made cards appear to slide behind neighbouring sections.
+   *
+   * A transform/opacity animation is composited anyway. The hint buys nothing
+   * and costs correctness.
+   */
 }
 
 .reveal.is-in {
@@ -191,7 +260,10 @@ body {
 
   .ql-drift,
   .ql-marquee,
-  .ql-sheen::after {
+  .ql-sheen::after,
+  /* Every scene animation, including the SMIL-driven ones. */
+  svg *,
+  svg {
     animation: none !important;
   }
 

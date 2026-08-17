@@ -1,8 +1,8 @@
 {
   "_source": "The platform's published contact details and its live social account.",
   "_note": "Only accounts that actually exist are listed. The earlier Facebook, X and LinkedIn entries were placeholders and have been removed rather than left pointing at profiles nobody owns — a dead social link on a footer is a support ticket waiting to happen.",
-  "phone": "+91 98765 43210",
-  "email": "quiclocal.dev@gmail.com",
+  "phone": "+91 XXXXX 50130",
+  "email": "quicklocal.dev@gmail.com",
   "address": "Pune, Maharashtra, India",
   "city": "Pune",
   "state": "Maharashtra",
@@ -13,5 +13,6 @@
       "handle": "@thequicklocal",
       "href": "https://instagram.com/thequicklocal"
     }
-  ]
+  ],
+  "_note_phone": "Partially masked until the public support line is live. The tel: link is built from this string with spaces stripped, so it stays unclickable-but-honest rather than dialling a wrong number."
 }

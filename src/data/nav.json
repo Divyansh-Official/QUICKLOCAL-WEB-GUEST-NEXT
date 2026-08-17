@@ -1,41 +1,105 @@
 {
   "primary": [
-    { "label": "Home", "href": "/" },
-    { "label": "About Us", "href": "/about" },
-    { "label": "Services", "href": "/services" },
-    { "label": "For Business", "href": "/for-business" },
-    { "label": "Pricing", "href": "/pricing" },
-    { "label": "Contact Us", "href": "/contact" }
+    {
+      "label": "Home",
+      "href": "/"
+    },
+    {
+      "label": "About Us",
+      "href": "/about"
+    },
+    {
+      "label": "Services",
+      "href": "/services"
+    },
+    {
+      "label": "For Business",
+      "href": "/for-business"
+    },
+    {
+      "label": "Pricing",
+      "href": "/pricing"
+    },
+    {
+      "label": "Get the App",
+      "href": "/get-the-app"
+    },
+    {
+      "label": "Contact Us",
+      "href": "/contact"
+    }
   ],
-  "_removed": "The mock has a Blog entry. There are no posts and no CMS behind this site, so a Blog link would open an empty page — it is left out until there is something to read.",
+  "_removed": "The mock has a Blog entry. There are no posts and no CMS behind this site, so a Blog link would open an empty page \u2014 it is left out until there is something to read.",
   "footer": [
     {
       "heading": "Quick Links",
       "links": [
-        { "label": "Home", "href": "/" },
-        { "label": "About Us", "href": "/about" },
-        { "label": "Services", "href": "/services" },
-        { "label": "For Business", "href": "/for-business" },
-        { "label": "Pricing", "href": "/pricing" }
+        {
+          "label": "Home",
+          "href": "/"
+        },
+        {
+          "label": "About Us",
+          "href": "/about"
+        },
+        {
+          "label": "Services",
+          "href": "/services"
+        },
+        {
+          "label": "For Business",
+          "href": "/for-business"
+        },
+        {
+          "label": "Pricing",
+          "href": "/pricing"
+        }
       ]
     },
     {
       "heading": "For Customers",
       "links": [
-        { "label": "How It Works", "href": "/#how-it-works" },
-        { "label": "Categories", "href": "/services" },
-        { "label": "Delivery Information", "href": "/services#delivery" },
-        { "label": "Refer & Earn", "href": "/services#referral" },
-        { "label": "Contact Support", "href": "/contact" }
+        {
+          "label": "How It Works",
+          "href": "/#how-it-works"
+        },
+        {
+          "label": "Categories",
+          "href": "/services"
+        },
+        {
+          "label": "Delivery Information",
+          "href": "/services#delivery"
+        },
+        {
+          "label": "Refer & Earn",
+          "href": "/services#referral"
+        },
+        {
+          "label": "Get the App",
+          "href": "/get-the-app"
+        }
       ]
     },
     {
       "heading": "For Partners",
       "links": [
-        { "label": "Become a Vendor", "href": "/for-business" },
-        { "label": "Become a Delivery Partner", "href": "/for-business#partners" },
-        { "label": "Vendor Pricing", "href": "/pricing" },
-        { "label": "Partner Earnings", "href": "/for-business#earnings" }
+        {
+          "label": "Become a Vendor",
+          "href": "/get-the-app#vendor"
+        },
+        {
+          "label": "Become a Delivery Partner",
+          "href": "/get-the-app#partner"
+        },
+        {
+          "label": "Vendor Pricing",
+          "href": "/pricing"
+        },
+        {
+          "label": "Partner Earnings",
+          "href": "/for-business#earnings"
+        }
       ]
     }
   ]
