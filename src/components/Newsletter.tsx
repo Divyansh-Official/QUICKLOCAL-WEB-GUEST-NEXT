@@ -114,7 +114,7 @@ export function Newsletter() {
           </div>
 
           {done ? (
-            <div className="rounded-2xl border border-[var(--color-ok)]/30 bg-[var(--color-ok)]/8 p-5">
+            <div className="ql-glass rounded-2xl p-5 ring-1 ring-inset ring-[var(--color-ok)]/25">
               <div className="flex items-center gap-2.5">
                 <span
                   className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-[var(--color-ok)] text-white"
@@ -159,7 +159,7 @@ export function Newsletter() {
                   aria-invalid={error ? true : undefined}
                   aria-describedby={error ? 'newsletter-error' : undefined}
                   disabled={state === 'sending'}
-                  className={`h-12 min-w-0 flex-1 rounded-xl border bg-[var(--color-cream-50)] px-4 text-[13.5px] outline-none transition focus:bg-[var(--surface)] disabled:opacity-60 ${
+                  className={`ql-glass h-12 min-w-0 flex-1 rounded-xl px-4 text-[13.5px] outline-none transition focus:brightness-105 disabled:opacity-60 ${
                     error
                       ? 'border-[var(--color-bad)]'
                       : 'border-[var(--line)] focus:border-[var(--color-tangerine-500)] focus:ring-[3px] focus:ring-[var(--color-tangerine-500)]/15'

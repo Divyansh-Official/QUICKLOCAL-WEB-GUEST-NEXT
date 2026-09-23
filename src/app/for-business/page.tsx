@@ -96,7 +96,7 @@ export default function ForBusinessPage() {
             ].map((d, i) => (
               <Reveal key={d.v} delay={i * 100}>
                 <div className="ql-glint h-full ql-glass rounded-2xl p-5 text-center">
-                  <span className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-[var(--color-tangerine-100)] text-[var(--color-tangerine-600)]">
+                  <span className="ql-glass mx-auto grid h-11 w-11 place-items-center rounded-xl text-[var(--color-tangerine-600)]">
                     <Icon name={d.icon} size={20} />
                   </span>
                   <p className="tnum mt-3 text-[22px] font-extrabold leading-none">{d.k}</p>

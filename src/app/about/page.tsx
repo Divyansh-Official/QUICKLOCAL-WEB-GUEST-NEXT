@@ -69,7 +69,7 @@ export default function AboutPage() {
               <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--text-muted)]">
                 One city, honestly stated. The map grows when the vendors do.
               </p>
-              <div className="mt-4 flex items-center gap-3 rounded-2xl bg-[var(--color-cream-100)] px-4 py-3.5">
+              <div className="ql-glass ql-glint mt-4 flex items-center gap-3 rounded-2xl px-4 py-3.5">
                 <IconTile name="pin" size={40} />
                 <div>
                   <p className="text-[14px] font-bold">

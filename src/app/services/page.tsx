@@ -75,7 +75,7 @@ export default function ServicesPage() {
       <section id="referral" className="scroll-mt-24 py-16 sm:py-20">
         <Container>
           <Reveal anim="scale">
-            <div className="flex flex-col items-center gap-4 rounded-[26px] border border-[var(--color-tangerine-300)] bg-[var(--color-tangerine-100)] px-6 py-10 text-center">
+            <div className="ql-glass ql-glint flex flex-col items-center gap-4 rounded-[26px] px-6 py-10 text-center ring-1 ring-inset ring-[var(--color-tangerine-300)]/50">
               <Icon name="sparkle" size={26} className="text-[var(--color-tangerine-600)]" />
               <h2 className="text-[24px] font-extrabold tracking-tight sm:text-[28px]">
                 Refer a friend, earn ₹{info.referral.rewardInr}

@@ -8,6 +8,7 @@
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { GlassPane } from './glass/GlassPane';
 import { Icon, type IconName } from './Icon';
 import { Reveal } from './Reveal';
 
@@ -224,21 +225,34 @@ export function PageHeader({
         <div className="absolute -right-[12%] -top-[40%] h-[440px] w-[440px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.17),transparent_66%)]" />
       </div>
       <Container>
-        <Reveal anim="fade">
-          <p className="text-[11.5px] font-extrabold uppercase tracking-[0.16em] text-[var(--color-tangerine-600)]">
-            {eyebrow}
-          </p>
-        </Reveal>
-        <Reveal delay={70}>
-          <h1 className="mt-2.5 max-w-[720px] text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[42px]">
-            {title}
-          </h1>
-        </Reveal>
-        <Reveal delay={140}>
-          <p className="mt-4 max-w-[620px] text-[14.5px] leading-relaxed text-[var(--color-ink-500)]">
-            {intro}
-          </p>
-        </Reveal>
+        {/* The one place on an inner page worth spending real refraction: a
+            single large slab that does not move, above the fold, with the
+            backdrop's weave running underneath it. Everything else on these
+            pages takes the glass look from paint. */}
+        <GlassPane
+          radius={26}
+          tint="rgba(255,255,255,0.5)"
+          blur={2.4}
+          strength="full"
+          elevation="float"
+          lazy={false}
+          className="ql-glint px-6 py-8 sm:px-8 sm:py-10">
+          <Reveal anim="fade">
+            <p className="text-[11.5px] font-extrabold uppercase tracking-[0.16em] text-[var(--color-tangerine-600)]">
+              {eyebrow}
+            </p>
+          </Reveal>
+          <Reveal delay={70}>
+            <h1 className="mt-2.5 max-w-[720px] text-[32px] font-extrabold leading-[1.1] tracking-tight sm:text-[42px]">
+              {title}
+            </h1>
+          </Reveal>
+          <Reveal delay={140}>
+            <p className="mt-4 max-w-[620px] text-[14.5px] leading-relaxed text-[var(--color-ink-500)]">
+              {intro}
+            </p>
+          </Reveal>
+        </GlassPane>
       </Container>
     </section>
   );

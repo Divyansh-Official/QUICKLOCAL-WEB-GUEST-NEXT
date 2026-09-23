@@ -160,6 +160,20 @@ A `requestAnimationFrame` probe reported a steady 60fps through all of it — th
 cost is on the compositor, where script cannot see it. Count the surfaces
 instead.
 
+### The budget, and how to spend it
+
+| | Per page |
+|---|---|
+| **Refracting surfaces** (`GlassPane`) | **2** — the header, and one large slab: the hero tracker on home, the banner on every inner page |
+| **Painted glass** (`.ql-glass`) | unlimited — 38 on home, 7–8 on an inner page |
+| **Infinite animations behind glass** | **0** |
+
+Adding glass to a container means reaching for `.ql-glass`,
+`.ql-glass-raised` (feature blocks) or `.ql-glass-dark` (on charcoal or
+tangerine). Reaching for `GlassPane` means taking one of the two slots, so it
+has to be large, stationary, and worth it — the bend is not legible below
+roughly a third of the viewport anyway.
+
 ## Layout
 
 ```

@@ -57,7 +57,7 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label={`${s.label} — ${s.handle}`}
-                className="inline-flex h-11 items-center gap-2.5 rounded-xl border border-white/15 px-4 text-[var(--color-cream-200)] transition hover:border-[var(--color-tangerine-500)] hover:bg-[var(--color-tangerine-500)] hover:text-white">
+                className="ql-glass-dark ql-glint inline-flex h-11 items-center gap-2.5 rounded-xl px-4 text-[var(--color-cream-200)] transition hover:bg-[var(--color-tangerine-500)] hover:text-white">
                 <Icon name={SOCIAL_ICONS[s.icon] ?? 'instagram'} size={17} />
                 <span className="text-[12.5px] font-bold">{s.handle}</span>
               </a>

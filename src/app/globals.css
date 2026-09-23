@@ -244,34 +244,77 @@ section {
 }
 
 /* ── Glass, without a backdrop pass ──────────────────────────────────────────
-   The look of glass from paint alone: a translucent fill, the two rim lights a
-   real edge has, and a shadow. No backdrop-filter, so it costs nothing per
-   frame and can be used as many times as a page needs.
+   The look of glass from PAINT ALONE, so it can be used as many times as a
+   page needs. Every refracting surface is a GPU pass redone whenever anything
+   behind it moves; these cost nothing per frame, which is what makes it safe
+   to put glass on every container on the site.
 
-   Everything that comes in multiples uses this — cards in a grid, chips, rail
-   items, buttons. Only large surfaces that stay put get the real refraction,
-   because each of those is a GPU pass redone whenever anything behind it
-   moves. Thirty-five of them over an animating backdrop is what made this site
-   lag; see GlassPane.tsx. */
+   What sells it without a backdrop filter is the light, not the blur. Four
+   things, all of them background layers:
+
+     · a specular band down from the top edge, where a curved surface catches
+       the light
+     · a soft bloom off the top-left corner, the direction everything else on
+       this site is lit from
+     · a faint warm tint at the bottom, so the surface has depth rather than
+       being uniformly white
+     · the translucent fill itself
+
+   They are BACKGROUND layers rather than a ::before, deliberately. An absolutely
+   positioned pseudo-element paints above in-flow content, so the highlight
+   would sit on top of the text; a background cannot, ever. It also leaves both
+   pseudo-elements free for .ql-glint and .ql-live.
+
+   Only large surfaces that stay put get the real refraction — see
+   GlassPane.tsx for where that line is drawn and what happened when it was not. */
 .ql-glass {
-  background: rgba(255, 255, 255, .62);
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 44%),
+    radial-gradient(130% 70% at 12% -12%, rgba(255, 255, 255, .42), transparent 62%),
+    linear-gradient(to top, rgba(253, 246, 237, .45), transparent 55%),
+    linear-gradient(0deg, rgba(255, 255, 255, .56), rgba(255, 255, 255, .56));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .6),
-    inset 0 -1px 0 rgba(255, 255, 255, .2),
-    inset 0 0 0 .5px rgba(255, 255, 255, .38),
+    inset 0 1px 0 rgba(255, 255, 255, .68),
+    inset 0 -1px 0 rgba(255, 255, 255, .22),
+    inset 0 0 0 .5px rgba(255, 255, 255, .42),
     0 1px 2px rgba(26, 23, 19, .05),
     0 6px 18px -8px rgba(26, 23, 19, .14);
 }
 
-/* Deeper, for a block that should sit clearly above the field. */
+/* A block that should sit clearly above the field — feature panels, the
+   newsletter, a plan table. Same material, more lift. */
 .ql-glass-raised {
-  background: rgba(255, 255, 255, .66);
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, .58), rgba(255, 255, 255, 0) 46%),
+    radial-gradient(130% 70% at 10% -14%, rgba(255, 255, 255, .5), transparent 64%),
+    linear-gradient(to top, rgba(253, 246, 237, .5), transparent 58%),
+    linear-gradient(0deg, rgba(255, 255, 255, .6), rgba(255, 255, 255, .6));
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, .65),
-    inset 0 -1px 0 rgba(255, 255, 255, .2),
-    inset 0 0 0 .5px rgba(255, 255, 255, .4),
+    inset 0 1px 0 rgba(255, 255, 255, .72),
+    inset 0 -1px 0 rgba(255, 255, 255, .24),
+    inset 0 0 0 .5px rgba(255, 255, 255, .46),
     0 2px 6px rgba(26, 23, 19, .07),
     0 18px 44px -22px rgba(26, 23, 19, .3);
+}
+
+/* The same material inverted, for glass sitting on charcoal or tangerine —
+   the footer and the app band. White at these opacities over a dark fill goes
+   grey and muddy, so the fill is barely-there white and the rim carries it. */
+.ql-glass-dark {
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 48%),
+    radial-gradient(130% 70% at 12% -12%, rgba(255, 255, 255, .13), transparent 62%),
+    linear-gradient(0deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .08));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .22),
+    inset 0 0 0 .5px rgba(255, 255, 255, .16),
+    0 10px 30px -14px rgba(0, 0, 0, .45);
+}
+
+/* A hairline divider that reads as an edge in the glass rather than a border
+   drawn on top of it. */
+.ql-glass-line {
+  border-color: rgba(255, 255, 255, .5);
 }
 
 /* ── Glass motion ────────────────────────────────────────────────────────────

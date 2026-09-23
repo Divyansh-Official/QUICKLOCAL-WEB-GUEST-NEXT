@@ -86,7 +86,7 @@ export default function ContactPage() {
                       target="_blank"
                       rel="noreferrer noopener"
                       aria-label={`${s.label} — ${s.handle}`}
-                      className="inline-flex items-center gap-2 rounded-xl border border-[var(--line)] px-3 py-2.5 text-[var(--color-ink-700)] transition hover:border-[var(--color-tangerine-300)] hover:bg-[var(--color-tangerine-100)] hover:text-[var(--color-tangerine-600)]">
+                      className="ql-glass ql-glint inline-flex items-center gap-2 rounded-xl px-3 py-2.5 text-[var(--color-ink-700)] transition hover:text-[var(--color-tangerine-600)]">
                       <Icon name={s.icon as IconName} size={17} />
                       <span className="text-[12.5px] font-semibold">{s.handle}</span>
                     </a>
@@ -94,7 +94,7 @@ export default function ContactPage() {
                 ))}
               </ul>
             </div>
-            <div className="rounded-2xl bg-[var(--color-cream-100)] p-5">
+            <div className="ql-glass ql-glint rounded-2xl p-5">
               <h3 className="text-[13.5px] font-bold">Why there is no form here</h3>
               <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--text-muted)]">
                 This site is static — nothing on it stores what you type. A contact form would take
