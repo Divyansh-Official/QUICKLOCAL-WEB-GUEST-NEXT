@@ -27,6 +27,8 @@ import contactJson from '@/data/contact.json';
 import featuresJson from '@/data/features.json';
 import feesJson from '@/data/fees.json';
 import infoJson from '@/data/info.json';
+import lifecycleJson from '@/data/lifecycle.json';
+import ridersJson from '@/data/riders.json';
 import navJson from '@/data/nav.json';
 import plansJson from '@/data/plans.json';
 import statsJson from '@/data/stats.json';
@@ -63,6 +65,36 @@ export type Fees = {
   driverMultiplier: number;
   defaultFreeDeliveryThresholdInr: number;
   categories: { slug: string; name: string; platformFeePercent: number }[];
+};
+
+/**
+ * The states an order genuinely passes through.
+ *
+ * `status` is the real OrderStatus constant, so what the site says lines up
+ * with what the app shows. `unhappy` is deliberately not hidden — the states
+ * a customer most wants explained are the ones that are not the happy path.
+ */
+export type OrderStep = {
+  status: string;
+  label: string;
+  detail: string;
+  icon: string;
+};
+
+export type Lifecycle = { happy: OrderStep[]; unhappy: OrderStep[] };
+
+/** What a delivery partner earns, and what moves them up. */
+export type Riders = {
+  payout: { baseInr: number; perKmInr: number; minimumInr: number };
+  tiers: {
+    level: string;
+    name: string;
+    deliveries: string;
+    rating: string;
+    detail: string;
+    tone: string;
+  }[];
+  documents: { type: string; label: string }[];
 };
 
 export type Social = { label: string; icon: string; handle: string; href: string };
@@ -142,6 +174,8 @@ export const featureLabels: Record<string, string> = plansJson.featureLabels;
 export const about = aboutJson;
 export const features = featuresJson;
 export const fees: Fees = feesJson;
+export const lifecycle: Lifecycle = lifecycleJson;
+export const riders: Riders = ridersJson;
 export const appStores: { android: StoreListing; ios: StoreListing } = {
   android: appJson.android,
   ios: appJson.ios,

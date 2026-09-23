@@ -144,7 +144,7 @@ export function Header() {
           onClick={() => setOpen(v => !v)}
           aria-expanded={open}
           aria-label={open ? 'Close menu' : 'Open menu'}
-          className="grid h-10 w-10 place-items-center rounded-xl border border-[var(--line)] bg-[var(--surface)] text-[var(--color-ink-700)] transition hover:bg-[var(--color-cream-100)] lg:hidden">
+          className="grid h-10 w-10 place-items-center rounded-xl bg-white/65 text-[var(--color-ink-700)] shadow-[inset_0_1px_0_rgba(255,255,255,.6),inset_0_0_0_.5px_rgba(255,255,255,.4)] backdrop-blur-md backdrop-saturate-150 transition hover:bg-white/85 lg:hidden">
           <Icon name={open ? 'close' : 'menu'} size={19} />
         </button>
       </GlassPane>

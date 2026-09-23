@@ -99,7 +99,7 @@ export function Newsletter() {
   return (
     <Container className="py-16 sm:py-20">
       <Reveal>
-        <div className="grid items-center gap-8 overflow-hidden rounded-[26px] border border-[var(--line)] bg-[var(--surface)] px-6 py-9 sm:px-10 lg:grid-cols-[1fr_minmax(0,420px)]">
+        <div className="ql-glint grid items-center gap-8 overflow-hidden rounded-[26px] bg-white/58 px-6 py-9 shadow-[inset_0_1px_0_rgba(255,255,255,.6),inset_0_0_0_.5px_rgba(255,255,255,.35),0_18px_46px_-22px_rgba(26,23,19,.3)] backdrop-blur-lg backdrop-saturate-150 sm:px-10 lg:grid-cols-[1fr_minmax(0,420px)]">
           <div className="flex items-start gap-5">
             <MailScene className="hidden h-[86px] w-[104px] shrink-0 sm:block" />
             <div>

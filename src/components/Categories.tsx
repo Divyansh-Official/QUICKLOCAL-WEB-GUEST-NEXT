@@ -90,7 +90,7 @@ export function Categories() {
                 className="w-[220px] shrink-0 snap-start sm:w-[236px]">
                 <Link
                   href={`/services#${c.slug}`}
-                  className="ql-lift group flex h-full flex-col rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-5 transition hover:border-[var(--color-tangerine-300)]">
+                  className="ql-lift ql-glint group flex h-full flex-col rounded-2xl bg-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,.6),inset_0_0_0_.5px_rgba(255,255,255,.35),0_4px_14px_rgba(26,23,19,.07)] backdrop-blur-md backdrop-saturate-150 p-5 transition">
                   <IconTile name={c.icon as IconName} size={46} />
                   <h3 className="mt-4 text-[15px] font-bold">{c.name}</h3>
                   <p className="mt-1.5 flex-1 text-[12.5px] leading-relaxed text-[var(--text-muted)]">
@@ -132,7 +132,7 @@ function RailButton({
       onClick={onClick}
       disabled={disabled}
       aria-label={dir === 'left' ? 'Previous categories' : 'Next categories'}
-      className="grid h-10 w-10 place-items-center rounded-full border border-[var(--line)] bg-[var(--surface)] text-[var(--color-ink-700)] transition hover:border-[var(--color-tangerine-300)] hover:text-[var(--color-tangerine-600)] disabled:pointer-events-none disabled:opacity-35">
+      className="grid h-10 w-10 place-items-center rounded-full bg-white/65 text-[var(--color-ink-700)] shadow-[inset_0_1px_0_rgba(255,255,255,.6),inset_0_0_0_.5px_rgba(255,255,255,.4),0_3px_12px_rgba(26,23,19,.09)] backdrop-blur-md backdrop-saturate-150 transition hover:text-[var(--color-tangerine-600)] disabled:pointer-events-none disabled:opacity-35">
       <Icon name={dir === 'left' ? 'chevron-left' : 'chevron-right'} size={17} />
     </button>
   );

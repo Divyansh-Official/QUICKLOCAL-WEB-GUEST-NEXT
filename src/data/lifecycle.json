@@ -1,0 +1,62 @@
+{
+  "_source": "OrderStatus.java — the enum the backend actually moves an order through — and PaymentStatus.java for the money column. The labels are plain English for the same states; the `status` field is the real constant, so a reader can match what they see in the app to what is written here.",
+  "_why": "Every delivery site says 'track your order'. Almost none say what the states ARE, which is the thing a customer is actually asking when an order sits on one for ten minutes. These are the real ones, in the real order, including the three that are not part of a happy path.",
+  "happy": [
+    {
+      "status": "PLACED",
+      "label": "Order placed",
+      "detail": "Payment authorised and the shop is notified. Nothing is captured yet.",
+      "icon": "basket"
+    },
+    {
+      "status": "VENDOR_ACCEPTED",
+      "label": "Shop accepted",
+      "detail": "The shop has your items and has confirmed it can fulfil them.",
+      "icon": "store"
+    },
+    {
+      "status": "DELIVERY_ASSIGNED",
+      "label": "Rider assigned",
+      "detail": "A partner nearby took the job. They can see the shop, you, and the distance between all three before accepting.",
+      "icon": "bike"
+    },
+    {
+      "status": "DELIVERY_PICKED",
+      "label": "Picked up",
+      "detail": "Collected from the shop and on the way.",
+      "icon": "truck"
+    },
+    {
+      "status": "IN_TRANSIT",
+      "label": "Out for delivery",
+      "detail": "Live on the map until it reaches you.",
+      "icon": "pin"
+    },
+    {
+      "status": "DELIVERED",
+      "label": "Delivered",
+      "detail": "Confirmed with a one-time code you give the rider — not a tap on their phone.",
+      "icon": "check"
+    }
+  ],
+  "unhappy": [
+    {
+      "status": "CANCELLED",
+      "label": "Cancelled",
+      "detail": "Before pickup, by you or by the shop. Anything authorised is released.",
+      "icon": "close"
+    },
+    {
+      "status": "REFUND_INITIATED",
+      "label": "Refund started",
+      "detail": "Raised against the original payment, with a reference you can quote.",
+      "icon": "refresh"
+    },
+    {
+      "status": "REFUNDED",
+      "label": "Refunded",
+      "detail": "Back on the card or account it came from.",
+      "icon": "wallet"
+    }
+  ]
+}

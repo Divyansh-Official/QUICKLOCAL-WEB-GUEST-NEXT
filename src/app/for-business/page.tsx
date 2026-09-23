@@ -95,7 +95,7 @@ export default function ForBusinessPage() {
               { k: `${inr(info.riderPayout.minimumInr)} min`, v: 'Guaranteed floor', icon: 'shield-check' as const },
             ].map((d, i) => (
               <Reveal key={d.v} delay={i * 100}>
-                <div className="h-full rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-5 text-center">
+                <div className="ql-glint h-full rounded-2xl bg-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,.6),inset_0_0_0_.5px_rgba(255,255,255,.35),0_4px_14px_rgba(26,23,19,.07)] backdrop-blur-md backdrop-saturate-150 p-5 text-center">
                   <span className="mx-auto grid h-11 w-11 place-items-center rounded-xl bg-[var(--color-tangerine-100)] text-[var(--color-tangerine-600)]">
                     <Icon name={d.icon} size={20} />
                   </span>

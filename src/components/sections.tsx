@@ -27,7 +27,7 @@ export function TrustStrip() {
       <Reveal anim="scale">
         <div className="grid gap-px overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--line)] shadow-[0_16px_44px_-24px_rgba(26,23,19,.34)] sm:grid-cols-2 lg:grid-cols-4">
           {trust.map(t => (
-            <div key={t.title} className="flex items-center gap-3 bg-[var(--surface)] px-4 py-4">
+            <div key={t.title} className="ql-glint flex items-center gap-3 bg-white/55 px-4 py-4 backdrop-blur-md backdrop-saturate-150">
               <IconTile name={t.icon as IconName} size={38} />
               <div className="min-w-0">
                 <p className="text-[13px] font-bold leading-tight">{t.title}</p>

@@ -105,7 +105,7 @@ export default function PricingPage() {
             title="What each sale costs"
             subtitle="Charged per order on top of the monthly plan. Set per category, the same for every shop in it."
           />
-          <div className="mx-auto mt-10 max-w-[560px] overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--surface)]">
+          <div className="mx-auto mt-10 max-w-[560px] overflow-hidden rounded-2xl bg-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,.6),inset_0_0_0_.5px_rgba(255,255,255,.35),0_4px_14px_rgba(26,23,19,.07)] backdrop-blur-md backdrop-saturate-150">
             {categories.map((c, i) => (
               <div
                 key={c.slug}

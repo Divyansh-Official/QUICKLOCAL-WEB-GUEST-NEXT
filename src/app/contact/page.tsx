@@ -72,7 +72,7 @@ export default function ContactPage() {
         </div>
 
         <Reveal delay={200}>
-          <div className="mt-4 grid gap-4 rounded-2xl border border-[var(--line)] bg-[var(--surface)] p-6 sm:grid-cols-2">
+          <div className="ql-glint mt-4 grid gap-4 rounded-2xl bg-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,.6),inset_0_0_0_.5px_rgba(255,255,255,.35),0_4px_14px_rgba(26,23,19,.07)] backdrop-blur-md backdrop-saturate-150 p-6 sm:grid-cols-2">
             <div>
               <h2 className="text-[15px] font-bold">Follow along</h2>
               <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--text-muted)]">

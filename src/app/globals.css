@@ -243,6 +243,86 @@ section {
   transform: translateY(-4px);
 }
 
+/* ── Glass motion ────────────────────────────────────────────────────────────
+   Added with the glass surfaces. Names are deliberately NOT ql-sheen/ql-float:
+   both already exist above with different jobs (the stats band's endless band,
+   and the scene illustrations' bob), and reusing either would have changed
+   them everywhere they are already used.
+
+   All transform/opacity, all switched off below. */
+
+/* A highlight travelling across a glass surface as the pointer arrives. This
+   is the one thing real glass does that refraction alone cannot show — a
+   displacement map bends what is behind the surface, it does not light the
+   surface itself. Pseudo-element, so it never touches layout; `inherit` on the
+   radius so the sweep cannot escape a rounded corner. */
+.ql-glint {
+  position: relative;
+  isolation: isolate;
+}
+
+.ql-glint::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 34%,
+    rgba(255, 255, 255, .5) 47%,
+    rgba(255, 255, 255, .8) 50%,
+    rgba(255, 255, 255, .5) 53%,
+    transparent 66%
+  );
+  background-size: 260% 100%;
+  background-position: 130% 0;
+  transition: opacity .2s ease;
+}
+
+.ql-glint:hover::after,
+.ql-glint:focus-within::after {
+  opacity: 1;
+  animation: ql-glint-sweep .9s cubic-bezier(.22, 1, .36, 1);
+}
+
+@keyframes ql-glint-sweep {
+  from { background-position: 130% 0; }
+  to   { background-position: -60% 0; }
+}
+
+/* A slow buoyant rise and fall, for a piece that should feel like it is
+   floating on the field rather than pinned to it. */
+.ql-bob {
+  animation: ql-bob 9s ease-in-out infinite alternate;
+}
+
+@keyframes ql-bob {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(0, -9px, 0); }
+}
+
+/* The ring around the one step in a timeline that is happening now. Reuses the
+   scene keyframes rather than declaring a second identical set. */
+.ql-live::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 2px solid var(--color-tangerine-500);
+  animation: ql-pulse-ring 2s ease-out infinite;
+  pointer-events: none;
+}
+
+/* Children arrive one after another instead of all at once. Set --i per child;
+   anything past the list length simply takes the largest delay, which is the
+   right way for it to fail. */
+.ql-stagger > * {
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
 /**
  * Everything above is decoration, so all of it goes when the reader has asked
  * for less motion. `.reveal` must still end up VISIBLE — turning the animation
@@ -260,7 +340,10 @@ section {
 
   .ql-drift,
   .ql-marquee,
+  .ql-bob,
+  .ql-live::before,
   .ql-sheen::after,
+  .ql-glint::after,
   /* Every scene animation, including the SMIL-driven ones. */
   svg *,
   svg {
@@ -268,6 +351,9 @@ section {
   }
 
   .ql-lift:hover { transform: none; }
+
+  .ql-glint::after { display: none; }
+  .ql-stagger > * { animation-delay: 0ms !important; }
 
   *, *::before, *::after {
     transition-duration: .01ms !important;

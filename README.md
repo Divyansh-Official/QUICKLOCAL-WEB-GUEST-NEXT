@@ -31,6 +31,8 @@ backend is down.
 | `contact.json` | phone, email, address, socials | published support contacts |
 | `stats.json` | the four figures in the orange band | `app_config` (see below) |
 | `fees.json` | every constant the cost estimator runs on | `DeliveryFeeCalculatorService`, V34, `VendorDeliveryThresholdService` |
+| `lifecycle.json` | the nine order states, happy and not | `OrderStatus.java`, `PaymentStatus.java` |
+| `riders.json` | payout model, badge tiers, documents required | `DeliveryBadgeService`, `BadgeLevel.java`, `DocumentType.java`, `app_config` |
 | `trust.json`, `steps.json`, `features.json`, `about.json` | the copy blocks | platform behaviour |
 | `testimonials.json` | customer quotes | `reviews` — **empty** |
 | `nav.json` | header and footer links | — |
@@ -90,6 +92,24 @@ because a public page that quotes a fee has to be checkable. **If the service
 changes, change `fees.json`** — the estimator will otherwise keep confidently
 quoting the old number.
 
+## Two sections that publish the enums
+
+**`OrderLifecycle`** lists the nine real `OrderStatus` constants in their real
+order, with the constant printed beside each label so what the site says can be
+matched against what the app shows. The three that are not a happy ending —
+`CANCELLED`, `REFUND_INITIATED`, `REFUNDED` — are on the page too, because they
+are the states a nervous customer most wants named *before* ordering. The
+timeline walks itself while it is on screen and hands control over permanently
+on the first click; under Reduce Motion it is still and shown complete.
+
+**`RiderTiers`** publishes the payout model (₹20 base, ₹5/km, ₹30 floor) and
+the exact promotion thresholds `DeliveryBadgeService` uses — 50, 200 and 500
+deliveries at 3.5, 4.0 and 4.5. Rounding those to "hundreds of deliveries"
+would make the ladder unfalsifiable, which is the opposite of the point. The
+caveat that a dipping rating does not demote automatically is on the page as
+well: it is true, it is in the rider's favour, and hiding it would make the
+tiers read as harsher than they are.
+
 ## Liquid glass
 
 The site uses the console's glass material, ported as-is: `lib/liquidGlass.ts`
@@ -115,8 +135,10 @@ and rim, which still reads as glass, just without the bend.
 src/
   app/               one route per nav item, all statically rendered
   components/        Header, Footer, Hero, Categories, Newsletter, sections, ui, Icon, Logo, Reveal
-    Backdrop.tsx     the field every glass surface sits on
-    FeeEstimator.tsx the order-cost calculator
+    Backdrop.tsx        the field every glass surface sits on
+    FeeEstimator.tsx    the order-cost calculator
+    OrderLifecycle.tsx  the nine real order states, walking
+    RiderTiers.tsx      payout model and badge ladder
     glass/           GlassPane + GlassFilter, ported from the console
   data/              the JSON above — the only source of content
   lib/data.ts        typed loaders + ₹ formatting
@@ -124,7 +146,8 @@ src/
 ```
 
 Client-side: `Header` (scroll state, mobile sheet), `Categories` (the scroll
-rail), `Newsletter` (form state), `FeeEstimator` (the sliders), `Reveal`, and
+rail), `Newsletter` (form state), `FeeEstimator` (the sliders),
+`OrderLifecycle` (the walk), `Reveal`, and
 `ui` — the shared `Card` is a glass surface, so the module carries the
 boundary. Everything else renders on the server.
 
@@ -133,6 +156,20 @@ boundary. Everything else renders on the server.
 Hand-rolled in `globals.css` rather than pulling in an animation library, the
 same way the console does it. Everything animates `transform` and `opacity`
 only, so it runs on the compositor and never forces layout mid-scroll.
+
+The glass surfaces added their own small vocabulary, deliberately **not**
+reusing the names already in the file — `ql-sheen` and `ql-float` were taken,
+by the stats band's endless band and the scene illustrations' bob, and
+redefining either would have changed them everywhere they were already used:
+
+| Class | Does |
+|---|---|
+| `ql-glint` | a highlight sweeping across a glass surface on hover — the one thing real glass does that a displacement map cannot show, since refraction bends what is *behind* a surface rather than lighting the surface itself |
+| `ql-bob` | a slow buoyant rise and fall, for a piece that should read as floating on the field |
+| `ql-live` | the pulsing ring around the one timeline step that is happening now |
+| `ql-stagger` | children arrive one after another; set `--i` per child |
+
+All four are switched off in the reduced-motion block at the bottom.
 
 `Reveal` shares **one** IntersectionObserver across every element on the page
 and unobserves each after it fires. It marks everything visible if
