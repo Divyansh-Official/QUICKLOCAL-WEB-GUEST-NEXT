@@ -60,7 +60,7 @@ export default function ServicesPage() {
               { icon: 'wallet' as const, k: `₹${info.delivery.minFeeInr}`, v: 'Minimum delivery fee' },
             ].map((d, i) => (
               <Reveal key={d.k} delay={i * 90}>
-                <div className="ql-glint h-full rounded-2xl bg-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,.6),inset_0_0_0_.5px_rgba(255,255,255,.35),0_4px_14px_rgba(26,23,19,.07)] backdrop-blur-md backdrop-saturate-150 p-5">
+                <div className="ql-glint h-full ql-glass rounded-2xl p-5">
                   <IconTile name={d.icon} size={42} />
                   <p className="tnum mt-4 text-[22px] font-extrabold leading-none">{d.k}</p>
                   <p className="mt-1.5 text-[12.5px] leading-snug text-[var(--text-muted)]">{d.v}</p>

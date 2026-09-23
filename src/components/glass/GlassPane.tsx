@@ -15,12 +15,27 @@
  * fixed at what that store ships as its default — the same glass, minus a
  * preferences system nobody would find.
  *
- * ── COST ────────────────────────────────────────────────────────────────────
+ * ── COST, AND THE RULE THAT FOLLOWS FROM IT ─────────────────────────────────
  * Each refracting surface is its own GPU pass, redone whenever anything behind
- * it moves. Maps are cached by size (snapped to an 8 x 4 px grid, where the
- * stretch is invisible) and shared by every surface of that size, and new ones
- * are built a few per frame so a long page never hitches. Anything below the
- * fold is `lazy` and only refracts once it is on screen.
+ * it moves. That is cheap for a handful of large, stable surfaces and ruinous
+ * for many small ones: this page once carried thirty-five backdrop-filtered
+ * elements over a backdrop that was itself animating, which meant thirty-five
+ * passes recomputed every frame for ever, including while nobody touched the
+ * page. The main thread stayed at 60fps throughout — the cost is on the
+ * compositor, where a requestAnimationFrame probe cannot see it, which is why
+ * it has to be reasoned about rather than measured from script.
+ *
+ * So: ONLY large surfaces that stay put use this component. Anything that
+ * comes in multiples — cards in a grid, chips, rail items, buttons — takes the
+ * glass LOOK from colour, rim and shadow instead (`.ql-glass` in globals.css),
+ * which is paint and costs nothing per frame. That is the same split the
+ * console makes between its panes and its message bubbles.
+ *
+ * Maps are cached by size (snapped to an 8 x 4 px grid, where the stretch is
+ * invisible) and shared by every surface of that size, and new ones are built
+ * a few per frame so a long page never hitches. Anything below the fold is
+ * `lazy` and does not refract — or pay for any backdrop pass at all — until it
+ * is on screen.
  *
  * Only Chromium resolves an SVG filter inside backdrop-filter. Everywhere else
  * this degrades to tint, blur and rim — which still reads as glass, just
@@ -33,6 +48,7 @@ import {
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
   type CSSProperties,
   type ReactNode,
 } from 'react';
@@ -59,6 +75,32 @@ const OPTICS = {
   response: 0.32,
   damping: 0.72,
 };
+
+/**
+ * Are we past hydration?
+ *
+ * This matters more than it looks. `supportsBackdropRefraction()` returns
+ * false on the server, because there is no window to ask — so a naive render
+ * puts a `blur()` fallback into the server HTML. React's FIRST hydration pass
+ * attaches to the existing DOM without reconciling attributes, so that blur
+ * stays in the document until something causes the element to re-render. A
+ * lazy pane that never scrolls into view never re-renders, and is left with a
+ * backdrop pass no client code ever asked for — invisible in the source,
+ * costly on the GPU, and exactly the kind of thing that makes a page feel
+ * heavy for no reason anybody can point at.
+ *
+ * Subscribing gives a guaranteed re-render after hydration, so the server can
+ * emit no filter at all and the client decides once it genuinely knows.
+ */
+const NO_SUBSCRIBE = () => () => {};
+
+function useHydrated() {
+  return useSyncExternalStore(
+    NO_SUBSCRIBE,
+    () => true,
+    () => false,
+  );
+}
 
 type Optics = {
   radius: number;
@@ -224,6 +266,7 @@ export function GlassPane({
   onPointerCancel,
   ...rest
 }: GlassPaneProps) {
+  const hydrated = useHydrated();
   const refracts = useMemo(() => supportsBackdropRefraction(), []);
   const hostRef = useRef<HTMLElement | null>(null);
   const [box, setBox] = useState<{ w: number; h: number } | null>(null);
@@ -357,12 +400,28 @@ export function GlassPane({
       style={{
         borderRadius: radius,
         background: tint,
+        /**
+         * THREE cases, not two. The bug this replaced collapsed the last two:
+         * a pane that COULD refract but had not built its map yet — every lazy
+         * one, which is most of the page — still fell into the blur branch and
+         * paid for a full backdrop pass to show a blur it would discard a
+         * moment later. Thirty-odd of those on one page, each one a GPU pass
+         * recomputed whenever anything behind it moved.
+         *
+         *   refracting            the real thing
+         *   client, cannot refract blur, for engines that resolve no SVG filter
+         *   anything else          NOTHING — tint and rim carry it until the
+         *                          map arrives, and off screen nobody is
+         *                          looking. Server included: see useHydrated.
+         */
         ...(live
           ? { backdropFilter: `url(#${filterId})`, WebkitBackdropFilter: `url(#${filterId})` }
-          : {
-              backdropFilter: `blur(${Math.max(10, blur * 5)}px) saturate(1.45) brightness(1.04)`,
-              WebkitBackdropFilter: `blur(${Math.max(10, blur * 5)}px) saturate(1.45) brightness(1.04)`,
-            }),
+          : hydrated && !refracts
+            ? {
+                backdropFilter: `blur(${Math.max(10, blur * 5)}px) saturate(1.45) brightness(1.04)`,
+                WebkitBackdropFilter: `blur(${Math.max(10, blur * 5)}px) saturate(1.45) brightness(1.04)`,
+              }
+            : {}),
         boxShadow: ELEVATION[elevation],
         ...style,
       }}>

@@ -27,7 +27,7 @@ export function TrustStrip() {
       <Reveal anim="scale">
         <div className="grid gap-px overflow-hidden rounded-2xl border border-[var(--line)] bg-[var(--line)] shadow-[0_16px_44px_-24px_rgba(26,23,19,.34)] sm:grid-cols-2 lg:grid-cols-4">
           {trust.map(t => (
-            <div key={t.title} className="ql-glint flex items-center gap-3 bg-white/55 px-4 py-4 backdrop-blur-md backdrop-saturate-150">
+            <div key={t.title} className="flex items-center gap-3 bg-white/55 px-4 py-4">
               <IconTile name={t.icon as IconName} size={38} />
               <div className="min-w-0">
                 <p className="text-[13px] font-bold leading-tight">{t.title}</p>
@@ -257,7 +257,7 @@ export function AppBand() {
         <div className="relative overflow-hidden rounded-[26px] bg-[var(--color-ink-950)] px-6 py-10 sm:px-10 sm:py-12">
           <div
             aria-hidden
-            className="ql-drift pointer-events-none absolute -right-[8%] -top-[40%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.30),transparent_65%)]"
+            className="pointer-events-none absolute -right-[8%] -top-[40%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.30),transparent_65%)]"
           />
           <div className="relative grid items-center gap-8 lg:grid-cols-[1.1fr_auto_1fr]">
             <div>

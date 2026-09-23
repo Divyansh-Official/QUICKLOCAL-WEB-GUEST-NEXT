@@ -73,15 +73,8 @@ export function Hero() {
                   e.preventDefault();
                   router.push(query.trim() ? `/contact?q=${encodeURIComponent(query.trim())}` : '/contact');
                 }}
-                className="ql-glint mt-7 flex flex-col gap-2 p-2 sm:flex-row sm:items-center"
-                style={{
-                  borderRadius: 18,
-                  background: 'rgba(255,255,255,0.62)',
-                  backdropFilter: 'blur(14px) saturate(1.4)',
-                  WebkitBackdropFilter: 'blur(14px) saturate(1.4)',
-                  boxShadow:
-                    'inset 0 1px 0 rgba(255,255,255,.6), inset 0 0 0 .5px rgba(255,255,255,.35), 0 10px 34px -16px rgba(26,23,19,.28)',
-                }}>
+                className="ql-glass ql-glint mt-7 flex flex-col gap-2 p-2 sm:flex-row sm:items-center"
+                style={{ borderRadius: 18 }}>
                 <span className="flex shrink-0 items-center gap-1.5 rounded-xl bg-[var(--color-cream-100)] px-3 py-2.5 text-[12.5px] font-semibold text-[var(--color-ink-700)]">
                   <Icon name="pin" size={15} className="text-[var(--color-tangerine-500)]" />
                   {contact.city}, {contact.state}
@@ -109,7 +102,7 @@ export function Hero() {
                   <a
                     key={c.slug}
                     href={`/services#${c.slug}`}
-                    className="rounded-full bg-white/60 px-2.5 py-1 text-[11.5px] font-semibold text-[var(--color-ink-500)] shadow-[inset_0_1px_0_rgba(255,255,255,.6),inset_0_0_0_.5px_rgba(255,255,255,.4)] backdrop-blur-md transition hover:text-[var(--color-tangerine-600)]">
+                    className="rounded-full ql-glass px-2.5 py-1 text-[11.5px] font-semibold text-[var(--color-ink-500)] transition hover:text-[var(--color-tangerine-600)]">
                     {c.name}
                   </a>
                 ))}
@@ -128,7 +121,7 @@ export function Hero() {
                 elevation="float"
                 lazy={false}
                 interactive
-                className="ql-glint ql-bob p-3">
+                className="ql-glint p-3">
                 {/* order header */}
                 <div className="flex items-center justify-between rounded-2xl bg-[var(--color-ink-950)] px-4 py-3.5">
                   <div>

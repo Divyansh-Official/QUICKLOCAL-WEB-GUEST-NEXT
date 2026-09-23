@@ -36,7 +36,7 @@ export default function GetTheAppPage() {
       {/* ── hero ─────────────────────────────────────────────────────────── */}
       <section className="relative overflow-hidden pt-[calc(var(--header-h)+36px)] pb-14">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="ql-drift absolute -right-[10%] -top-[30%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.20),transparent_66%)]" />
+          <div className="absolute -right-[10%] -top-[30%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.20),transparent_66%)]" />
         </div>
 
         <Container>
@@ -159,7 +159,7 @@ export default function GetTheAppPage() {
           <div className="relative overflow-hidden rounded-[26px] bg-[var(--color-ink-950)] px-6 py-11 text-center sm:px-10">
             <div
               aria-hidden
-              className="ql-drift pointer-events-none absolute -left-[6%] -top-[50%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.28),transparent_66%)]"
+              className="pointer-events-none absolute -left-[6%] -top-[50%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.28),transparent_66%)]"
             />
             <div className="relative">
               <h2 className="text-[24px] font-extrabold tracking-tight text-white sm:text-[29px]">

@@ -129,6 +129,37 @@ below the fold only refracts once it is on screen. Only Chromium resolves an
 SVG filter inside `backdrop-filter` — everywhere else it degrades to tint, blur
 and rim, which still reads as glass, just without the bend.
 
+### The rule, learned the hard way
+
+**Each refracting surface is a GPU pass redone whenever anything behind it
+moves.** This site briefly carried **35** backdrop-filtered elements over a
+backdrop that was itself animating, which meant 35 passes recomputed every
+frame for ever — including while the page sat still. It is now **2** at rest
+and 4 with a large pane in view, and no page has an infinite animation behind
+glass.
+
+Three separate faults produced that, and all three are worth not repeating:
+
+1. **`Card` was a `GlassPane`.** It is the most repeated component on the site
+   — grids of four, rails of five — so making it refract multiplied the cost by
+   everything on the page. Anything that comes in multiples now takes
+   `.ql-glass`: fill, rim lights and a shadow. That is paint, and at card size
+   the bend was barely legible anyway. Refraction shows on big surfaces.
+2. **The blooms drifted.** Movement *behind* glass invalidates its backdrop, so
+   an animating field makes every glass surface recompute continuously. They
+   are static now, and the same applies to `ql-bob`: never put it on a pane
+   that refracts.
+3. **SSR emitted a `blur()` that hydration never removed.** `supports…()`
+   returns false on the server, so the fallback blur went into the HTML;
+   React's first hydration pass does not reconcile attributes, so a **lazy**
+   pane that never scrolled into view kept a backdrop pass no client code had
+   asked for. `useHydrated()` (a `useSyncExternalStore` subscription) makes the
+   server emit no filter at all and lets the client decide once it knows.
+
+A `requestAnimationFrame` probe reported a steady 60fps through all of it — the
+cost is on the compositor, where script cannot see it. Count the surfaces
+instead.
+
 ## Layout
 
 ```

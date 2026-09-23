@@ -8,7 +8,6 @@
 
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { GlassPane } from './glass/GlassPane';
 import { Icon, type IconName } from './Icon';
 import { Reveal } from './Reveal';
 
@@ -169,10 +168,18 @@ export function IconTile({
 /**
  * The card used for categories, steps, plans and testimonials.
  *
- * Glass rather than a white box: it sits on the page's patterned field, so it
- * refracts what is behind it and flexes under the pointer. `interactive` drives
- * the lens spring as well as the lift, which is why the two are one flag —
- * a card that rises but does not bend reads as a sticker, not as glass.
+ * ── GLASS BY PAINT, NOT BY BACKDROP ─────────────────────────────────────────
+ * This was briefly a refracting GlassPane, and it is the most repeated
+ * component on the site — grids of four, rails of five, a plan table. Each
+ * refracting surface is a GPU pass redone whenever anything behind it moves,
+ * so making this one refract multiplied that cost by everything on the page
+ * and the whole site went sluggish.
+ *
+ * It now takes the glass LOOK from `.ql-glass`: translucent fill, the two rim
+ * lights a real edge has, and a shadow. That is paint, it costs nothing per
+ * frame, and at card size the bend was barely legible anyway — refraction
+ * shows on big surfaces, not on a 220px tile. The real thing is reserved for
+ * the handful of large, stationary panes that can afford it.
  */
 export function Card({
   children,
@@ -181,26 +188,18 @@ export function Card({
   // Cards are deep-link targets on Services and For Business, so an id has to
   // reach the element the browser scrolls to rather than being dropped here.
   id,
-  radius = 18,
 }: {
   children: ReactNode;
   className?: string;
   interactive?: boolean;
   id?: string;
-  radius?: number;
 }) {
   return (
-    <GlassPane
+    <div
       id={id}
-      radius={radius}
-      tint="rgba(255,255,255,0.62)"
-      blur={2}
-      strength="soft"
-      elevation="raised"
-      interactive={interactive}
-      className={`${interactive ? 'ql-lift' : ''} ${className}`}>
+      className={`ql-glass rounded-2xl ${interactive ? 'ql-lift ql-glint' : ''} ${className}`}>
       {children}
-    </GlassPane>
+    </div>
   );
 }
 
@@ -222,7 +221,7 @@ export function PageHeader({
   return (
     <section className="relative overflow-hidden pt-[calc(var(--header-h)+40px)] pb-12 sm:pb-14">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="ql-drift absolute -right-[12%] -top-[40%] h-[440px] w-[440px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.17),transparent_66%)]" />
+        <div className="absolute -right-[12%] -top-[40%] h-[440px] w-[440px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.17),transparent_66%)]" />
       </div>
       <Container>
         <Reveal anim="fade">

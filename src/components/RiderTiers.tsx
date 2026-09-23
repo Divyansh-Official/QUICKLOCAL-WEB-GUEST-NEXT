@@ -13,13 +13,18 @@
  * of deliveries" would make the ladder unfalsifiable, which is the opposite of
  * the point.
  *
+ * ── PAINT, NOT REFRACTION ───────────────────────────────────────────────────
+ * Seven glass surfaces in one section, four of them a grid of cards. Every
+ * refracting surface is a GPU pass redone whenever anything behind it moves,
+ * so a grid of them is the exact shape of the problem. They take the look from
+ * `.ql-glass` instead; see GlassPane.tsx for where the line is drawn.
+ *
  * ── AND THE CAVEAT IS HERE TOO ──────────────────────────────────────────────
  * A rating dipping below a threshold does not demote automatically. That is
  * genuinely how it works, it is in the rider's favour, and burying it would
  * make the tiers read as harsher than they are.
  */
 import { riders } from '@/lib/data';
-import { GlassPane } from './glass/GlassPane';
 import { Icon } from './Icon';
 import { Container, Eyebrow } from './ui';
 import { Reveal } from './Reveal';
@@ -55,17 +60,11 @@ export function RiderTiers() {
 
         {/* ── the payout, as three figures ───────────────────────────────── */}
         <Reveal delay={60}>
-          <GlassPane
-            radius={22}
-            tint="rgba(255,255,255,0.55)"
-            blur={2.2}
-            strength="soft"
-            elevation="raised"
-            className="ql-glint mx-auto mt-9 grid max-w-[620px] grid-cols-3 divide-x divide-white/60">
+          <div className="ql-glass-raised ql-glint mx-auto mt-9 grid max-w-[620px] grid-cols-3 divide-x divide-white/60 rounded-[22px]">
             <Figure value={`₹${payout.baseInr}`} label="Base, every job" />
             <Figure value={`₹${payout.perKmInr}`} label="Per kilometre" />
             <Figure value={`₹${payout.minimumInr}`} label="Floor, whatever happens" />
-          </GlassPane>
+          </div>
         </Reveal>
 
         {/* ── the ladder ─────────────────────────────────────────────────── */}
@@ -75,14 +74,7 @@ export function RiderTiers() {
             return (
               <li key={tier.level} style={{ ['--i' as string]: i }}>
                 <Reveal delay={i * 70}>
-                  <GlassPane
-                    radius={20}
-                    tint="rgba(255,255,255,0.58)"
-                    blur={2}
-                    strength="soft"
-                    elevation="raised"
-                    interactive
-                    className="ql-glint ql-lift flex h-full flex-col p-5">
+                  <div className="ql-glass ql-glint ql-lift flex h-full flex-col rounded-[20px] p-5">
                     <span
                       aria-hidden
                       className="grid h-10 w-10 place-items-center rounded-2xl"
@@ -109,7 +101,7 @@ export function RiderTiers() {
                     <p className="mt-2.5 text-[12px] leading-relaxed text-[var(--color-ink-500)]">
                       {tier.detail}
                     </p>
-                  </GlassPane>
+                  </div>
                 </Reveal>
               </li>
             );
@@ -118,11 +110,7 @@ export function RiderTiers() {
 
         <Reveal delay={120}>
           <div className="mx-auto mt-5 grid max-w-[880px] gap-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-            <GlassPane
-              radius={20}
-              tint="rgba(255,255,255,0.5)"
-              blur={2}
-              className="ql-glint p-5">
+            <div className="ql-glass ql-glint rounded-[20px] p-5">
               <h3 className="flex items-center gap-2 text-[13px] font-extrabold">
                 <Icon name="shield-check" size={15} className="text-[var(--color-tangerine-600)]" />
                 What you bring
@@ -139,13 +127,9 @@ export function RiderTiers() {
               <p className="mt-3 text-[11.5px] leading-relaxed text-[var(--color-ink-500)]">
                 Checked against the issuing authority before your first job, not after.
               </p>
-            </GlassPane>
+            </div>
 
-            <GlassPane
-              radius={20}
-              tint="rgba(255,255,255,0.5)"
-              blur={2}
-              className="ql-glint p-5">
+            <div className="ql-glass ql-glint rounded-[20px] p-5">
               <h3 className="flex items-center gap-2 text-[13px] font-extrabold">
                 <Icon name="refresh" size={15} className="text-[var(--color-tangerine-600)]" />
                 A bad week is a bad week
@@ -154,7 +138,7 @@ export function RiderTiers() {
                 A rating that dips below a tier&rsquo;s line does not demote you overnight — no
                 nightly job takes a badge away. Where it matters, a person looks at it.
               </p>
-            </GlassPane>
+            </div>
           </div>
         </Reveal>
       </Container>
