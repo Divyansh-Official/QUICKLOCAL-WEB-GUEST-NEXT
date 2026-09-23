@@ -4,8 +4,11 @@
  * Kept in one file because they are small and always used together; splitting
  * six twenty-line components across six files buys nothing but imports.
  */
+'use client';
+
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { GlassPane } from './glass/GlassPane';
 import { Icon, type IconName } from './Icon';
 import { Reveal } from './Reveal';
 
@@ -163,7 +166,14 @@ export function IconTile({
   );
 }
 
-/** The white card used for categories, steps, plans and testimonials. */
+/**
+ * The card used for categories, steps, plans and testimonials.
+ *
+ * Glass rather than a white box: it sits on the page's patterned field, so it
+ * refracts what is behind it and flexes under the pointer. `interactive` drives
+ * the lens spring as well as the lift, which is why the two are one flag —
+ * a card that rises but does not bend reads as a sticker, not as glass.
+ */
 export function Card({
   children,
   className = '',
@@ -171,20 +181,26 @@ export function Card({
   // Cards are deep-link targets on Services and For Business, so an id has to
   // reach the element the browser scrolls to rather than being dropped here.
   id,
+  radius = 18,
 }: {
   children: ReactNode;
   className?: string;
   interactive?: boolean;
   id?: string;
+  radius?: number;
 }) {
   return (
-    <div
+    <GlassPane
       id={id}
-      className={`rounded-2xl border border-[var(--line)] bg-[var(--surface)] ${
-        interactive ? 'ql-lift hover:border-[var(--color-tangerine-300)]' : ''
-      } ${className}`}>
+      radius={radius}
+      tint="rgba(255,255,255,0.62)"
+      blur={2}
+      strength="soft"
+      elevation="raised"
+      interactive={interactive}
+      className={`${interactive ? 'ql-lift' : ''} ${className}`}>
       {children}
-    </div>
+    </GlassPane>
   );
 }
 

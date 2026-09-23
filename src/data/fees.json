@@ -1,0 +1,24 @@
+{
+  "_source": "DeliveryFeeCalculatorService (app.order.* defaults and the app_config keys that override them), V34__fixed_categories_platform_fee.sql, and VendorDeliveryThresholdService.DEFAULT_THRESHOLD_FALLBACK.",
+  "_why": "The estimator on the public site runs the SAME arithmetic the backend runs, rather than an approximation of it. If a number here stops matching the service, the site starts lying about what an order costs — so each value names the exact constant it mirrors.",
+  "baseFeeInr": 30,
+  "_baseFeeInr": "app.order.base-fee, overridable by app_config['delivery.base_fee_inr']",
+  "freeRangeKm": 4,
+  "_freeRangeKm": "app.order.free-range-km, overridable by app_config['delivery.free_range_km']. The base fee covers everything inside this.",
+  "petrolPriceInrPerL": 106,
+  "_petrolPriceInrPerL": "app.order.default-petrol-price. In production this is the city's fuel price for the day, updated by an admin; this is the fallback the service uses when there is no entry.",
+  "bikeMileageKmpl": 45,
+  "_bikeMileageKmpl": "app.order.bike-mileage-kmpl, overridable by app_config['app.bike_mileage_kmpl']",
+  "driverMultiplier": 2.5,
+  "_driverMultiplier": "app.order.fee-multiplier, overridable by app_config['app.driver_multiplier']",
+  "defaultFreeDeliveryThresholdInr": 999,
+  "_defaultFreeDeliveryThresholdInr": "VendorDeliveryThresholdService.DEFAULT_THRESHOLD_FALLBACK. Each vendor sets their own per category; this is what applies until they do.",
+  "categories": [
+    { "slug": "grocery", "name": "Grocery", "platformFeePercent": 2 },
+    { "slug": "hardware", "name": "Hardware", "platformFeePercent": 3 },
+    { "slug": "furniture", "name": "Furniture", "platformFeePercent": 3 },
+    { "slug": "fashion", "name": "Fashion", "platformFeePercent": 3 },
+    { "slug": "others", "name": "Others", "platformFeePercent": 1 }
+  ],
+  "_categories": "V34__fixed_categories_platform_fee.sql — the five fixed categories and their platform_fee_percent."
+}

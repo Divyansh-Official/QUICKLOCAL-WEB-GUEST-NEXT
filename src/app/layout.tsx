@@ -13,6 +13,7 @@ import { Manrope } from 'next/font/google';
 import './globals.css';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
+import { Backdrop } from '@/components/Backdrop';
 import { contact, info } from '@/lib/data';
 
 const manrope = Manrope({
@@ -64,6 +65,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-[var(--color-ink-950)] focus:px-4 focus:py-2.5 focus:text-[13px] focus:font-bold focus:text-white">
           Skip to content
         </a>
+        {/* Painted once, behind everything, so glass has something to bend
+            and no section carries a wash of its own. */}
+        <Backdrop />
         <Header />
         <main id="main">{children}</main>
         <Footer />

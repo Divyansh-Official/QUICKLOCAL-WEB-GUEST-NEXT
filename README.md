@@ -30,6 +30,7 @@ backend is down.
 | `plans.json` | FREE / STARTER / GROWTH / PRO and their feature flags | `subscription_plans` — V17 and V37 |
 | `contact.json` | phone, email, address, socials | published support contacts |
 | `stats.json` | the four figures in the orange band | `app_config` (see below) |
+| `fees.json` | every constant the cost estimator runs on | `DeliveryFeeCalculatorService`, V34, `VendorDeliveryThresholdService` |
 | `trust.json`, `steps.json`, `features.json`, `about.json` | the copy blocks | platform behaviour |
 | `testimonials.json` | customer quotes | `reviews` — **empty** |
 | `nav.json` | header and footer links | — |
@@ -67,19 +68,65 @@ worse than no link), **Contact** has no form (nothing here can store a message,
 so it sends you to a mailbox somebody reads), and the store badges say **Soon**
 because the apps are not published.
 
+## The cost estimator
+
+`FeeEstimator` runs the **same arithmetic the backend runs** when an order is
+placed, rather than an approximation of it:
+
+```
+fuelCostPerKm = petrolPrice / mileage            106 / 45
+extraFee      = ceil(extraKm × fuelCostPerKm × multiplier)    × 2.5
+deliveryFee   = baseFee + extraFee               30 + extraFee
+```
+
+Cross the vendor's free-delivery threshold and the **base** moves from the
+customer to the shop; the per-km part stays with the customer and the rider is
+paid the whole fee either way. That rule is the most surprising thing in the
+model and the hardest to explain in a sentence, so the basket is a slider with
+the threshold marked on it and you can watch the split jump as it crosses.
+
+Every constant lives in `fees.json` and names the backend constant it mirrors,
+because a public page that quotes a fee has to be checkable. **If the service
+changes, change `fees.json`** — the estimator will otherwise keep confidently
+quoting the old number.
+
+## Liquid glass
+
+The site uses the console's glass material, ported as-is: `lib/liquidGlass.ts`
+ray-traces a light ray through a curved bezel with Snell's law and bakes the
+2D offset field into a PNG that `feDisplacementMap` consumes, and `GlassPane`
+applies it through `backdrop-filter`.
+
+The thing to know before moving any of it: **refraction bends a backdrop, so
+bending a flat backdrop shows nothing.** Glass over plain cream is an expensive
+border. That is what `Backdrop` is for — a fixed field of warm drifting colour
+and a 26px weave, painted once behind the whole document, giving every glass
+surface something to bend. Move a pane off it and the effect silently
+disappears.
+
+Maps are cached by size on an 8×4px grid and built a few per frame; anything
+below the fold only refracts once it is on screen. Only Chromium resolves an
+SVG filter inside `backdrop-filter` — everywhere else it degrades to tint, blur
+and rim, which still reads as glass, just without the bend.
+
 ## Layout
 
 ```
 src/
-  app/            one route per nav item, all statically rendered
-  components/     Header, Footer, Hero, Categories, Newsletter, sections, ui, Icon, Logo, Reveal
-  data/           the JSON above — the only source of content
-  lib/data.ts     typed loaders + ₹ formatting
+  app/               one route per nav item, all statically rendered
+  components/        Header, Footer, Hero, Categories, Newsletter, sections, ui, Icon, Logo, Reveal
+    Backdrop.tsx     the field every glass surface sits on
+    FeeEstimator.tsx the order-cost calculator
+    glass/           GlassPane + GlassFilter, ported from the console
+  data/              the JSON above — the only source of content
+  lib/data.ts        typed loaders + ₹ formatting
+  lib/liquidGlass.ts the refraction maths
 ```
 
-Only three components are client-side: `Header` (scroll state, mobile sheet),
-`Categories` (the scroll rail), `Newsletter` (form state), plus `Reveal`.
-Everything else renders on the server.
+Client-side: `Header` (scroll state, mobile sheet), `Categories` (the scroll
+rail), `Newsletter` (form state), `FeeEstimator` (the sliders), `Reveal`, and
+`ui` — the shared `Card` is a glass surface, so the module carries the
+boundary. Everything else renders on the server.
 
 ## Motion
 
@@ -95,7 +142,20 @@ be an invisible page — and the whole system is disabled under
 
 ## Responsiveness
 
-Verified at 390px, 768px, 1024px and 1440px: no horizontal page scroll, nothing
+Verified at **320px and 375px** on all seven routes and at desktop width: zero
+horizontal page scroll anywhere (`scrollWidth === clientWidth`), nothing
 overflowing its container, and the category rail swipes natively on touch. The
-mobile menu is a full sheet that locks the page behind it and closes on
-Escape, on the backdrop and on any link.
+estimator's controls stack below `md` and its sliders carry 24px thumbs so they
+clear the minimum touch target without the track growing with them.
+
+The mobile menu is a full sheet that locks the page behind it and closes on
+Escape, on the backdrop and on any link. It is a **sibling** of the bar, not a
+child: the bar carries `backdrop-filter`, which makes an element a containing
+block for its `position: fixed` descendants, and nesting the sheet inside it
+collapses the sheet to the height of the bar the moment you scroll.
+
+## CI
+
+Typecheck, lint and a production build on every push — see
+`.github/workflows/ci.yml`. This site is the front door, so a broken build here
+is not an internal inconvenience.

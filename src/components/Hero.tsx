@@ -40,16 +40,6 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden pt-[calc(var(--header-h)+28px)] pb-16 sm:pb-20">
-      {/* Colour wash. aria-hidden and pointer-events-none — it carries no
-          meaning and must never intercept a click on the search box. */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="ql-drift absolute -right-[14%] -top-[22%] h-[560px] w-[560px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.20),transparent_66%)]" />
-        <div
-          className="ql-drift absolute -left-[16%] top-[26%] h-[440px] w-[440px] rounded-full bg-[radial-gradient(circle,rgba(245,198,69,.16),transparent_68%)]"
-          style={{ animationDelay: '-7s' }}
-        />
-      </div>
-
       <Container>
         <div className="grid items-center gap-12 lg:grid-cols-[1.02fr_1fr] lg:gap-10">
           {/* ── copy ──────────────────────────────────────────────────────── */}

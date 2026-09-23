@@ -2,9 +2,16 @@
  * The site header.
  *
  * ── IT CHANGES WHEN THE PAGE SCROLLS ────────────────────────────────────────
- * Transparent over the hero's colour wash, then solid with a hairline once the
- * page moves. A permanently solid bar would cut the hero in half; a permanently
- * transparent one becomes unreadable the moment a white card slides under it.
+ * At the top it is a bare row over the backdrop. Once the page moves it draws
+ * in to a floating glass capsule, tinted enough to keep the links readable
+ * with a card sliding under it. A permanently solid bar would cut the hero in
+ * half; a permanently transparent one becomes unreadable the moment anything
+ * light passes beneath it.
+ *
+ * The glass is always mounted, not swapped in on scroll — a surface that
+ * appears mid-scroll has to build its displacement map at the worst possible
+ * moment, and the seam is visible. Only the tint, the inset and the shadow
+ * move.
  *
  * ── THE MOBILE MENU IS A SHEET, NOT A DROPDOWN ──────────────────────────────
  * Six links and two buttons do not fit in a dropdown on a 375px screen without
@@ -33,6 +40,7 @@ import { usePathname } from 'next/navigation';
 import { Icon } from './Icon';
 import { Logo } from './Logo';
 import { Button, Container } from './ui';
+import { GlassPane } from './glass/GlassPane';
 import { nav } from '@/lib/data';
 
 export function Header() {
@@ -77,18 +85,27 @@ export function Header() {
     <>
     <header
       style={{ height: 'var(--header-h)' }}
-      className={`fixed inset-x-0 top-0 z-50 flex items-center transition-all duration-300 ${
-        scrolled
-          ? 'border-b border-[var(--line)] bg-[rgba(253,250,246,.86)] backdrop-blur-md'
-          : 'border-b border-transparent bg-transparent'
-      }`}>
-      <Container className="flex items-center justify-between gap-4">
+      className="fixed inset-x-0 top-0 z-50 flex items-center">
+      <Container className={`transition-[padding] duration-300 ${scrolled ? 'px-3 sm:px-5' : ''}`}>
+      <GlassPane
+        as="div"
+        radius={scrolled ? 20 : 14}
+        lazy={false}
+        blur={scrolled ? 2.4 : 1.2}
+        strength="soft"
+        elevation={scrolled ? 'raised' : 'flat'}
+        tint={scrolled ? 'rgba(253,250,246,0.70)' : 'rgba(253,250,246,0.10)'}
+        style={{
+          transition: 'background 300ms ease, box-shadow 300ms ease, padding 300ms ease',
+          padding: scrolled ? '6px 10px' : '4px 0',
+        }}
+        className="flex items-center justify-between gap-3">
         <Link href="/" aria-label="QuickLocal — home">
           <Logo size={34} priority />
         </Link>
 
         {/* ≥lg: the full bar. Below that everything folds into the sheet. */}
-        <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
+        <nav aria-label="Main" className="hidden items-center gap-0.5 lg:flex xl:gap-1">
           {nav.map(item => {
             const current = isCurrent(item.href);
             return (
@@ -96,7 +113,7 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 aria-current={current ? 'page' : undefined}
-                className={`relative rounded-lg px-3 py-2 text-[13.5px] font-semibold transition-colors ${
+                className={`relative whitespace-nowrap rounded-lg px-2.5 py-2 text-[13.5px] font-semibold transition-colors ${
                   current
                     ? 'text-[var(--color-tangerine-600)]'
                     : 'text-[var(--color-ink-700)] hover:text-[var(--color-tangerine-600)]'
@@ -114,7 +131,7 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden items-center gap-2.5 lg:flex">
+        <div className="hidden shrink-0 items-center gap-2 lg:flex">
           <Button href="/get-the-app" variant="outline" size="sm">
             Become a Partner
           </Button>
@@ -130,6 +147,7 @@ export function Header() {
           className="grid h-10 w-10 place-items-center rounded-xl border border-[var(--line)] bg-[var(--surface)] text-[var(--color-ink-700)] transition hover:bg-[var(--color-cream-100)] lg:hidden">
           <Icon name={open ? 'close' : 'menu'} size={19} />
         </button>
+      </GlassPane>
       </Container>
     </header>
 

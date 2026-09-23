@@ -25,6 +25,7 @@ import appJson from '@/data/app.json';
 import categoriesJson from '@/data/categories.json';
 import contactJson from '@/data/contact.json';
 import featuresJson from '@/data/features.json';
+import feesJson from '@/data/fees.json';
 import infoJson from '@/data/info.json';
 import navJson from '@/data/nav.json';
 import plansJson from '@/data/plans.json';
@@ -46,6 +47,22 @@ export type Info = {
   fees: { platformFeeInr: number; lowestCategoryFeePercent: number };
   referral: { rewardInr: number };
   riderPayout: { baseInr: number; perKmInr: number; minimumInr: number };
+};
+
+/**
+ * Everything the fee estimator needs to run the backend's own arithmetic.
+ *
+ * Mirrors DeliveryFeeCalculatorService rather than approximating it — see
+ * fees.json, where every value names the constant it copies.
+ */
+export type Fees = {
+  baseFeeInr: number;
+  freeRangeKm: number;
+  petrolPriceInrPerL: number;
+  bikeMileageKmpl: number;
+  driverMultiplier: number;
+  defaultFreeDeliveryThresholdInr: number;
+  categories: { slug: string; name: string; platformFeePercent: number }[];
 };
 
 export type Social = { label: string; icon: string; handle: string; href: string };
@@ -124,6 +141,7 @@ export const plans: Plan[] = plansJson.items;
 export const featureLabels: Record<string, string> = plansJson.featureLabels;
 export const about = aboutJson;
 export const features = featuresJson;
+export const fees: Fees = feesJson;
 export const appStores: { android: StoreListing; ios: StoreListing } = {
   android: appJson.android,
   ios: appJson.ios,
