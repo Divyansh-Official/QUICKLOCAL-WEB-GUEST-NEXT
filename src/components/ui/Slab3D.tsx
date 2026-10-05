@@ -16,13 +16,29 @@ const HUES: Record<string, string> = {
  * CSS 3D, so it is sharp at every size and turns on hover (inside a `.group`)
  * on a spring. Purely decorative.
  */
-export default function Slab3D({ icon, hue = 'tangerine', size = 132, active = false, className = '' }: { icon: string; hue?: string; size?: number; active?: boolean; className?: string }) {
+export default function Slab3D({
+  icon,
+  hue = 'tangerine',
+  size = 132,
+  phoneSize,
+  active = false,
+  className = '',
+}: {
+  icon: string;
+  hue?: string;
+  size?: number;
+  /** A smaller size below 640px, for a hero slab that should not fill a phone. */
+  phoneSize?: number;
+  active?: boolean;
+  className?: string;
+}) {
   return (
     <span
       aria-hidden="true"
       className={`slab-stage ${HUES[hue] ?? HUES.tangerine} ${className}`}
       data-active={active ? '' : undefined}
-      style={{ '--s': `${size}px` } as CSSProperties}>
+      data-phone={phoneSize ? '' : undefined}
+      style={{ '--s-d': `${size}px`, '--s-m': `${phoneSize ?? size}px` } as CSSProperties}>
       <span className="slab-shadow" />
       <span className="slab">
         {Array.from({ length: 10 }, (_, i) => (

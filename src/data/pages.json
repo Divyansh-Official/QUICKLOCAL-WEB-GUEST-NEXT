@@ -248,7 +248,9 @@
       "intro": "Charged per order on top of the monthly plan. Set per category, the same for every shop in it.",
       "flat": "Flat platform fee per order"
     },
-    "boostsRow": "Shop boosts a month"
+    "boostsRow": "Shop boosts a month",
+    "freeNote": "No monthly fee",
+    "billedNote": "Billed monthly · cancel any month"
   },
   "getTheApp": {
     "meta": {

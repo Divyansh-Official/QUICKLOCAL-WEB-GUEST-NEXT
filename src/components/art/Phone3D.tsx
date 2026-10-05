@@ -23,10 +23,13 @@ type Step = { status: string; label: string; icon: string };
 type Chip = { icon: string; title: string; text: string; position: string };
 
 const ROUTE = 'M22 118 C 60 118 62 70 104 70 S 150 40 196 34';
+/* Each chip floats over a part of the screen that carries no words — the
+   map's edge, the status ticks, the bezel below the fees — so nothing on the
+   handset is ever hidden behind one. */
 const POS: Record<string, CSSProperties> = {
-  tl: { top: '12%', left: '-34%', ['--z' as string]: '90px', ['--delay' as string]: '0s' },
-  r: { top: '44%', right: '-38%', ['--z' as string]: '130px', ['--delay' as string]: '-2s' },
-  bl: { bottom: '10%', left: '-30%', ['--z' as string]: '60px', ['--delay' as string]: '-4s' },
+  tl: { top: '31%', left: '-31%', ['--z' as string]: '90px', ['--delay' as string]: '0s' },
+  r: { top: '55%', right: '-33%', ['--z' as string]: '130px', ['--delay' as string]: '-2s' },
+  bl: { bottom: '-4%', left: '-17%', ['--z' as string]: '60px', ['--delay' as string]: '-4s' },
 };
 
 export default function Phone3D({
@@ -112,7 +115,7 @@ export default function Phone3D({
               <span className="phone-island" />
               <div className="flex h-full flex-col gap-[3.4cqw] px-[5cqw] pb-[5cqw] pt-[13cqw]">
                 {/* ETA */}
-                <div className="flex items-center justify-between rounded-[6cqw] bg-[#1a1713] px-[5cqw] py-[4.2cqw] text-white shadow-[0_8px_20px_-10px_rgb(0_0_0/0.6)]">
+                <div className="flex items-center justify-between rounded-[6cqw] bg-[#1a1713] px-[5cqw] py-[4.2cqw] text-white shadow-[0_8px_20px_-10px_rgb(0_0_0/0.6)] dark:bg-[linear-gradient(150deg,#3a2f25,#211b16)] dark:shadow-[inset_0_1px_0_rgb(255_255_255/0.12),0_8px_20px_-10px_rgb(0_0_0/0.8)]">
                   <div>
                     <p className="text-[3.6cqw] font-semibold uppercase tracking-[0.1em] text-white/60">{labels.eyebrow}</p>
                     <p className="mt-[1cqw] text-[8.4cqw] font-extrabold leading-none tracking-[-0.04em]">{labels.eta}</p>
@@ -185,7 +188,7 @@ export default function Phone3D({
                   {fees.map(f => (
                     <div key={f.label} className="flex items-center justify-between py-[0.6cqw] text-[3.5cqw]">
                       <span className={f.strong ? 'font-bold text-fg' : 'text-fg-2'}>{f.label}</span>
-                      <span className={`tnum font-extrabold ${f.strong ? 'text-[#3e9f5c]' : 'text-fg'}`}>{f.value}</span>
+                      <span className={`tnum font-extrabold ${f.strong ? 'text-ok-ink' : 'text-fg'}`}>{f.value}</span>
                     </div>
                   ))}
                 </div>
@@ -196,13 +199,13 @@ export default function Phone3D({
 
           {chips.map(chip => (
             <div key={chip.title} className="float-chip hidden sm:block" style={POS[chip.position] ?? POS.tl}>
-              <div className="chip-solid flex items-center gap-2.5 whitespace-nowrap rounded-2xl py-2.5 pl-2.5 pr-4">
-                <span className="icon-tile" style={{ ['--s' as string]: '34px' } as CSSProperties}>
-                  <Icon name={chip.icon} size={17} strokeWidth={1.9} />
+              <div className="chip-solid flex items-center gap-2.5 whitespace-nowrap rounded-[18px] py-2 pl-2 pr-3.5">
+                <span className="icon-tile" style={{ ['--s' as string]: '32px' } as CSSProperties}>
+                  <Icon name={chip.icon} size={16} strokeWidth={2} />
                 </span>
                 <span>
-                  <span className="block text-[13px] font-extrabold tracking-[-0.02em] text-fg">{chip.title}</span>
-                  <span className="block text-[11.5px] text-fg-3">{chip.text}</span>
+                  <span className="block text-[12.5px] font-extrabold leading-tight tracking-[-0.02em] text-fg">{chip.title}</span>
+                  <span className="block text-[11px] leading-tight text-fg-3">{chip.text}</span>
                 </span>
               </div>
             </div>

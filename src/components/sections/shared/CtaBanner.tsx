@@ -28,7 +28,7 @@ export default function CtaBanner({
           <div className="tone-night relative overflow-hidden rounded-[var(--radius-panel)] px-6 py-16 text-center sm:px-12 sm:py-20">
             <Aurora variant="night" />
             <div className="relative mx-auto max-w-3xl">
-              {eyebrow ? <p className="t-eyebrow justify-center">{eyebrow}</p> : null}
+              {eyebrow ? <p className="t-eyebrow is-center justify-center">{eyebrow}</p> : null}
               <h2 className="t-display mt-4">
                 <AccentText text={title} accent={accent} />
               </h2>

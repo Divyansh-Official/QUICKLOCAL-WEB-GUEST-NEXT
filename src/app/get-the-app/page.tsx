@@ -43,20 +43,19 @@ export default function GetTheAppPage() {
               labels={{ eyebrow: phone.eyebrow, eta: phone.eta, shop: phone.shop, order: phone.orderLabel, basket: phone.basket }}
             />
           </div>
+        }
+        note={
+          <>
+            {fill(ui.stores.version)} · {copy.hero.question}{' '}
+            <a href={`mailto:${contact.email}`} className="font-bold text-primary-ink hover:underline">
+              {contact.email}
+            </a>
+          </>
         }>
         {badges}
       </PageHero>
 
-      <section className="tone-base -mt-6 pb-4">
-        <p className="shell t-small text-center lg:text-left">
-          {fill(ui.stores.version)} · {copy.hero.question}{' '}
-          <a href={`mailto:${contact.email}`} className="font-bold text-primary-ink hover:underline">
-            {contact.email}
-          </a>
-        </p>
-      </section>
-
-      <section className="tone-base section">
+      <section className="tone-base pb-[var(--section-y)]">
         <div className="shell grid gap-5 lg:grid-cols-2">
           {appRoles.map((r, i) => (
             <Reveal key={r.key} index={i} className="group glass glass-raised relative scroll-mt-28 overflow-hidden rounded-[var(--radius-panel)]" id={r.key}>

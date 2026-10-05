@@ -54,12 +54,13 @@ export default function PricingPage() {
                     {copy.popular}
                   </span>
                 ) : null}
-                <h2 className="text-[13px] font-extrabold uppercase tracking-[0.14em] text-primary-ink">{p.label}</h2>
-                <p className="mt-4 flex items-baseline gap-1.5">
-                  <span className="tnum text-[46px] font-extrabold leading-none tracking-[-0.05em] text-fg">{p.priceMonthly === 0 ? ui.common.free : inr(p.priceMonthly)}</span>
-                  {p.priceMonthly > 0 ? <span className="text-[14px] font-semibold text-fg-3">{ui.common.perMonth}</span> : null}
+                <h2 className={`text-[22px] font-extrabold tracking-[-0.03em] ${p.popular ? 'text-primary-ink' : 'text-fg'}`}>{p.label}</h2>
+                <p className="t-small mt-1.5 min-h-[3.1em]">{p.blurb}</p>
+                <p className="mt-5 flex items-baseline gap-1.5">
+                  <span className="tnum text-[48px] font-extrabold leading-none tracking-[-0.05em] text-fg">{inr(p.priceMonthly)}</span>
+                  <span className="text-[14px] font-semibold text-fg-3">{ui.common.perMonth}</span>
                 </p>
-                <p className="t-small mt-3 min-h-[3em]">{p.blurb}</p>
+                <p className="mt-2 text-[12.5px] font-semibold text-fg-3">{p.priceMonthly === 0 ? copy.freeNote : copy.billedNote}</p>
                 <ul className="mt-6 flex-1 space-y-2.5 border-t border-hair pt-6">
                   <li className="flex items-start gap-2.5 text-[14.5px] text-fg">
                     <Mark ok />
@@ -106,7 +107,7 @@ export default function PricingPage() {
                   {plans.map(p => (
                     <th key={p.name} scope="col" className={`px-4 py-5 text-center text-[15px] font-extrabold ${p.popular ? 'text-primary-ink' : 'text-fg'}`}>
                       {p.label}
-                      <span className="block text-[12.5px] font-semibold text-fg-3">{p.priceMonthly === 0 ? ui.common.free : `${inr(p.priceMonthly)}${ui.common.perMonth}`}</span>
+                      <span className="block text-[12.5px] font-semibold text-fg-3">{`${inr(p.priceMonthly)}${ui.common.perMonth}`}</span>
                     </th>
                   ))}
                 </tr>

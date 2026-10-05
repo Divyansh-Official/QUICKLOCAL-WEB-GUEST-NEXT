@@ -12,9 +12,9 @@ export default function NotFound() {
     <section className="tone-base relative flex min-h-[86vh] items-center overflow-clip pb-20 pt-[calc(var(--header-h)+48px)]">
       <div className="shell text-center">
         <Enter effect="scale" className="group flex justify-center">
-          <Slab3D icon="pin" hue="tangerine" size={200} active />
+          <Slab3D icon="pin" hue="tangerine" size={200} phoneSize={150} active />
         </Enter>
-        <Enter as="p" delay={60} className="t-eyebrow mt-4 justify-center">
+        <Enter as="p" delay={60} className="t-eyebrow is-center mt-4 justify-center">
           {c.eyebrow}
         </Enter>
         <Enter as="h1" delay={110} effect="blur" className="t-hero mx-auto mt-4 max-w-4xl text-[clamp(2.4rem,1.4rem+4.4vw,5rem)]">

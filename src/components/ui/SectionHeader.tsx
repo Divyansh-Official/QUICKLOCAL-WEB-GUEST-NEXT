@@ -45,7 +45,7 @@ export default function SectionHeader({
   }
   return (
     <Reveal className={`mx-auto flex max-w-4xl flex-col items-center text-center ${className}`}>
-      {eyebrow ? <p className="t-eyebrow">{eyebrow}</p> : null}
+      {eyebrow ? <p className="t-eyebrow is-center">{eyebrow}</p> : null}
       <Heading className={`${titleClass} ${eyebrow ? 'mt-4' : ''}`}>
         <AccentText text={title} accent={accent} />
       </Heading>

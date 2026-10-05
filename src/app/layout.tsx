@@ -18,7 +18,9 @@ import MorphProvider from '@/components/motion/MorphProvider';
 import ScrollProgress from '@/components/motion/ScrollProgress';
 import { allNav, contact, fill, footerColumns, info, isEnabled, mailHref, nav, site, siteUrl, telHref, ui } from '@/lib/data';
 
-const manrope = Manrope({ variable: '--font-manrope', subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], display: 'swap' });
+/* The variable font: one file, and every weight between 200 and 800 —
+   headings sit at weights a static family does not ship. */
+const manrope = Manrope({ variable: '--font-manrope', subsets: ['latin'], display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -32,9 +34,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: site.locale.openGraph,
     siteName: info.name,
-    images: [{ url: '/logo-512.png', width: 512, height: 512, alt: `${info.name} logo` }],
   },
-  twitter: { card: 'summary', title: `${info.name} — ${info.tagline}`, description: info.intro, images: ['/logo-512.png'] },
+  twitter: { card: 'summary_large_image', title: `${info.name} — ${info.tagline}`, description: info.intro },
   icons: {
     icon: [
       { url: '/logo-32.png', sizes: '32x32', type: 'image/png' },

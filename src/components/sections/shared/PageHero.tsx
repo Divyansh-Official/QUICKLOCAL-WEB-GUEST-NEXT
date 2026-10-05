@@ -46,6 +46,7 @@ export default function PageHero({
   labels,
   art,
   children,
+  note,
 }: {
   eyebrow: string;
   title: string;
@@ -55,6 +56,8 @@ export default function PageHero({
   labels: { home: string; breadcrumb: string };
   art?: ReactNode;
   children?: ReactNode;
+  /** A line of fine print under the actions. */
+  note?: ReactNode;
 }) {
   return (
     <section className="tone-base relative overflow-clip pb-[clamp(48px,7vw,104px)] pt-[calc(var(--header-h)+clamp(36px,6vw,84px))]">
@@ -63,7 +66,7 @@ export default function PageHero({
           <Enter delay={0}>
             <Breadcrumbs crumbs={crumbs} home={labels.home} label={labels.breadcrumb} center={!art} />
           </Enter>
-          <Enter as="p" delay={60} className={`t-eyebrow mt-8 ${art ? 'justify-center lg:justify-start' : 'justify-center'}`}>
+          <Enter as="p" delay={60} className={`t-eyebrow mt-8 ${art ? 'justify-center lg:justify-start' : 'is-center justify-center'}`}>
             {eyebrow}
           </Enter>
           <Enter as="h1" delay={110} effect="blur" className={`t-hero mt-4 text-[clamp(2.5rem,1.4rem+4.6vw,5.4rem)] ${art ? 'mx-auto max-w-4xl lg:mx-0' : 'mx-auto max-w-5xl'}`}>
@@ -75,6 +78,11 @@ export default function PageHero({
           {children ? (
             <Enter delay={240} className={`mt-9 flex flex-wrap items-center gap-3 ${art ? 'justify-center lg:justify-start' : 'justify-center'}`}>
               {children}
+            </Enter>
+          ) : null}
+          {note ? (
+            <Enter as="p" delay={290} className={`t-small mt-5 ${art ? 'text-center lg:text-left' : 'text-center'}`}>
+              {note}
             </Enter>
           ) : null}
         </div>

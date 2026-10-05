@@ -51,7 +51,9 @@ section renders itself the day one is added.
 | `/get-the-app` | Store badges (marked *Soon* until `app.json` says otherwise) → onboarding for each role |
 | `/about`, `/contact` | Story, principles · channels with copy buttons, FAQ |
 
-Plus `sitemap.xml`, `robots.txt`, a 404 and an error boundary.
+Plus `sitemap.xml`, `robots.txt`, a 404, an error boundary, and a generated
+1200×630 social card (`app/opengraph-image.tsx`) built from the same JSON, so a
+shared link never quotes a stale fee.
 
 ## Design
 
@@ -78,11 +80,18 @@ over night sections.
 ### The performance rule
 
 Every backdrop-filtered surface is a GPU pass redone whenever anything behind
-it moves. So **real backdrop glass is reserved for the chrome**: the header,
-the phone tab bar and the Back control. Every other glass surface — cards,
+it moves. So **real refraction is reserved for the chrome**: the header and
+the phone tab bar. The Back control is frosted (blur and tint, no bend). Every
+other glass surface — cards,
 chips, buttons, panels — is `.glass`: light, rim and shadow from paint alone,
 free per frame. Removing the backdrop passes from the content took the
 measured scroll frame time from ~60 ms to ~17 ms in software rendering.
+
+### Contrast
+
+Text colours hold WCAG AA on cream: secondary text 7.6:1, captions 5.0:1,
+brand-coloured text 5.4:1, green status text 5.1:1. The headline gradient is
+deep enough for 3:1 as display type; the bright tangerine is kept for fills.
 
 ## Motion
 

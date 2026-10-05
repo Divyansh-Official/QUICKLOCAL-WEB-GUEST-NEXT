@@ -19,7 +19,7 @@ export default function Statement({ eyebrow, text, accent, tone = 'tone-base' }:
   const to = from < 0 ? -1 : from + target.length;
 
   return (
-    <section className={`${tone} section`}>
+    <section className={`${tone} section pb-[calc(var(--section-y)*0.5)]`}>
       <div className="shell">
         {eyebrow ? (
           <Reveal as="p" className="t-eyebrow">

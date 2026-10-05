@@ -63,7 +63,7 @@ export default function HomePage() {
       <Statement {...h.statement} />
       <CategoryShelf
         section={h.categories}
-        items={categories.map(c => ({ slug: c.slug, name: c.name, icon: c.icon, hue: c.hue, tagline: c.tagline, fee: feePercent(c.platformFeePercent) }))}
+        items={categories.map(c => ({ slug: c.slug, name: c.name, icon: c.icon, hue: c.hue, tagline: c.tagline, fee: feePercent(c.platformFeePercent), examples: c.examples }))}
         labels={{ fee: ui.common.platformFee, explore: ui.common.explore, ...shelf }}
       />
       <Bento section={h.bento} tiles={h.bento.tiles} />

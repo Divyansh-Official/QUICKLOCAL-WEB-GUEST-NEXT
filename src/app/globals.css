@@ -38,6 +38,7 @@
   --color-primary-soft: var(--primary-soft);
   --color-accent: var(--accent);
   --color-ok: var(--ok);
+  --color-ok-ink: var(--ok-ink);
   --color-bad: var(--bad);
   --color-night: var(--night);
   --color-night-2: var(--night-2);
@@ -64,25 +65,29 @@
   --card: #ffffff;
   --fg: #1a1713;
   --fg-2: #575047;
-  --fg-3: #8a8178;
+  --fg-3: #746b62;
   --hair: #ebe2d5;
   --primary: #f08626;
   --primary-hover: #f39434;
   --primary-deep: #de7314;
-  --primary-ink: #b85c0f;
+  --primary-ink: #a3520d;
   --primary-soft: #fdebd7;
   --accent: #f5c645;
   --ok: #3e9f5c;
-  --bad: #e25534;
+  --ok-ink: #2e7a45;
+  --bad: #c9431f;
   --night: #1a1713;
   --night-2: #25211c;
   --night-3: #332d27;
   --on-night: #f8f4ef;
   --on-night-2: #b9afa3;
 
-  --grad-a: #de7314;
-  --grad-b: #f08626;
-  --grad-c: #f2a53c;
+  /* The headline gradient: deep enough to hold 3:1 on cream as display text.
+     The bright tangerine stays on fills, where white sits on it. */
+  --grad-a: #c35e0b;
+  --grad-b: #d66c11;
+  --grad-c: #e0791a;
+  --accent-ink: #c96210;
 
   /* Glass: the tint a surface takes, and the lighter one once it refracts. */
   --glass-tint: rgb(255 252 248 / 0.66);
@@ -134,6 +139,9 @@
   --grad-a: #f08626;
   --grad-b: #f7a356;
   --grad-c: #f5c645;
+  --accent-ink: #f5923a;
+  --ok-ink: #6cc287;
+  --bad: #f07a5c;
   --glass-tint: rgb(38 33 28 / 0.62);
   --glass-tint-live: rgb(38 33 28 / 0.38);
   --glass-paint: rgb(44 38 32 / 0.62);
@@ -166,6 +174,9 @@
     --grad-a: #f08626;
     --grad-b: #f7a356;
     --grad-c: #f5c645;
+    --accent-ink: #f5923a;
+    --ok-ink: #6cc287;
+    --bad: #f07a5c;
     --glass-tint: rgb(38 33 28 / 0.62);
     --glass-tint-live: rgb(38 33 28 / 0.38);
     --glass-paint: rgb(44 38 32 / 0.62);
@@ -231,10 +242,11 @@
     background: color-mix(in oklab, var(--primary) 26%, transparent);
   }
 
+  /* The ring follows each element's own corners: a rounded card keeps its
+     radius when focused. */
   :focus-visible {
-    outline: 2.5px solid color-mix(in oklab, var(--primary) 80%, transparent);
+    outline: 2.5px solid color-mix(in oklab, var(--primary) 85%, transparent);
     outline-offset: 3px;
-    border-radius: 8px;
   }
 
   button {
@@ -305,21 +317,21 @@
   .t-hero {
     font-size: clamp(2.65rem, 1.45rem + 5.4vw, 6.1rem);
     line-height: 1;
-    font-weight: 800;
+    font-weight: 740;
     letter-spacing: -0.048em;
   }
 
   .t-display {
     font-size: clamp(2.05rem, 1.35rem + 3vw, 4rem);
     line-height: 1.04;
-    font-weight: 800;
+    font-weight: 740;
     letter-spacing: -0.04em;
   }
 
   .t-title {
     font-size: clamp(1.55rem, 1.25rem + 1.3vw, 2.45rem);
     line-height: 1.1;
-    font-weight: 800;
+    font-weight: 720;
     letter-spacing: -0.032em;
   }
 
@@ -367,12 +379,18 @@
     color: var(--primary-ink);
   }
 
-  .t-eyebrow::before {
+  .t-eyebrow::before,
+  .t-eyebrow.is-center::after {
     content: '';
     width: 18px;
     height: 2px;
     border-radius: 2px;
     background: linear-gradient(90deg, var(--grad-a), var(--grad-c));
+  }
+
+  /* Centred, the rule sits on both sides so the label is optically centred. */
+  .t-eyebrow.is-center::after {
+    background: linear-gradient(270deg, var(--grad-a), var(--grad-c));
   }
 
   .t-stat {
@@ -480,9 +498,12 @@
 
   /* A button with a little body to it: a lit top edge, a shaded underside and
      a coloured contact shadow, so it reads as a raised key, not a flat fill. */
+  /* Deeper than the brand tangerine at its centre so white text holds up;
+     the bright tangerine stays as the lit top edge. */
   .btn-primary {
     color: #fff;
-    background: linear-gradient(180deg, #f59a42 0%, #f08626 52%, #e57a1a 100%);
+    background: linear-gradient(180deg, #ef8a2c 0%, #d9690f 55%, #c95e0a 100%);
+    text-shadow: 0 1px 0 rgb(120 50 0 / 0.18);
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.38),
       inset 0 -2px 0 rgb(150 70 0 / 0.22),
@@ -491,7 +512,7 @@
   }
 
   .btn-primary:hover {
-    background: linear-gradient(180deg, #f7a552 0%, #f39434 52%, #ea8222 100%);
+    background: linear-gradient(180deg, #f39434 0%, #e0721a 55%, #d0640e 100%);
     box-shadow:
       inset 0 1px 0 rgb(255 255 255 / 0.42),
       inset 0 -2px 0 rgb(150 70 0 / 0.2),
@@ -893,6 +914,9 @@
       color 0.35s var(--ease-ios);
   }
 
+  /* A page that opens on a night section gets dark glass from the first
+     frame, before the header has looked at what is behind it. */
+  html:has(main > div > section.tone-night:first-child) .site-header:not([data-tone]),
   .site-header[data-tone='dark'] {
     --fg: #f8f4ef;
     --fg-2: #c9bfb3;
@@ -1156,14 +1180,14 @@
   .statement {
     font-size: clamp(1.8rem, 1.1rem + 3vw, 4rem);
     line-height: 1.08;
-    font-weight: 800;
+    font-weight: 740;
     letter-spacing: -0.042em;
     color: var(--fg);
     text-wrap: pretty;
   }
 
   .statement > .is-accent {
-    color: var(--primary);
+    color: var(--accent-ink);
   }
 
   /* ---- 3D: the slab (ui/Slab3D) ----
@@ -1171,7 +1195,7 @@
      an isometric angle, with the category glyph standing on its top face. All
      transforms — composited, and a single rule turns it under the pointer. */
   .slab-stage {
-    --s: 132px;
+    --s: var(--s-d, 132px);
     position: relative;
     display: inline-block;
     flex: none;
@@ -1216,9 +1240,18 @@
     transform: translateZ(15.4px);
   }
 
+  /* The glyph scales with the slab, so one slab can take two sizes. */
   .slab-top svg {
+    width: calc(var(--s) * 0.36) !important;
+    height: calc(var(--s) * 0.36) !important;
     filter: drop-shadow(0 3px 2px rgb(0 0 0 / 0.22));
     transform: rotateZ(42deg);
+  }
+
+  @media (max-width: 639.98px) {
+    .slab-stage[data-phone] {
+      --s: var(--s-m);
+    }
   }
 
   .slab-shadow {
@@ -1372,21 +1405,28 @@
 
   /* ---- radar (bento) ---- */
 
+  /* Measured to the edge (closest-side), so the four rings and the sweep
+     share one radius exactly: the sweep stops on the outer ring. */
   .radar {
+    --ring: color-mix(in oklab, var(--primary) 20%, transparent);
     position: relative;
     aspect-ratio: 1;
     border-radius: 50%;
     background:
-      radial-gradient(circle, transparent 0 18%, color-mix(in oklab, var(--primary) 18%, transparent) 18.5% 19%, transparent 19.5% 38%, color-mix(in oklab, var(--primary) 16%, transparent) 38.5% 39%, transparent 39.5% 58%, color-mix(in oklab, var(--primary) 14%, transparent) 58.5% 59%, transparent 59.5% 78%, color-mix(in oklab, var(--primary) 12%, transparent) 78.5% 79%, transparent 79.5%);
+      radial-gradient(closest-side, transparent calc(25% - 1px), var(--ring) 25%, transparent calc(25% + 1px)),
+      radial-gradient(closest-side, transparent calc(50% - 1px), var(--ring) 50%, transparent calc(50% + 1px)),
+      radial-gradient(closest-side, transparent calc(75% - 1px), var(--ring) 75%, transparent calc(75% + 1px)),
+      radial-gradient(closest-side, transparent calc(99% - 1.5px), var(--ring) 99%, transparent 100%),
+      radial-gradient(closest-side, color-mix(in oklab, var(--primary) 6%, transparent), transparent 99%);
   }
 
   .radar-sweep {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: conic-gradient(from 0deg, color-mix(in oklab, var(--primary) 40%, transparent), transparent 22%);
-    mask: radial-gradient(circle, #000 0 79%, transparent 79.5%);
-    -webkit-mask: radial-gradient(circle, #000 0 79%, transparent 79.5%);
+    background: conic-gradient(from 0deg, color-mix(in oklab, var(--primary) 42%, transparent), transparent 24%);
+    mask: radial-gradient(closest-side, #000 98%, transparent 99%);
+    -webkit-mask: radial-gradient(closest-side, #000 98%, transparent 99%);
   }
 
   .radar-dot {

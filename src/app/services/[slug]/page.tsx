@@ -60,7 +60,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
           </div>
           <div className="detail-hero-body shell relative my-auto grid items-center gap-8 pt-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-10">
             <div className="relative flex justify-center lg:order-2">
-              <span aria-hidden="true" className="orbits [--o:clamp(300px,60vw,560px)]">
+              <span aria-hidden="true" className="orbits [--o:clamp(280px,74vw,560px)]">
                 <span style={{ ['--k' as string]: 0 }} />
                 <span style={{ ['--k' as string]: 1 }} />
                 <span style={{ ['--k' as string]: 2 }} />
@@ -69,7 +69,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                 <b className="ping" style={{ left: '40%', top: '92%', ['--delay' as string]: '-2s' }} />
               </span>
               <Enter delay={160} effect="scale" className="group relative">
-                <Slab3D icon={c.icon} hue={c.hue} size={300} active />
+                <Slab3D icon={c.icon} hue={c.hue} size={300} phoneSize={210} active />
               </Enter>
             </div>
             <div data-vanish className="min-w-0 lg:order-1" style={{ ['--vanish' as string]: '70vh' }}>
@@ -149,7 +149,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         </div>
         <Shelf className="mt-6" label={d.relatedTitle} itemWidth="clamp(268px, 74vw, 310px)" labels={{ previous: ui.common.previous, next: ui.common.next }}>
           {related.map(r => (
-            <CategoryCard key={r.slug} c={{ slug: r.slug, name: r.name, icon: r.icon, hue: r.hue, tagline: r.tagline, fee: feePercent(r.platformFeePercent) }} feeLabel={ui.common.platformFee} />
+            <CategoryCard key={r.slug} c={{ slug: r.slug, name: r.name, icon: r.icon, hue: r.hue, tagline: r.tagline, fee: feePercent(r.platformFeePercent), examples: r.examples }} feeLabel={ui.common.platformFee} />
           ))}
         </Shelf>
       </section>

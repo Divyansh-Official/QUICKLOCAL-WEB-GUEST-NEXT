@@ -24,7 +24,7 @@ export default function CopyButton({ value, label, copiedLabel }: { value: strin
       onClick={copy}
       className="chip relative z-[2] min-h-8 px-3 transition-colors hover:bg-[color-mix(in_oklab,var(--fg)_10%,transparent)]"
       aria-label={copied ? copiedLabel : `${label} ${value}`}>
-      <Icon name={copied ? 'check' : 'copy'} size={14} strokeWidth={copied ? 2.4 : 1.7} className={copied ? 'text-ok' : ''} />
+      <Icon name={copied ? 'check' : 'copy'} size={14} strokeWidth={copied ? 2.4 : 1.7} className={copied ? 'text-ok-ink' : ''} />
       <span aria-live="polite">{copied ? copiedLabel : label}</span>
     </button>
   );

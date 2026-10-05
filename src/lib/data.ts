@@ -100,8 +100,12 @@ export const categories: Category[] = [...categoriesJson.items].sort(
 );
 export const getCategory = (slug: string) => categories.find(c => c.slug === slug) ?? null;
 
-/** Header links: everything but Home, which the logo already is. */
-export const nav: Link[] = navJson.primary.filter(item => item.href !== '/');
+/**
+ * Header links: everything but Home (the logo already is it) and the page the
+ * header's own button opens — the same destination twice in one bar is noise.
+ * The phone menu keeps the full list.
+ */
+export const nav: Link[] = navJson.primary.filter(item => item.href !== '/' && item.href !== uiJson.header.cta.href);
 export const allNav: Link[] = navJson.primary;
 export const footerColumns: FooterColumn[] = navJson.footer;
 

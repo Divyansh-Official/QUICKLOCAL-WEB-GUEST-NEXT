@@ -57,6 +57,7 @@ export default function OrderLifecycle({
   }, [taken, happy.length]);
 
   const progress = happy.length > 1 ? active / (happy.length - 1) : 1;
+  const current = happy[active];
 
   return (
     <section ref={host} id="order-lifecycle" className="tone-alt section scroll-mt-24">
@@ -69,7 +70,7 @@ export default function OrderLifecycle({
             <div className="flex items-center gap-3 px-2 pb-5 pt-1">
               <span className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]">
                 <span
-                  className="absolute inset-y-0 left-0 origin-left rounded-full bg-gradient-to-r from-[#de7314] to-[#f2a53c] transition-[width] duration-700 ease-[var(--ease-out)]"
+                  className="absolute inset-y-0 left-0 origin-left rounded-full bg-gradient-to-r from-[#e0721a] to-[#f2a53c] transition-[width] duration-700 ease-[var(--ease-out)]"
                   style={{ width: `${Math.max(6, progress * 100)}%` }}
                 />
               </span>
@@ -78,7 +79,7 @@ export default function OrderLifecycle({
               </span>
             </div>
             <ol className="relative">
-              <span aria-hidden="true" className="absolute bottom-7 left-[27px] top-7 w-[2px] rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]" />
+              <span aria-hidden="true" className="absolute bottom-6 left-[27px] top-6 w-[2px] rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]" />
               {happy.map((step, i) => {
                 const done = i < active;
                 const now = i === active;
@@ -91,7 +92,7 @@ export default function OrderLifecycle({
                         setActive(i);
                       }}
                       aria-current={now ? 'step' : undefined}
-                      className={`relative flex w-full items-start gap-4 rounded-[20px] px-2 py-3 text-left transition-colors duration-300 ${
+                      className={`relative flex w-full items-start gap-4 rounded-[20px] px-2 py-2 text-left transition-colors duration-300 ${
                         now ? 'bg-[color-mix(in_oklab,var(--card)_80%,transparent)] shadow-[var(--rim),var(--edge)]' : 'hover:bg-[color-mix(in_oklab,var(--fg)_4%,transparent)]'
                       }`}>
                       <span
@@ -100,30 +101,40 @@ export default function OrderLifecycle({
                         }`}>
                         <Icon name={done ? 'check' : step.icon} size={17} strokeWidth={done ? 2.6 : 1.9} />
                       </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="flex flex-wrap items-center gap-x-2.5 gap-y-1">
-                          <span className={`text-[16px] font-extrabold tracking-[-0.02em] ${now ? 'text-primary-ink' : 'text-fg'}`}>{step.label}</span>
-                          <code className="rounded-md bg-[color-mix(in_oklab,var(--fg)_6%,transparent)] px-1.5 py-0.5 text-[10.5px] font-bold tracking-wide text-fg-3">
-                            {step.status}
-                          </code>
+                      <span className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2.5 gap-y-1 pt-2">
+                        <span className={`text-[16px] font-extrabold tracking-[-0.02em] transition-colors duration-300 ${now ? 'text-primary-ink' : done ? 'text-fg' : 'text-fg-2'}`}>
+                          {step.label}
                         </span>
-                        <span
-                          className={`grid transition-[grid-template-rows,opacity] duration-500 ease-[var(--ease-out)] ${
-                            now ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-                          }`}>
-                          <span className="overflow-hidden">
-                            <span className="block pt-1 text-[14.5px] leading-relaxed text-fg-2">{step.detail}</span>
-                          </span>
-                        </span>
+                        <code className="rounded-md bg-[color-mix(in_oklab,var(--fg)_6%,transparent)] px-1.5 py-0.5 text-[10.5px] font-bold tracking-wide text-fg-3">
+                          {step.status}
+                        </code>
                       </span>
                     </button>
                   </li>
                 );
               })}
             </ol>
-            <p className="mt-3 px-2 text-[12.5px] text-fg-3" aria-live="polite">
-              {taken ? null : section.hint}
-            </p>
+            {/* The current step, explained. A fixed height, so the walk never
+                moves anything on the page while somebody is reading. */}
+            <div className="mt-4 rounded-[22px] bg-[color-mix(in_oklab,var(--fg)_4.5%,transparent)] px-5 py-4">
+              <div className="grid">
+                {happy.map(step => {
+                  const on = step.status === current.status;
+                  return (
+                    <p
+                      key={step.status}
+                      aria-hidden={on ? undefined : true}
+                      className={`[grid-area:1/1] text-[15px] leading-relaxed text-fg-2 transition-[opacity,transform] duration-500 ease-[var(--ease-out)] ${
+                        on ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-1.5 opacity-0'
+                      }`}>
+                      <span className="font-extrabold text-fg">{step.label}. </span>
+                      {step.detail}
+                    </p>
+                  );
+                })}
+              </div>
+              <p className="mt-2 text-[12.5px] font-semibold text-fg-3">{taken ? '\u00a0' : section.hint}</p>
+            </div>
           </Reveal>
 
           <Reveal index={1} className="glass flex flex-col rounded-[var(--radius-panel)] p-6 sm:p-7">

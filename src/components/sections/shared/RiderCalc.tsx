@@ -48,7 +48,7 @@ export default function RiderCalc({ payout, labels }: { payout: { baseInr: numbe
       <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-[13px] font-semibold text-fg-3">
         <span>{fillLive(labels.legend.base, { amount: rupees(payout.baseInr) })}</span>
         <span className="text-primary-ink">{fillLive(labels.legend.distance, { amount: rupees(payout.perKmInr * km) })}</span>
-        {lift > 0 ? <span className="text-ok">{fillLive(labels.legend.floor, { amount: rupees(lift) })}</span> : null}
+        {lift > 0 ? <span className="text-ok-ink">{fillLive(labels.legend.floor, { amount: rupees(lift) })}</span> : null}
       </p>
     </div>
   );

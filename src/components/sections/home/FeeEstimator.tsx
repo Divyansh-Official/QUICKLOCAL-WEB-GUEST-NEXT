@@ -139,7 +139,7 @@ export default function FeeEstimator({ fees, copy }: { fees: Fees; copy: Copy })
                       style={{ '--fill': `${basketFill}%` } as CSSProperties}
                     />
                     <span aria-hidden="true" className="pointer-events-none absolute -top-5 flex -translate-x-1/2 flex-col items-center" style={{ left: `${thresholdAt}%` }}>
-                      <span className="whitespace-nowrap text-[10px] font-extrabold uppercase tracking-[0.08em] text-ok">{copy.thresholdMark}</span>
+                      <span className="whitespace-nowrap text-[10px] font-extrabold uppercase tracking-[0.08em] text-ok-ink">{copy.thresholdMark}</span>
                       <span className="mt-0.5 h-2.5 w-[2px] rounded-full bg-ok" />
                     </span>
                   </div>
@@ -172,7 +172,11 @@ export default function FeeEstimator({ fees, copy }: { fees: Fees; copy: Copy })
               </div>
 
               {/* the split */}
-              <div className="p-6 sm:p-8" aria-live="polite">
+              <div className="p-6 sm:p-8">
+                {/* One short sentence for screen readers, not the whole panel on every tick. */}
+                <p className="sr-only" aria-live="polite">
+                  {`${copy.customer} ${rupees(q.customerTotal)}. ${copy.shop} ${rupees(q.shopKeeps)}. ${copy.rider} ${rupees(q.riderEarns)}.`}
+                </p>
                 <Line icon="basket" label={copy.customer} value={rupees(q.customerTotal)} note={fillLive(q.free ? copy.customerNoteFree : copy.customerNote, v)} strong />
                 <Line icon="store" label={copy.shop} value={rupees(q.shopKeeps)} note={fillLive(q.absorbed > 0 ? copy.shopNoteFree : copy.shopNote, v)} />
                 <Line icon="bike" label={copy.rider} value={rupees(q.riderEarns)} note={copy.riderNote} />
@@ -180,7 +184,7 @@ export default function FeeEstimator({ fees, copy }: { fees: Fees; copy: Copy })
                 <p
                   key={q.free ? 'free' : 'more'}
                   className={`enter-scale mt-5 flex items-start gap-2.5 rounded-2xl px-4 py-3 text-[13.5px] font-semibold leading-relaxed ${
-                    q.free ? 'bg-[color-mix(in_oklab,var(--ok)_14%,transparent)] text-ok' : 'bg-[color-mix(in_oklab,var(--fg)_5%,transparent)] text-fg-2'
+                    q.free ? 'bg-[color-mix(in_oklab,var(--ok)_14%,transparent)] text-ok-ink' : 'bg-[color-mix(in_oklab,var(--fg)_5%,transparent)] text-fg-2'
                   }`}>
                   <Icon name={q.free ? 'check-circle' : 'sparkle'} size={17} strokeWidth={2} className="mt-0.5" />
                   {q.free ? copy.freeBanner : fillLive(copy.moreBanner, v)}

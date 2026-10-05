@@ -4,7 +4,7 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Shelf from '@/components/ui/Shelf';
 import Slab3D from '@/components/ui/Slab3D';
 
-export type CategoryCard = { slug: string; name: string; icon: string; hue: string; tagline: string; fee: string };
+export type CategoryCard = { slug: string; name: string; icon: string; hue: string; tagline: string; fee: string; examples: string[] };
 
 /**
  * One category as a tall glass card with its 3D slab. Tapping it zooms the
@@ -20,7 +20,7 @@ export function CategoryCard({ c, feeLabel }: { c: CategoryCard; feeLabel: strin
           <Icon name="tag" size={13} />
           {c.fee} {feeLabel}
         </span>
-        <span className="grid h-10 w-10 place-items-center rounded-full bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] text-fg transition-transform duration-500 ease-[var(--ease-ios)] group-hover:translate-x-1">
+        <span className="grid h-10 w-10 place-items-center rounded-full bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] text-fg transition-[transform,background-color,color] duration-500 ease-[var(--ease-ios)] group-hover:translate-x-1 group-hover:bg-primary group-hover:text-white">
           <Icon name="arrow-right" size={17} strokeWidth={1.9} />
         </span>
       </span>
@@ -29,6 +29,7 @@ export function CategoryCard({ c, feeLabel }: { c: CategoryCard; feeLabel: strin
       </span>
       <span className="block text-[clamp(1.5rem,1.3rem+0.7vw,1.85rem)] font-extrabold leading-tight tracking-[-0.035em] text-fg">{c.name}</span>
       <span className="mt-1.5 block min-h-[2.75em] text-[15px] leading-snug text-fg-2">{c.tagline}</span>
+      <span className="mt-4 block truncate border-t border-hair pt-3.5 text-[12.5px] font-semibold text-fg-3">{c.examples.slice(0, 3).join(' · ')}</span>
     </MorphLink>
   );
 }
