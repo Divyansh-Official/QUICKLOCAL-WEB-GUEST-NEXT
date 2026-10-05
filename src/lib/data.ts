@@ -50,7 +50,6 @@ export type Category = {
   tagline: string;
   examples: string[];
   hue: string;
-  platformFeePercent: number;
   displayOrder: number;
 };
 
@@ -75,6 +74,15 @@ export type StoreListing = { available: boolean; url: string | null; store: stri
 export const info = infoJson;
 export const contact = contactJson;
 export const fees = feesJson;
+/** Only the delivery constants — what a client widget is handed, and nothing else. */
+export const deliveryRules = {
+  baseFeeInr: feesJson.baseFeeInr,
+  freeRangeKm: feesJson.freeRangeKm,
+  petrolPriceInrPerL: feesJson.petrolPriceInrPerL,
+  bikeMileageKmpl: feesJson.bikeMileageKmpl,
+  driverMultiplier: feesJson.driverMultiplier,
+  defaultFreeDeliveryThresholdInr: feesJson.defaultFreeDeliveryThresholdInr,
+};
 export const riders = ridersJson;
 export const lifecycle: { happy: OrderStep[]; unhappy: OrderStep[] } = lifecycleJson;
 export const site = siteJson;
@@ -117,20 +125,12 @@ export function inr(value: number): string {
   return `₹${value.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
 }
 
-/** "2%" rather than "2.0%" — trailing zeros read as false precision. */
-export function feePercent(value: number): string {
-  return `${Number(value.toFixed(2))}%`;
-}
-
 export const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, '')}`;
 export const mailHref = (email: string) => `mailto:${email}`;
 
 // ── copy tokens ─────────────────────────────────────────────────────────────
 
 const plan = (name: string) => plans.find(p => p.name === name);
-const feesByCategory = categories.map(c => c.platformFeePercent);
-const lowestFee = Math.min(...feesByCategory);
-const highestFee = Math.max(...feesByCategory);
 const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
 const aisleWord = NUMBER_WORDS[categories.length] ?? String(categories.length);
 const names = categories.map(c => c.name);
@@ -150,9 +150,6 @@ export const tokens: Record<string, string> = {
   radius: String(info.delivery.defaultRadiusKm),
   maxRadius: String(info.delivery.maxRadiusKm),
   hours: String(info.delivery.maxHours),
-  lowestFee: feePercent(lowestFee).replace('%', ''),
-  highestFee: feePercent(highestFee).replace('%', ''),
-  bestKeep: String(100 - lowestFee),
   aisles: aisleWord,
   Aisles: aisleWord.charAt(0).toUpperCase() + aisleWord.slice(1),
   aisleList: `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`,
@@ -166,7 +163,6 @@ export const tokens: Record<string, string> = {
   sampleExtra: inr(sample.extra),
   sampleExtraKm: String(sample.extraKm),
   threshold: inr(fees.defaultFreeDeliveryThresholdInr),
-  absorbCeiling: String(fees.absorbCeilingPercent),
   petrol: inr(fees.petrolPriceInrPerL),
   mileage: String(fees.bikeMileageKmpl),
   multiplier: String(fees.driverMultiplier),

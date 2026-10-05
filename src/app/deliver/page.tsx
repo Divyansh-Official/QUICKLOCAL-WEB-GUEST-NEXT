@@ -16,7 +16,7 @@ import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
-import { fees, fillDeep, pages, riders, ui } from '@/lib/data';
+import { deliveryRules, fillDeep, pages, riders, ui } from '@/lib/data';
 
 const copy = fillDeep(pages.deliver);
 const earnings = fillDeep(pages.forBusiness.earnings);
@@ -47,7 +47,7 @@ export default function DeliverPage() {
             <FactGrid items={earnings.items} cols={3} />
           </div>
           <Reveal className="mt-6">
-            <RiderCalc fees={fees} labels={{ title: copy.earnings.calcTitle, distance: copy.earnings.calcLabel, result: copy.earnings.calcResult, legend: earnings.legend }} />
+            <RiderCalc fees={deliveryRules} labels={{ title: copy.earnings.calcTitle, distance: copy.earnings.calcLabel, result: copy.earnings.calcResult, legend: earnings.legend }} />
           </Reveal>
           <Reveal as="p" className="t-small mx-auto mt-6 max-w-xl text-center">
             {earnings.example}

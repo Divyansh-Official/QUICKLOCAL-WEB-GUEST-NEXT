@@ -1,7 +1,7 @@
 /**
  * /pricing — every figure is a column value from subscription_plans; nothing
  * rounded, no tier invented. Four plan cards (the popular one lifted and lit),
- * a full comparison, and the per-category platform fee.
+ * and a full comparison.
  */
 import type { Metadata } from 'next';
 import Reveal from '@/components/motion/Reveal';
@@ -11,9 +11,7 @@ import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
-import { categories, featureLabels, feePercent, fill, fillDeep, inr, pages, plans, ui } from '@/lib/data';
-
-const topFee = Math.max(...categories.map(c => c.platformFeePercent));
+import { featureLabels, fill, fillDeep, inr, pages, plans, ui } from '@/lib/data';
 
 const copy = fillDeep(pages.pricing);
 const ORDER = ['sales_dashboard', 'export_orders', 'customer_history', 'priority_support', 'advanced_analytics', 'featured_badge', 'bulk_offers', 'custom_banner'];
@@ -145,35 +143,6 @@ export default function PricingPage() {
         </div>
       </section>
 
-      <section className="tone-base section">
-        <div className="shell">
-          <SectionHeader eyebrow={copy.fee.eyebrow} title={copy.fee.title} accent={copy.fee.accent} intro={copy.fee.intro} />
-          <Reveal className="glass glass-raised mx-auto mt-12 max-w-[640px] overflow-hidden rounded-[var(--radius-panel)]">
-            <ul>
-              {categories.map(c => (
-                <li key={c.slug} className="flex items-center justify-between gap-4 border-b border-hair px-6 py-4">
-                  <span className="flex items-center gap-3 text-[16px] font-bold text-fg">
-                    <span className="grid h-9 w-9 place-items-center rounded-xl bg-primary-soft text-primary-ink">
-                      <Icon name={c.icon} size={17} strokeWidth={1.9} />
-                    </span>
-                    {c.name}
-                  </span>
-                  <span className="relative flex flex-1 items-center justify-end gap-4">
-                    <span className="hidden h-2 max-w-[160px] flex-1 overflow-hidden rounded-full bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] xs:block">
-                      <span className="block h-full rounded-full bg-gradient-to-r from-[#de7314] to-[#f2a53c]" style={{ width: `${(c.platformFeePercent / topFee) * 100}%` }} />
-                    </span>
-                    <span className="tnum w-12 text-right text-[18px] font-extrabold text-primary-ink">{feePercent(c.platformFeePercent)}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <div className="flex items-center justify-between gap-4 bg-[color-mix(in_oklab,var(--fg)_4%,transparent)] px-6 py-4">
-              <span className="text-[14px] font-semibold text-fg-2">{copy.fee.flat}</span>
-              <span className="text-right text-[15px] font-extrabold text-fg">{copy.fee.payer}</span>
-            </div>
-          </Reveal>
-        </div>
-      </section>
     </>
   );
 }

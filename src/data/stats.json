@@ -21,10 +21,10 @@
       "icon": "wallet"
     },
     {
-      "value": "{lowestFee}%",
-      "label": "Lowest platform fee",
-      "detail": "Paid by the shop — no aisle above {highestFee}%",
-      "icon": "tag"
+      "value": "₹{referral}",
+      "label": "Off for every friend",
+      "detail": "When their first order lands",
+      "icon": "gift"
     }
   ]
 }

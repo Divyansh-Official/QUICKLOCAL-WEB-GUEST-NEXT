@@ -30,8 +30,7 @@ import {
   contact,
   faq,
   features,
-  feePercent,
-  fees,
+  deliveryRules,
   fill,
   fillDeep,
   home,
@@ -63,14 +62,14 @@ export default function HomePage() {
       <Statement {...h.statement} />
       <CategoryShelf
         section={h.categories}
-        items={categories.map(c => ({ slug: c.slug, name: c.name, icon: c.icon, hue: c.hue, tagline: c.tagline, fee: feePercent(c.platformFeePercent), examples: c.examples }))}
-        labels={{ fee: ui.common.platformFee, explore: ui.common.explore, ...shelf }}
+        items={categories.map(c => ({ slug: c.slug, name: c.name, icon: c.icon, hue: c.hue, tagline: c.tagline, badge: fill(ui.common.deliveryFrom), examples: c.examples }))}
+        labels={{ explore: ui.common.explore, ...shelf }}
       />
       <Bento section={h.bento} tiles={h.bento.tiles} />
       <StatsBand section={h.stats} stats={stats} />
       <HowItWorks section={h.how} steps={steps} />
       <OrderLifecycle section={h.lifecycle} happy={lifecycle.happy} unhappy={lifecycle.unhappy} />
-      <FeeEstimator fees={fees} copy={h.estimator} />
+      <FeeEstimator fees={deliveryRules} copy={h.estimator} />
       <Audiences
         section={h.audiences}
         tabs={h.audiences.tabs.map(t => ({ ...t, items: features[t.key as keyof typeof features] as string[] }))}

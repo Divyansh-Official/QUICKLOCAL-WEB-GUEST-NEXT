@@ -4,21 +4,21 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Shelf from '@/components/ui/Shelf';
 import Slab3D from '@/components/ui/Slab3D';
 
-export type CategoryCard = { slug: string; name: string; icon: string; hue: string; tagline: string; fee: string; examples: string[] };
+export type CategoryCard = { slug: string; name: string; icon: string; hue: string; tagline: string; badge: string; examples: string[] };
 
 /**
  * One category as a tall glass card with its 3D slab. Tapping it zooms the
  * card open into the category's page (MorphLink); the slab turns on hover.
  */
-export function CategoryCard({ c, feeLabel }: { c: CategoryCard; feeLabel: string }) {
+export function CategoryCard({ c }: { c: CategoryCard }) {
   return (
     <MorphLink
       href={`/services/${c.slug}`}
       className="group glass hover-lift relative flex h-[clamp(380px,56vh,440px)] flex-col overflow-hidden rounded-[var(--radius-card)] p-6">
       <span className="flex items-center justify-between">
         <span className="chip chip-brand">
-          <Icon name="tag" size={13} />
-          {c.fee} {feeLabel}
+          <Icon name="truck" size={13} />
+          {c.badge}
         </span>
         <span className="grid h-10 w-10 place-items-center rounded-full bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] text-fg transition-[transform,background-color,color] duration-500 ease-[var(--ease-ios)] group-hover:translate-x-1 group-hover:bg-primary group-hover:text-white">
           <Icon name="arrow-right" size={17} strokeWidth={1.9} />
@@ -41,7 +41,7 @@ export default function CategoryShelf({
 }: {
   section: { eyebrow: string; title: string; accent: string; intro: string; cta: { label: string; href: string } };
   items: CategoryCard[];
-  labels: { fee: string; previous: string; next: string; explore: string };
+  labels: { previous: string; next: string; explore: string };
 }) {
   return (
     <section className="tone-base section overflow-clip pb-[calc(var(--section-y)*0.6)]">
@@ -55,7 +55,7 @@ export default function CategoryShelf({
       </div>
       <Shelf className="mt-8" label={section.title} itemWidth="clamp(268px, 74vw, 310px)" labels={labels}>
         {items.map(c => (
-          <CategoryCard key={c.slug} c={c} feeLabel={labels.fee} />
+          <CategoryCard key={c.slug} c={c} />
         ))}
       </Shelf>
     </section>

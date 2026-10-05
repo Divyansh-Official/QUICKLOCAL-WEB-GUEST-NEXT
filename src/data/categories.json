@@ -1,13 +1,12 @@
 {
-  "_source": "categories table. V34__fixed_categories_platform_fee.sql locked the catalogue to five slugs with a per-category platform fee; Toys is the sixth permanent category (named alongside the others in V103__events_are_occasions.sql, themed in V88 and V105) and was created through the admin categories console, so its fee lives in that console rather than in a migration.",
-  "_note": "Six: Grocery, Hardware, Furniture, Fashion, Toys, Others — the categories a vendor can register under and the six tabs of the customer app's category rail.",
+  "_source": "categories table: the six permanent categories (Grocery, Hardware, Furniture, Fashion, Toys, Others) a vendor can register under and the customer app's category rail shows. Commission is deliberately not published on this site.",
+  "_note": "No platform-fee figures live here or anywhere on the public site, by decision.",
   "items": [
     {
       "slug": "grocery",
       "name": "Grocery",
       "icon": "basket",
       "blurb": "Daily essentials from shops on your street",
-      "platformFeePercent": 2.0,
       "displayOrder": 1,
       "tagline": "The corner store, without the walk.",
       "examples": [
@@ -23,7 +22,6 @@
       "name": "Hardware",
       "icon": "tools",
       "blurb": "Tools, fittings and repairs when you need them",
-      "platformFeePercent": 3.0,
       "displayOrder": 2,
       "tagline": "The right fitting, the same afternoon.",
       "examples": [
@@ -39,7 +37,6 @@
       "name": "Furniture",
       "icon": "sofa",
       "blurb": "Home pieces from local makers and stores",
-      "platformFeePercent": 3.0,
       "displayOrder": 3,
       "tagline": "Pieces made a few streets away.",
       "examples": [
@@ -55,7 +52,6 @@
       "name": "Fashion",
       "icon": "shirt",
       "blurb": "Clothing and accessories from nearby boutiques",
-      "platformFeePercent": 3.0,
       "displayOrder": 4,
       "tagline": "Your neighbourhood boutique, on your phone.",
       "examples": [
@@ -71,7 +67,6 @@
       "name": "Toys",
       "icon": "blocks",
       "blurb": "Games, puzzles and outdoor play from shops nearby",
-      "platformFeePercent": 3.0,
       "displayOrder": 5,
       "tagline": "Something to keep them busy.",
       "examples": [
@@ -87,7 +82,6 @@
       "name": "Others",
       "icon": "box",
       "blurb": "Everything else your neighbourhood sells",
-      "platformFeePercent": 1.0,
       "displayOrder": 6,
       "tagline": "Everything else your street sells.",
       "examples": [
@@ -99,6 +93,5 @@
       "hue": "green"
     }
   ],
-  "_note_redesign": "tagline, examples and hue were added for the 2026 redesign: examples describe what a shop in the category typically lists, hue picks the colour of its 3D tile. platformFeePercent is unchanged.",
-  "_toysFee": "CHECK THIS ONE NUMBER: Toys' platform_fee_percent is set in the admin console (Categories → Toys → Platform fee) and is not in any repository. 3% is assumed, matching the other retail aisles. If the console says otherwise, change it here and in fees.json — every page, the estimator and the vendor planner follow."
+  "_note_redesign": "tagline, examples and hue were added for the 2026 redesign: examples describe what a shop in the category typically lists, hue picks the colour of its 3D tile. platformFeePercent is unchanged."
 }

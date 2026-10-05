@@ -49,14 +49,14 @@
     },
     {
       "audience": "customers",
-      "q": "Do I pay a platform fee?",
-      "a": "No. The platform fee is a percentage of the sale that the shop pays — {lowestFee}% to {highestFee}% depending on the aisle. You pay for your basket and your share of delivery, and nothing else.",
+      "q": "Are there hidden charges?",
+      "a": "No. You pay for your basket and your share of delivery, and both are shown before you pay. Nothing is added at the door.",
       "home": true
     },
     {
       "audience": "customers",
       "q": "Which aisles can I shop?",
-      "a": "{aisleList}. Each is a fixed category in the app, with its own look and its own platform fee for the shop."
+      "a": "{aisleList}. Each is a fixed category in the app, with its own look."
     },
     {
       "audience": "customers",
@@ -86,19 +86,19 @@
     },
     {
       "audience": "shops",
-      "q": "How much does a shop pay to sell?",
-      "a": "Listing is free for up to {freeProducts} products. Starter is ₹{starterPrice} a month for {starterProducts}, Growth ₹{growthPrice} for {growthProducts}, and Pro ₹{proPrice} for unlimited. On top, the platform takes {lowestFee}–{highestFee}% of each sale, depending on the category.",
+      "q": "How much does it cost to list a shop?",
+      "a": "Listing is free for up to {freeProducts} products. Starter is ₹{starterPrice} a month for {starterProducts}, Growth ₹{growthPrice} for {growthProducts}, and Pro ₹{proPrice} for unlimited. Change or cancel any month.",
       "home": true
     },
     {
       "audience": "shops",
       "q": "What is a free-delivery threshold?",
-      "a": "The basket size above which you cover the {base} delivery base, so the customer sees free delivery. It is {threshold} until you set your own, per category — and the planner warns you when a threshold would give away more than {absorbCeiling}% of a small order."
+      "a": "The basket size above which you cover the {base} delivery base, so the customer sees free delivery. It is {threshold} until you set your own, per category."
     },
     {
       "audience": "shops",
       "q": "When does a shop get paid?",
-      "a": "After every delivered order, straight to your bank or UPI: the basket, less the platform fee, less the delivery base on orders you made free. Never before the order is delivered."
+      "a": "After every delivered order, straight to your bank or UPI, reconciled automatically. Never before the order is delivered."
     },
     {
       "audience": "shops",
@@ -108,7 +108,7 @@
     {
       "audience": "riders",
       "q": "How are riders paid?",
-      "a": "You are paid the order's whole delivery fee: {base} for any trip up to {freeKm} km, plus about ₹{perKm} for every kilometre beyond it at the day's fuel price. The platform takes none of it, and it is paid after every delivered order.",
+      "a": "You are paid the order's whole delivery fee: {base} for any trip up to {freeKm} km, plus about ₹{perKm} for every kilometre beyond it at the day's fuel price — paid after every delivered order.",
       "home": true
     },
     {

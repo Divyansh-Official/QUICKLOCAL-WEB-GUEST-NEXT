@@ -1,6 +1,6 @@
 {
   "_source": "DeliveryFeeCalculatorService (app.order.* defaults and the app_config keys that override them), V34__fixed_categories_platform_fee.sql, and VendorDeliveryThresholdService.DEFAULT_THRESHOLD_FALLBACK.",
-  "_why": "The estimator on the public site runs the SAME arithmetic the backend runs, rather than an approximation of it. If a number here stops matching the service, the site starts lying about what an order costs — so each value names the exact constant it mirrors.",
+  "_why": "The estimator and the rider slider run the SAME delivery arithmetic the backend runs. Only delivery is here: the platform's commission is deliberately not published on this site.",
   "baseFeeInr": 30,
   "_baseFeeInr": "app.order.base-fee, overridable by app_config['delivery.base_fee_inr']",
   "freeRangeKm": 4,
@@ -13,44 +13,7 @@
   "_driverMultiplier": "app.order.fee-multiplier, overridable by app_config['app.driver_multiplier']",
   "defaultFreeDeliveryThresholdInr": 999,
   "_defaultFreeDeliveryThresholdInr": "VendorDeliveryThresholdService.DEFAULT_THRESHOLD_FALLBACK. Each vendor sets their own per category; this is what applies until they do.",
-  "categories": [
-    {
-      "slug": "grocery",
-      "name": "Grocery",
-      "platformFeePercent": 2
-    },
-    {
-      "slug": "hardware",
-      "name": "Hardware",
-      "platformFeePercent": 3
-    },
-    {
-      "slug": "furniture",
-      "name": "Furniture",
-      "platformFeePercent": 3
-    },
-    {
-      "slug": "fashion",
-      "name": "Fashion",
-      "platformFeePercent": 3
-    },
-    {
-      "slug": "toys",
-      "name": "Toys",
-      "platformFeePercent": 3
-    },
-    {
-      "slug": "others",
-      "name": "Others",
-      "platformFeePercent": 1
-    }
-  ],
-  "_categories": "The six permanent categories and their platform_fee_percent: the five from V34, plus Toys — whose fee is set in the admin console (see categories.json _toysFee).",
   "_rider": "SplitPayoutService.driverAmount: the rider is paid the order's whole delivery_fee — base plus any extra-km charge — passed straight through, whichever side funded it. delivery.base_payout_inr / payout_per_km_inr / min_payout_inr (20 / 5 / 30) are only a fallback for an order with no delivery fee on it, so the site never quotes them.",
   "maxDistanceKm": 20,
-  "_maxDistanceKm": "Checkout refuses an order beyond 20 km (admin-tunable), the same ceiling as the customer's search radius, so discovery and ordering cannot disagree.",
-  "absorbCeilingPercent": 15,
-  "_absorbCeilingPercent": "ProfitSimulatorService.ABSORB_CEILING_PCT: a free-delivery order should give away no more than this share in platform fee plus delivery base. The recommended minimum threshold is ceil(base / (ceiling − fee%)).",
-  "marginFloorPercent": 5,
-  "_marginFloorPercent": "ProfitSimulatorService.MARGIN_FLOOR_PCT: below this gross margin an order is flagged as thin."
+  "_maxDistanceKm": "Checkout refuses an order beyond 20 km (admin-tunable), the same ceiling as the customer's search radius, so discovery and ordering cannot disagree."
 }

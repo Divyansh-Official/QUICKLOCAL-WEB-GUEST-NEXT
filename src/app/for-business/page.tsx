@@ -12,7 +12,7 @@ import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
-import { features, fees, fillDeep, pages, ui } from '@/lib/data';
+import { deliveryRules, features, fillDeep, pages, ui } from '@/lib/data';
 
 const copy = fillDeep(pages.forBusiness);
 
@@ -79,7 +79,7 @@ export default function ForBusinessPage() {
             <FactGrid items={copy.earnings.items} cols={3} />
           </div>
           <Reveal className="mt-6">
-            <RiderCalc fees={fees} labels={{ title: copy.earnings.calcTitle, distance: copy.earnings.calcLabel, result: copy.earnings.calcResult, legend: copy.earnings.legend }} />
+            <RiderCalc fees={deliveryRules} labels={{ title: copy.earnings.calcTitle, distance: copy.earnings.calcLabel, result: copy.earnings.calcResult, legend: copy.earnings.legend }} />
           </Reveal>
           <Reveal as="p" className="t-small mx-auto mt-6 max-w-xl text-center">
             {copy.earnings.example}

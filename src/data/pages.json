@@ -35,8 +35,8 @@
       "items": [
         {
           "icon": "store",
-          "title": "The shop keeps more",
-          "text": "Platform fees start at {lowestFee}% and never exceed {highestFee}%, and the customer pays none of it. Convenience for the customer should not come out of the seller's margin."
+          "title": "Every fee in writing",
+          "text": "What a shop pays to list and what a customer pays for delivery are written down before anyone commits. Convenience for the customer should not come out of the seller's margin."
         },
         {
           "icon": "bike",
@@ -59,7 +59,7 @@
       "eyebrow": "For shop owners",
       "title": "Own a shop in {city}?",
       "accent": "{city}?",
-      "text": "List free, keep up to {bestKeep}% of every sale, and get paid after every delivered order.",
+      "text": "List free, set your own free-delivery threshold, and get paid after every delivered order.",
       "cta": {
         "label": "Start selling",
         "href": "/sell"
@@ -69,13 +69,13 @@
   "services": {
     "meta": {
       "title": "Services",
-      "description": "Every category a local shop can open under on {name}, with the platform fee it pays and how delivery works."
+      "description": "Every category a local shop can open under on {name}, and how delivery works."
     },
     "hero": {
       "eyebrow": "Services",
       "title": "Everything your neighbourhood already sells.",
       "accent": "already sells.",
-      "intro": "{Aisles} categories, each with its own platform fee for the shop. Delivered inside {radius} km by default and within {hours} hours, always."
+      "intro": "{Aisles} categories, delivered inside {radius} km by default and within {hours} hours, always."
     },
     "delivery": {
       "eyebrow": "Delivery",
@@ -117,16 +117,10 @@
     },
     "detail": {
       "eyebrow": "Category",
-      "feeLabel": "Platform fee",
       "deliveryLabel": "Delivery from",
       "examplesTitle": "What shops here list",
       "factsTitle": "The numbers for this aisle",
       "facts": [
-        {
-          "icon": "tag",
-          "label": "Platform fee, paid by the shop",
-          "key": "fee"
-        },
         {
           "icon": "wallet",
           "label": "Delivery for the first {freeKm} km",
@@ -141,10 +135,13 @@
           "icon": "clock",
           "label": "Maximum delivery window",
           "key": "hours"
+        },
+        {
+          "icon": "pin",
+          "label": "Furthest you can widen it",
+          "key": "maxRadius"
         }
       ],
-      "keepTitle": "On a ₹1,000 sale the shop keeps",
-      "keepNote": "Before any delivery the shop chooses to absorb.",
       "costCta": {
         "label": "Work out an order",
         "href": "/#what-it-costs"
@@ -153,13 +150,15 @@
         "label": "Sell in this category",
         "href": "/sell"
       },
-      "relatedTitle": "Other aisles"
+      "relatedTitle": "Other aisles",
+      "deliveryTitle": "Delivery, from the shop to you",
+      "deliveryNote": "Free over the shop's own threshold — {threshold} until it sets one."
     }
   },
   "forBusiness": {
     "meta": {
       "title": "For Business",
-      "description": "Sell on {name} or deliver for it — platform fees from {lowestFee}%, and the whole delivery fee for every rider."
+      "description": "Sell on {name} or deliver for it — free to list, and the whole delivery fee for every rider."
     },
     "hero": {
       "eyebrow": "For business",
@@ -204,9 +203,9 @@
           "label": "Each kilometre beyond it"
         },
         {
-          "icon": "shield-check",
-          "value": "100%",
-          "label": "Of the fee is the rider's"
+          "icon": "route",
+          "value": "{sampleFee}",
+          "label": "For a {sampleKm} km delivery"
         }
       ],
       "example": "A {sampleKm} km delivery pays {sampleFee}: the {base} base, plus {sampleExtra} for the {sampleExtraKm} km past {freeKm}. Per-km follows the day's fuel price.",
@@ -222,13 +221,13 @@
   "pricing": {
     "meta": {
       "title": "Pricing",
-      "description": "Vendor plans on {name} — from free to ₹{proPrice} a month, plus a platform fee from {lowestFee}% that the customer never pays."
+      "description": "Vendor plans on {name} — from free to ₹{proPrice} a month. Change or cancel any month."
     },
     "hero": {
       "eyebrow": "Pricing",
-      "title": "Plans for the shop. Fees for the sale.",
-      "accent": "Fees for the sale.",
-      "intro": "A monthly plan decides how much you can list and what tools you get. On top, the platform takes {lowestFee}–3% of each sale, by category."
+      "title": "Plans for every shop.",
+      "accent": "every shop.",
+      "intro": "A monthly plan decides how much you can list and which tools you get. Start free, move up when it pays, and change or cancel any month."
     },
     "popular": "Most chosen",
     "startFree": "Start free",
@@ -240,14 +239,6 @@
     "compareFeature": "Feature",
     "products": "Products",
     "unlimited": "Unlimited",
-    "fee": {
-      "eyebrow": "Platform fee",
-      "title": "What each sale costs.",
-      "accent": "each sale",
-      "intro": "Charged per order on top of the monthly plan, as a share of the sale. Set per category, the same for every shop in it — and never added to the customer's bill.",
-      "flat": "Who pays it",
-      "payer": "The shop — never the customer"
-    },
     "boostsRow": "Paid boosts a month",
     "freeNote": "No monthly fee",
     "billedNote": "Billed monthly · cancel any month"
@@ -352,14 +343,13 @@
           "icon": "lock",
           "who": "You",
           "title": "Pay, and see every rupee first.",
-          "text": "Your basket and your share of delivery — no platform fee on your side. Payment goes through Razorpay, and an order left unpaid is cancelled after thirty minutes so its stock goes back on the shelf.",
+          "text": "Your basket and your share of delivery, nothing else, all shown before you pay. Payment goes through Razorpay, and an order left unpaid is cancelled after thirty minutes so its stock goes back on the shelf.",
           "screen": {
             "title": "Checkout",
             "chip": "Razorpay",
             "rows": [
               "Basket · ₹640",
-              "Delivery · {base}",
-              "Platform fee · ₹0"
+              "Delivery · {base}"
             ],
             "totalLabel": "Total",
             "button": "Pay with Razorpay"
@@ -527,7 +517,7 @@
   "sell": {
     "meta": {
       "title": "Sell on QuickLocal",
-      "description": "Open your shop to your own neighbourhood — {freeProducts} products free, platform fees from {lowestFee}%, and paid after every delivered order."
+      "description": "Open your shop to your own neighbourhood — {freeProducts} products free, your own free-delivery threshold, and paid after every delivered order."
     },
     "hero": {
       "eyebrow": "For shops",
@@ -542,41 +532,7 @@
         "label": "See the plans",
         "href": "/pricing"
       },
-      "note": "Free for up to {freeProducts} products. The customer never pays a platform fee — you pay {lowestFee}–{highestFee}% of the sale."
-    },
-    "planner": {
-      "eyebrow": "Free-delivery planner",
-      "title": "Set a threshold that protects your margin.",
-      "accent": "protects your margin.",
-      "intro": "The same check the vendor app runs before you save: what a free-delivery order costs you, the smallest safe threshold for your aisle, and a warning when an order would give too much away.",
-      "category": "Your aisle",
-      "threshold": "Free delivery from",
-      "order": "An order of",
-      "cost": "Your cost of goods",
-      "costHint": "Optional — as a share of the price",
-      "costOff": "Not set",
-      "platformFee": "Platform fee",
-      "absorbed": "Delivery base you cover",
-      "net": "You receive",
-      "profit": "Your profit",
-      "given": "Given away",
-      "recommended": "Smallest safe threshold for {category}",
-      "useRecommended": "Use it",
-      "none": "No safe threshold exists at this fee",
-      "healthy": "Healthy",
-      "check": "Worth a second look",
-      "free": "Free delivery applies",
-      "paid": "The customer pays delivery",
-      "warnings": {
-        "thresholdLow": "{chosen} is below the {recommended} minimum for {category}: a small order could qualify for free delivery and give away more than {ceiling}%.",
-        "loss": "This order would lose you {loss}. Raise your price or your threshold.",
-        "thin": "A thin margin — {margin}% after the platform fee and delivery.",
-        "nonPositive": "After the platform fee and delivery you would receive {net} — nothing left.",
-        "giveaway": "You would give away {given}% of this order. A higher threshold would protect it.",
-        "cliff": "Free delivery applies, so you cover the {base} base on top of the {fee} platform fee. An order just under {chosen} would net you {base} more."
-      },
-      "footnote": "Mirrors the backend's profit simulator: a {ceiling}% ceiling on what a free order gives away, a {floor}% margin floor, and a smallest safe threshold of ⌈{baseRaw} ÷ ({ceiling}% − fee)⌉.",
-      "_tokens": "Live values filled in the browser: {chosen} {recommended} {category} {loss} {margin} {net} {given} {fee}. {ceiling} {floor} {baseRaw} {base} are filled at build."
+      "note": "Free for up to {freeProducts} products. Change or cancel a plan any month."
     },
     "documents": {
       "eyebrow": "Verification",
@@ -681,12 +637,27 @@
         "label": "Ask us first",
         "href": "/contact"
       }
+    },
+    "delivery": {
+      "eyebrow": "Free delivery, your call",
+      "title": "Decide when delivery is on you.",
+      "accent": "on you.",
+      "intro": "Set a basket size per aisle. Above it you cover the {base} delivery base and the customer sees free delivery; below it they pay. Anything past {freeKm} km stays with the customer either way.",
+      "threshold": "Free delivery from",
+      "order": "An order of",
+      "distance": "Distance",
+      "customer": "Customer pays for delivery",
+      "shop": "You cover",
+      "rider": "Rider earns",
+      "free": "Free delivery applies",
+      "paid": "The customer pays delivery",
+      "note": "The rider is paid the whole fee either way — the only question is who funds the base."
     }
   },
   "deliver": {
     "meta": {
       "title": "Deliver with QuickLocal",
-      "description": "Keep the whole delivery fee — {base} for any trip up to {freeKm} km and about ₹{perKm} a kilometre beyond — on a motorbike, scooter, auto or bicycle."
+      "description": "Earn the order's whole delivery fee — {base} for any trip up to {freeKm} km and about ₹{perKm} a kilometre beyond — on a motorbike, scooter, auto or bicycle."
     },
     "hero": {
       "eyebrow": "For riders",
@@ -706,7 +677,7 @@
       "eyebrow": "What a delivery pays",
       "title": "Slide it. That is your fee.",
       "accent": "That is your fee.",
-      "intro": "The same arithmetic the platform runs on every order. The platform takes none of it.",
+      "intro": "The same arithmetic the platform runs on every order — the order's whole delivery fee is what you earn.",
       "calcTitle": "Try a distance",
       "calcLabel": "Distance",
       "calcResult": "You earn"

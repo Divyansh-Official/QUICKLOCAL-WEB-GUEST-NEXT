@@ -32,8 +32,8 @@
         },
         {
           "icon": "bike",
-          "title": "Rider keeps 100%",
-          "text": "Of every delivery fee",
+          "title": "Rider earns ₹30+",
+          "text": "On every delivery",
           "position": "r"
         },
         {
@@ -45,12 +45,12 @@
       ],
       "fees": [
         {
-          "label": "Delivery, first {freeKm} km",
-          "value": "{base}"
+          "label": "Basket",
+          "value": "₹640"
         },
         {
-          "label": "Platform fee for you",
-          "value": "₹0"
+          "label": "Delivery, first {freeKm} km",
+          "value": "{base}"
         },
         {
           "label": "Rider earns",
@@ -83,10 +83,6 @@
       "text": "Shops within {radius} km — or up to {maxRadius}"
     },
     {
-      "icon": "tag",
-      "text": "Platform fee from {lowestFee}%, paid by the shop"
-    },
-    {
       "icon": "bike",
       "text": "Riders keep the whole delivery fee"
     },
@@ -97,6 +93,10 @@
     {
       "icon": "headset",
       "text": "Complaints escalated, never closed quietly"
+    },
+    {
+      "icon": "tag",
+      "text": "Free delivery over the shop's threshold"
     }
   ],
   "statement": {
@@ -108,7 +108,7 @@
     "eyebrow": "What we offer",
     "title": "{Aisles} aisles. One neighbourhood.",
     "accent": "One neighbourhood.",
-    "intro": "Every category a local shop can open under — each with the platform fee it actually pays. Tap one to step inside.",
+    "intro": "Every category a local shop can open under. Tap one to step inside.",
     "cta": {
       "label": "All categories",
       "href": "/services"
@@ -141,10 +141,10 @@
         "kind": "stat",
         "size": "wide",
         "icon": "tag",
-        "title": "Shops keep up to {bestKeep}%.",
-        "text": "Platform fees start at {lowestFee}% and never exceed {highestFee}% — and the customer never pays one.",
-        "stat": "{lowestFee}%",
-        "statLabel": "Lowest platform fee"
+        "title": "Free delivery, the shop's call.",
+        "text": "Each shop sets the basket size above which it covers the {base} delivery base — so a big order arrives free.",
+        "stat": "{threshold}",
+        "statLabel": "Default free-delivery threshold"
       },
       {
         "kind": "plain",
@@ -198,8 +198,7 @@
     "eyebrow": "What it costs",
     "title": "Work out a real order, to the rupee.",
     "accent": "to the rupee.",
-    "intro": "The same arithmetic the platform runs when an order is placed — the flat base fee, the fuel-derived per-km beyond {freeKm} km, and your category's platform fee. Nothing is rounded for effect.",
-    "category": "Category",
+    "intro": "The same arithmetic the platform runs when an order is placed — the flat base fee and the fuel-derived per-km beyond {freeKm} km. Nothing is rounded for effect.",
     "basket": "Basket",
     "distance": "Distance",
     "thresholdNote": "Free delivery from {threshold} — the default until a shop sets its own.",
@@ -207,12 +206,12 @@
     "extraNote": "{extraKm} km beyond it adds {extraFee}.",
     "noExtraNote": "Nothing extra at this distance.",
     "customer": "Customer pays",
-    "shop": "Shop keeps",
+    "shop": "Shop covers",
     "rider": "Rider earns",
     "customerNote": "{basket} basket · {delivery} delivery",
     "customerNoteFree": "{basket} basket · {delivery} delivery (base covered by the shop)",
-    "shopNote": "after {fee} platform fee at {percent}%",
-    "shopNoteFree": "after {fee} platform fee and {absorbed} of delivery",
+    "shopNote": "nothing — below the shop's threshold",
+    "shopNoteFree": "the {absorbed} delivery base, to make it free",
     "riderNote": "The whole delivery fee, whoever funded it",
     "freeBanner": "Over the threshold — the shop absorbs the {base} base and the customer sees free delivery.",
     "moreBanner": "{remaining} more and the shop takes on the base fee instead.",
@@ -260,16 +259,16 @@
     "eyebrow": "Ride with us",
     "title": "The delivery fee is the rider's.",
     "accent": "the rider's.",
-    "intro": "{base} for any delivery up to {freeKm} km, about ₹{perKm} for every kilometre past it, and all of it reaches the rider — whichever side paid for it.",
+    "intro": "{base} for any delivery up to {freeKm} km and about ₹{perKm} for every kilometre past it — the order's whole delivery fee, whichever side paid for it.",
     "figures": [
       "Any trip up to {freeKm} km",
       "Each km beyond it",
-      "Of the fee, the rider's"
+      "A 6 km trip"
     ],
     "figureValues": [
       "{base}",
       "₹{perKm}",
-      "100%"
+      "{sampleFee}"
     ],
     "deliveries": "Deliveries",
     "rating": "Rating",

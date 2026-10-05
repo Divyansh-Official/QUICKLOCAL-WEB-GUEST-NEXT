@@ -41,12 +41,12 @@ is `tokens` in the same file.
 The platform files mirror the backend's **latest** branch (`Phase-06`), not its
 default branch, which is far behind. The ones that matter most:
 
-- **Six permanent categories** — Grocery 2%, Hardware 3%, Furniture 3%,
-  Fashion 3%, **Toys**, Others 1%. Toys was created in the admin console, so
-  its fee is not in any repository: **3% is assumed** — see `_toysFee` in
-  `categories.json` and change one number if the console says otherwise.
-- **The customer never pays a platform fee.** It is a share of the sale,
-  charged to the shop.
+- **Six permanent categories** — Grocery, Hardware, Furniture, Fashion,
+  **Toys** and Others.
+- **Commission is never published.** No platform-fee or commission figure
+  appears on the site, in its copy, or in the data its pages ship to the
+  browser — by decision. `categories.json` and `fees.json` deliberately carry
+  no fee percentages, so nothing can leak by accident.
 - **A rider is paid the order's whole delivery fee**: ₹30 for the first 4 km,
   then petrol ÷ mileage × 2.5 per km beyond, rounded up
   (`SplitPayoutService.driverAmount`). The ₹20 + ₹5/km figures in app_config
@@ -59,7 +59,7 @@ default branch, which is far behind. The ones that matter most:
 
 The money arithmetic lives once, in `src/lib/fees.ts`, as pure functions that
 copy the services line for line — the estimator, the rider slider and the
-shop's planner all run it, and the server uses it for the figures it prints.
+shop's delivery tool all run it, and the server uses it for the figures it prints.
 
 `testimonials.json` is empty on purpose: there are no real reviews yet, and the
 section renders itself the day one is added.
@@ -71,13 +71,13 @@ section renders itself the day one is added.
 | `/` | Hero with a 3D phone tracking a real order → guarantees ribbon → scroll-lit statement → category shelf → bento → numbers band → how it works → every order state → cost estimator → three audiences → rider tiers → about → app band → FAQ → newsletter |
 | `/how-it-works` | **One order as a scroll story** — a sticky handset whose screen changes scene as each of eight steps crosses the middle of the screen, turning as you go → every order state → the four clocks on every order |
 | `/services` | Six category cards → how delivery works → refer & earn |
-| `/services/[slug]` | **The page a category card zooms open into** — 3D slab, fee, what shops list, what a shop keeps, the aisle's numbers, other aisles |
-| `/sell` | For shops — the **free-delivery planner** (the backend's profit simulator, in the browser) → documents → plans → paid boosts → four steps to live |
+| `/services/[slug]` | **The page a category card zooms open into** — 3D slab, what shops list, what delivery costs, the aisle's numbers, other aisles |
+| `/sell` | For shops — **free delivery, your call** (who funds a delivery at any threshold, order and distance) → documents → plans → paid boosts → four steps to live |
 | `/deliver` | For riders — what a delivery pays, on a slider → **pick your vehicle, see your papers** → 3D tier medals → the rules that protect a rider's time |
 | `/safety` | Verification, the codes at both ends, money that waits for the order (each with scroll-driven art) → the clocks → the checks nobody sees |
 | `/help` | **Help Centre** — every question, searchable as you type, filtered by who is asking, shareable as `?q=…&topic=…`, published as FAQPage data |
 | `/for-business` | Both partner tracks side by side, linking to `/sell` and `/deliver` |
-| `/pricing` | Plan cards → full comparison → platform fee by category |
+| `/pricing` | Plan cards → full comparison |
 | `/get-the-app` | Store badges (marked *Soon* until `app.json` says otherwise) → onboarding for each role |
 | `/about`, `/contact` | Story, principles · channels with copy buttons, FAQ |
 

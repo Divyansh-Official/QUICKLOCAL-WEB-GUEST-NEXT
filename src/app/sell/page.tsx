@@ -1,11 +1,11 @@
 /**
- * /sell — for a shop deciding whether to join: what a sale costs, the
- * free-delivery planner the vendor app runs, the papers to have ready, the
- * plans and boosts, and the four steps to going live.
+ * /sell — for a shop deciding whether to join: free delivery on its own
+ * terms, the papers to have ready, the plans and boosts, and the four steps
+ * to going live.
  */
 import type { Metadata } from 'next';
 import Reveal from '@/components/motion/Reveal';
-import Planner from '@/components/sections/partners/Planner';
+import DeliveryChoice from '@/components/sections/partners/DeliveryChoice';
 import CtaBanner from '@/components/sections/shared/CtaBanner';
 import PageHero from '@/components/sections/shared/PageHero';
 import Button from '@/components/ui/Button';
@@ -13,9 +13,9 @@ import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
-import { appRoles, fees, fill, fillDeep, inr, pages, plans, ui } from '@/lib/data';
+import { appRoles, deliveryRules, fill, fillDeep, inr, pages, plans, ui } from '@/lib/data';
 
-const copy = fillDeep(pages.sell, { ceiling: fees.absorbCeilingPercent, floor: fees.marginFloorPercent });
+const copy = fillDeep(pages.sell);
 const vendor = appRoles.find(r => r.key === 'vendor');
 
 export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
@@ -39,9 +39,9 @@ export default function SellPage() {
 
       <section id="planner" className="tone-alt section scroll-mt-24">
         <div className="shell">
-          <SectionHeader eyebrow={copy.planner.eyebrow} title={copy.planner.title} accent={copy.planner.accent} intro={copy.planner.intro} />
-          <Reveal className="mx-auto mt-14 max-w-[1040px]">
-            <Planner fees={fees} categories={fees.categories} copy={copy.planner} />
+          <SectionHeader eyebrow={copy.delivery.eyebrow} title={copy.delivery.title} accent={copy.delivery.accent} intro={copy.delivery.intro} />
+          <Reveal className="mx-auto mt-14 max-w-[980px]">
+            <DeliveryChoice fees={deliveryRules} copy={copy.delivery} />
           </Reveal>
         </div>
       </section>

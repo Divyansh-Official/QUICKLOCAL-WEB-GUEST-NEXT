@@ -17,9 +17,9 @@
     "comingSoon": "Coming soon to the stores",
     "perMonth": "/month",
     "free": "Free",
-    "platformFee": "platform fee",
     "explore": "Explore",
-    "more": "More"
+    "more": "More",
+    "deliveryFrom": "Delivery from {base}"
   },
   "header": {
     "cta": {

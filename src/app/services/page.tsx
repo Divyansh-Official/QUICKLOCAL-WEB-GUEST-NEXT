@@ -11,7 +11,7 @@ import CtaBanner from '@/components/sections/shared/CtaBanner';
 import FactGrid from '@/components/sections/shared/FactGrid';
 import PageHero from '@/components/sections/shared/PageHero';
 import SectionHeader from '@/components/ui/SectionHeader';
-import { categories, feePercent, fillDeep, pages, ui } from '@/lib/data';
+import { categories, fill, fillDeep, pages, ui } from '@/lib/data';
 
 const copy = fillDeep(pages.services);
 
@@ -31,7 +31,7 @@ export default function ServicesPage() {
         <ul className="shell grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((c, i) => (
             <Reveal as="li" key={c.slug} id={c.slug} index={i % 3} className="scroll-mt-28">
-              <CategoryCard c={{ slug: c.slug, name: c.name, icon: c.icon, hue: c.hue, tagline: c.tagline, fee: feePercent(c.platformFeePercent), examples: c.examples }} feeLabel={ui.common.platformFee} />
+              <CategoryCard c={{ slug: c.slug, name: c.name, icon: c.icon, hue: c.hue, tagline: c.tagline, badge: fill(ui.common.deliveryFrom), examples: c.examples }} />
             </Reveal>
           ))}
         </ul>

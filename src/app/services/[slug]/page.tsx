@@ -2,7 +2,7 @@
  * /services/[slug] — the page a category card zooms open into.
  *
  * Opening: night, warm light, the category's 3D slab, its name, promise and
- * fee, with the glass Back control that shrinks the page back into its card.
+ * delivery, with the glass Back control that shrinks the page back into its card.
  * Then what shops in the aisle list, the numbers that apply to it, what a shop
  * keeps on a ₹1,000 sale, and the other aisles.
  */
@@ -21,7 +21,7 @@ import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Shelf from '@/components/ui/Shelf';
 import Slab3D from '@/components/ui/Slab3D';
-import { categories, feePercent, fees, fillDeep, getCategory, info, inr, pages, ui } from '@/lib/data';
+import { categories, fees, fill, fillDeep, getCategory, info, inr, pages, ui } from '@/lib/data';
 
 const copy = fillDeep(pages.services);
 
@@ -34,19 +34,17 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const c = getCategory((await params).slug);
   if (!c) return {};
-  return { title: `${c.name} — ${copy.meta.title}`, description: `${c.tagline} ${c.blurb}. ${feePercent(c.platformFeePercent)} ${ui.common.platformFee}.` };
+  return { title: `${c.name} — ${copy.meta.title}`, description: `${c.tagline} ${c.blurb}.` };
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
   const c = getCategory((await params).slug);
   if (!c) notFound();
   const d = copy.detail;
-  const fee = feePercent(c.platformFeePercent);
-  const keeps = 1000 - Math.round((1000 * c.platformFeePercent) / 100);
   const facts = d.facts.map(f => ({
     icon: f.icon,
     label: f.label,
-    value: { fee, base: inr(fees.baseFeeInr), radius: `${info.delivery.defaultRadiusKm} km`, hours: `${info.delivery.maxHours} hrs` }[f.key] ?? '',
+    value: { base: inr(fees.baseFeeInr), maxRadius: `${info.delivery.maxRadiusKm} km`, radius: `${info.delivery.defaultRadiusKm} km`, hours: `${info.delivery.maxHours} hrs` }[f.key] ?? '',
   }));
   const related = categories.filter(x => x.slug !== c.slug);
 
@@ -90,10 +88,6 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
               </Enter>
               <Enter delay={260} className="mt-8 flex flex-wrap gap-2.5">
                 <span className="glass inline-flex h-10 items-center gap-2 rounded-full px-4 text-[14px] font-bold text-fg">
-                  <Icon name="tag" size={16} className="text-[#f7b16d]" />
-                  {fee} {ui.common.platformFee}
-                </span>
-                <span className="glass inline-flex h-10 items-center gap-2 rounded-full px-4 text-[14px] font-bold text-fg">
                   <Icon name="wallet" size={16} className="text-[#f7b16d]" />
                   {d.deliveryLabel} {inr(fees.baseFeeInr)}
                 </span>
@@ -119,9 +113,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
             </ul>
           </Reveal>
           <Reveal index={1} className="glass glass-raised stat-box flex flex-col rounded-[var(--radius-panel)] p-7 sm:p-9">
-            <p className="text-[13px] font-extrabold uppercase tracking-[0.12em] text-fg-3">{d.keepTitle}</p>
-            <p className="t-stat text-gradient mt-4 text-[clamp(3rem,2rem+4vw,5rem)]">{inr(keeps)}</p>
-            <p className="t-small mt-3">{d.keepNote}</p>
+            <p className="text-[13px] font-extrabold uppercase tracking-[0.12em] text-fg-3">{d.deliveryTitle}</p>
+            <p className="t-stat text-gradient mt-4 text-[clamp(3rem,2rem+4vw,5rem)]">{inr(fees.baseFeeInr)}</p>
+            <p className="t-small mt-3">{fillDeep(d.deliveryNote)}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button href={d.costCta.href} iconStart="calculator">
                 {d.costCta.label}
@@ -149,7 +143,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         </div>
         <Shelf className="mt-6" label={d.relatedTitle} itemWidth="clamp(268px, 74vw, 310px)" labels={{ previous: ui.common.previous, next: ui.common.next }}>
           {related.map(r => (
-            <CategoryCard key={r.slug} c={{ slug: r.slug, name: r.name, icon: r.icon, hue: r.hue, tagline: r.tagline, fee: feePercent(r.platformFeePercent), examples: r.examples }} feeLabel={ui.common.platformFee} />
+            <CategoryCard key={r.slug} c={{ slug: r.slug, name: r.name, icon: r.icon, hue: r.hue, tagline: r.tagline, badge: fill(ui.common.deliveryFrom), examples: r.examples }} />
           ))}
         </Shelf>
       </section>

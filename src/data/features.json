@@ -10,16 +10,15 @@
   ],
   "vendors": [
     "List {freeProducts} products free, 25 on Starter, unlimited on Pro",
-    "Platform fee from {lowestFee}%, never above {highestFee}% — the customer pays none",
     "Paid after every delivered order, reconciled automatically",
-    "Set your own free-delivery threshold, with a planner that warns you",
+    "Set your own free-delivery threshold, aisle by aisle",
     "Boost a product or the whole shop, on Growth and Pro",
     "Change or cancel your plan any month"
   ],
   "partners": [
     "{base} for any delivery up to {freeKm} km",
     "Beyond {freeKm} km, ₹{perKm} more for every kilometre",
-    "The whole delivery fee is yours — the platform takes none of it",
+    "The order's whole delivery fee is what you earn",
     "See the shop, the customer and both distances before you accept",
     "Paid after every delivered order, to your bank or UPI",
     "A motorbike, a scooter, an auto — or a bicycle"
