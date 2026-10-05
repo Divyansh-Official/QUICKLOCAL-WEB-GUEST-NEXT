@@ -19,8 +19,10 @@ export default function MorphLink({ href, onClick, children, ...rest }: Componen
     event.preventDefault();
     expand({ source: morphSurface(event.currentTarget), href, go: () => router.push(href) });
   };
+  /* Fetch the page the moment a pointer or finger arrives, so it is ready when the panel opens. */
+  const warm = () => router.prefetch(href);
   return (
-    <Link href={href} onClick={handle} data-morph-key={href} {...rest}>
+    <Link href={href} onClick={handle} onPointerEnter={warm} onPointerDown={warm} data-morph-key={href} {...rest}>
       {children}
     </Link>
   );

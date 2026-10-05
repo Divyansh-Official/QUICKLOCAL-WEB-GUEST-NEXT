@@ -132,7 +132,7 @@ No animation library. Motion is CSS, Web Animations and View Transitions:
 
 | What | How | Where |
 |---|---|---|
-| Category card zooms open into its page; Back shrinks it home | fixed overlay beneath the header, Web Animations | `lib/morph.ts`, `motion/MorphLink`, `motion/MorphBack` |
+| Category card opens into its page — the panel by clip-path, the 3D tile flown by transform to its place; Back reverses it and returns step by step | one fixed panel beneath the header, Web Animations, no layout animation | `lib/morph.ts`, `motion/MorphLink`, `motion/MorphBack` |
 | Content rises in and vanishes under the header | scroll-driven animations on registered properties | `motion/Reveal`, `[data-reveal]` |
 | Hero copy recedes as you scroll | scroll timeline | `[data-vanish]` |
 | The statement lights up word by word | view timeline | `sections/shared/Statement` |

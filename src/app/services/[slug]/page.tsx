@@ -66,7 +66,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                 <b className="ping" style={{ left: '86%', top: '62%', ['--delay' as string]: '-1.2s' }} />
                 <b className="ping" style={{ left: '40%', top: '92%', ['--delay' as string]: '-2s' }} />
               </span>
-              <Enter delay={160} effect="scale" className="group relative">
+              <Enter delay={160} effect="scale" className="group relative" data-morph-slab>
                 <Slab3D icon={c.icon} hue={c.hue} size={300} phoneSize={210} active />
               </Enter>
             </div>

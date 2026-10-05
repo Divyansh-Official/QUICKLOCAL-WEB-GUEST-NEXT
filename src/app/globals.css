@@ -1628,33 +1628,45 @@
     opacity: 0;
   }
 
+  /* One full-viewport panel; its visible shape is a clip-path inset. */
   .morph-surface {
     position: fixed;
+    inset: 0;
     isolation: isolate;
     overflow: hidden;
-    background: var(--night);
-    box-shadow: 0 30px 80px -30px rgb(0 0 0 / 0.55);
+    background: var(--card);
+    will-change: clip-path;
   }
 
   .morph-shade {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 3;
     opacity: 0;
     background:
-      radial-gradient(60% 50% at 80% 10%, rgb(240 134 38 / 0.45), transparent 70%),
-      radial-gradient(50% 50% at 10% 90%, rgb(245 198 69 / 0.18), transparent 70%),
+      radial-gradient(60% 50% at 80% 10%, rgb(240 134 38 / 0.42), transparent 70%),
+      radial-gradient(50% 50% at 10% 90%, rgb(245 198 69 / 0.16), transparent 70%),
       var(--night);
   }
 
   .morph-copy {
     position: absolute !important;
-    top: 0;
-    left: 0;
     z-index: 2;
     margin: 0 !important;
     transform: none !important;
     box-shadow: none !important;
+    animation: none !important;
+  }
+
+  /* The tile in flight: its own composited layer above the panel. */
+  .morph-fly {
+    position: fixed !important;
+    z-index: 4;
+    margin: 0 !important;
+    transform-origin: 50% 50%;
+    will-change: transform;
+    pointer-events: none;
+    animation: none !important;
   }
 
   html[data-morph] .site-header .lg[data-lg-live],

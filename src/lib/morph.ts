@@ -1,47 +1,47 @@
 /**
  * Card ↔ page zoom, in the manner of the App Store's Today cards: the card
- * you tap grows out of its exact place on the screen into the page it opens,
- * and the page's content rises in once it lands. Back runs it in reverse.
+ * you tap opens out of its exact place into the page it leads to, and its 3D
+ * tile flies to where the page shows it. Back runs it in reverse.
  *
- * It is a fixed overlay of a copy of the card, animated with Web Animations
- * BENEATH the header — the header, the tab bar and the rest of the chrome are
- * never captured, covered or redrawn.
+ * Everything moves on the compositor or in paint, never in layout:
+ *   · the panel is ONE fixed, full-viewport surface whose visible shape is a
+ *     clip-path inset — from the card's rectangle and corners to the page's
+ *     hero, and back;
+ *   · the tile is a copy flown with transform (translate + scale) from the
+ *     card's tile to the page's, and swapped for the real one when it lands.
  *
- * Smoothness comes from never asking the main thread for two things at once:
- *
- *   expand    the copy grows straight to the box the page's hero will occupy
- *             and holds still; only then does the navigation run, under it;
- *             once the new page has painted, the overlay dissolves (a
- *             compositor-only fade) as the page's text rises in.
- *   collapse  the hero darkens under an opaque layer, the previous page
- *             renders beneath it, then the layer shrinks back into the card.
+ * The navigation runs once the panel has opened (the page is prefetched, so it
+ * is there at once), and the tile flies in one movement to where category
+ * pages put it — remembered after the first open, so it lands exactly. It all sits BENEATH the header: the chrome is never covered.
  *
  * Reduced motion and ?nomotion fall straight through to an ordinary
  * navigation, and nothing here can block one: if the new page has not
- * arrived within 2.5s the overlay simply fades and navigation finishes alone.
+ * arrived within 2.5s the panel simply fades and navigation finishes alone.
  */
 import { prefersCalm } from '@/lib/hooks';
 
 const GIVE_UP_MS = 2500;
-const GROW_MS = 620;
-const SHRINK_MS = 560;
-const DARKEN_MS = 170;
-const REVEAL_MS = 440;
-const HANDOFF_MS = 160;
+const OPEN_MS = 500;
+const FLY_MS = 520;
+const CLOSE_MS = 520;
+const FADE_MS = 260;
 const SAFETY_MS = 6000;
 const ENTRANCES_MS = 1800;
-const SOFT = 'cubic-bezier(0.4, 0, 0.2, 1)';
+/* iOS's own sheet curve: quick away, long soft landing, no overshoot. */
+const IOS = 'cubic-bezier(0.32, 0.72, 0, 1)';
+const OUT = 'cubic-bezier(0.22, 1, 0.36, 1)';
 const HERO_MIN = 560;
 const HERO_MAX = 820;
 const HERO_VH = 0.88;
 
-type Layer = { layer: HTMLDivElement; dim: HTMLDivElement; surface: HTMLDivElement; shade: HTMLDivElement; copy: HTMLElement | null };
+type Layer = { layer: HTMLDivElement; dim: HTMLDivElement; surface: HTMLDivElement; shade: HTMLDivElement; fly: HTMLElement | null };
 type Pending = { mode: 'expand' | 'collapse'; from: string; restore?: boolean; resolve: () => void; timer: number };
 
 const state: {
   pending: Pending | null;
   current: string | null;
-  opened: { detail: string; from: string } | null;
+  /** Every card opened in a row (Home → Grocery → Toys), so each Back goes one step. */
+  opened: { detail: string; from: string }[];
   scroll: Map<string, number>;
   layer: Layer | null;
   startedAt: number;
@@ -52,7 +52,7 @@ const state: {
 } = {
   pending: null,
   current: null,
-  opened: null,
+  opened: [],
   scroll: new Map(),
   layer: null,
   startedAt: 0,
@@ -68,11 +68,6 @@ const frames = (count = 2) =>
   new Promise<void>(resolve => {
     const step = (left: number) => (left ? requestAnimationFrame(() => step(left - 1)) : resolve());
     step(count);
-  });
-const idle = (timeout: number) =>
-  new Promise<void>(resolve => {
-    if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(() => resolve(), { timeout });
-    else window.setTimeout(resolve, Math.min(timeout, 120));
   });
 
 const busy = () => Boolean(state.layer) && performance.now() - state.startedAt < SAFETY_MS;
@@ -99,24 +94,18 @@ function inViewport(el: Element | null) {
   return r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth && r.width > 0;
 }
 
+function animate(el: Element, keyframes: Keyframe[], options: KeyframeAnimationOptions) {
+  return el.animate(keyframes, options);
+}
+const done = (a: Animation) => a.finished.then(() => undefined, () => undefined);
+
 /* ---------- geometry ---------- */
 
-let easing: string | null = null;
-const spring = () =>
-  (easing ??= getComputedStyle(root()).getPropertyValue('--spring-snappy').trim() || 'cubic-bezier(0.32, 0.72, 0, 1)');
-
-function animate(el: Element, keyframes: Keyframe[], options: KeyframeAnimationOptions) {
-  try {
-    return el.animate(keyframes, options);
-  } catch {
-    return el.animate(keyframes, { ...options, easing: 'cubic-bezier(0.32, 0.72, 0, 1)' });
-  }
-}
-
 type Box = { top: number; left: number; width: number; height: number };
-const box = (r: Box) => ({ top: `${r.top}px`, left: `${r.left}px`, width: `${r.width}px`, height: `${r.height}px` });
-const near = (a: Box, b: Box) =>
-  Math.abs(a.top - b.top) < 2 && Math.abs(a.left - b.left) < 2 && Math.abs(a.width - b.width) < 2 && Math.abs(a.height - b.height) < 2;
+const rectOf = (el: Element): Box => {
+  const r = el.getBoundingClientRect();
+  return { top: r.top, left: r.left, width: r.width, height: r.height };
+};
 
 let probe: HTMLDivElement | null = null;
 function smallViewportHeight() {
@@ -129,36 +118,71 @@ function smallViewportHeight() {
   return probe.offsetHeight || window.innerHeight;
 }
 
-/** Where the page at `href` will put its hero, before it exists. */
+/** Where the page will put its hero, before it exists: the top of the viewport, full width. */
 function heroRect(): Box {
   const width = document.documentElement.clientWidth;
   const height = Math.max(HERO_MIN, Math.min(smallViewportHeight() * HERO_VH, HERO_MAX));
-  const top = document.getElementById('main')?.offsetTop || 0;
-  return { top, left: 0, width, height };
+  return { top: 0, left: 0, width, height };
 }
 
-/* ---------- the overlay ---------- */
-
-function copyOf(el: HTMLElement, rect: Box) {
-  const copy = el.cloneNode(true) as HTMLElement;
-  copy.removeAttribute('id');
-  copy.removeAttribute('data-morph-key');
-  copy.querySelectorAll('[id], [data-morph-key]').forEach(node => {
-    node.removeAttribute('id');
-    node.removeAttribute('data-morph-key');
-  });
-  copy.classList.add('morph-copy');
-  copy.style.width = `${rect.width}px`;
-  copy.style.height = `${rect.height}px`;
-  return copy;
+/** A box as a clip-path on the full-viewport surface. */
+function clip(r: Box, radius: string) {
+  const vw = document.documentElement.clientWidth;
+  const vh = window.innerHeight;
+  const right = Math.max(0, vw - (r.left + r.width));
+  const bottom = Math.max(0, vh - (r.top + r.height));
+  return `inset(${Math.max(0, r.top)}px ${right}px ${bottom}px ${Math.max(0, r.left)}px round ${radius})`;
 }
+
+/** Transform that puts an element laid out at `to` exactly over `from`. */
+function over(from: Box, to: Box) {
+  const sx = from.width / to.width;
+  const sy = from.height / to.height;
+  const dx = from.left + from.width / 2 - (to.left + to.width / 2);
+  const dy = from.top + from.height / 2 - (to.top + to.height / 2);
+  return `translate3d(${dx}px, ${dy}px, 0) scale(${sx}, ${sy})`;
+}
+
+/** Transform that moves an element laid out at `from` onto `to`. */
+function onto(from: Box, to: Box) {
+  const dx = to.left + to.width / 2 - (from.left + from.width / 2);
+  const dy = to.top + to.height / 2 - (from.top + from.height / 2);
+  return `translate3d(${dx}px, ${dy}px, 0) scale(${to.width / from.width}, ${to.height / from.height})`;
+}
+
+/*
+ * Where a category page puts its tile, so the tile can fly there in one
+ * movement before the page exists. Every category page shares one layout,
+ * so the first real measurement is remembered per viewport size and every
+ * later flight lands exactly; the layout arithmetic below covers the first.
+ */
+const landed = new Map<string, Box>();
+const sizeKey = () => `${document.documentElement.clientWidth}x${window.innerHeight}`;
+
+function predictSlab(hero: Box): Box {
+  const known = landed.get(sizeKey());
+  if (known) return known;
+  const vw = document.documentElement.clientWidth;
+  if (vw < 1024) {
+    const size = vw < 640 ? 210 : 300;
+    return { top: 168, left: (vw - size) / 2, width: size, height: size };
+  }
+  const gutter = Math.min(48, Math.max(18, vw * 0.046));
+  const shell = Math.min(vw, vw >= 1600 ? 1320 : 1240);
+  const inner = shell - gutter * 2;
+  const start = (vw - shell) / 2 + gutter;
+  const centre = start + (inner - 40) * 0.6 + 40 + ((inner - 40) * 0.4) / 2;
+  return { top: hero.height * 0.36, left: centre - 150, width: 300, height: 300 };
+}
+
+/* ---------- the layer ---------- */
 
 function removeLayer() {
   state.layer?.layer.remove();
   state.layer = null;
 }
 
-function buildLayer(rect: Box, radius: string, copy: HTMLElement | null): Layer {
+function buildLayer(): Layer {
   removeLayer();
   const layer = document.createElement('div');
   layer.className = 'morph-layer';
@@ -167,18 +191,46 @@ function buildLayer(rect: Box, radius: string, copy: HTMLElement | null): Layer 
   dim.className = 'morph-dim';
   const surface = document.createElement('div');
   surface.className = 'morph-surface';
-  Object.assign(surface.style, box(rect), { borderRadius: radius });
   const shade = document.createElement('div');
   shade.className = 'morph-shade';
   surface.append(shade);
-  if (copy) surface.append(copy);
   layer.append(dim, surface);
   document.body.append(layer);
-  state.layer = { layer, dim, surface, shade, copy };
+  /* Every scroll during a morph is a jump, never a glide: a smooth scroll
+     still running after a measurement would leave the card behind. */
+  root().style.scrollBehavior = 'auto';
+  state.layer = { layer, dim, surface, shade, fly: null };
   state.startedAt = performance.now();
   window.clearTimeout(state.safetyTimer);
   state.safetyTimer = window.setTimeout(finish, SAFETY_MS);
   return state.layer;
+}
+
+/** A copy of an element, laid out at `r` in viewport coordinates. */
+function pinned(el: HTMLElement, r: Box, className: string) {
+  const copy = el.cloneNode(true) as HTMLElement;
+  copy.removeAttribute('id');
+  copy.removeAttribute('data-morph-key');
+  copy.querySelectorAll('[id], [data-morph-key]').forEach(node => {
+    node.removeAttribute('id');
+    node.removeAttribute('data-morph-key');
+  });
+  copy.classList.add(className);
+  Object.assign(copy.style, { top: `${r.top}px`, left: `${r.left}px`, width: `${r.width}px`, height: `${r.height}px` });
+  return copy;
+}
+
+/**
+ * The tile, as a free-flying copy laid out at `r`. It starts in the pose its
+ * source shows and eases into the pose its destination shows while it flies
+ * (the slab's own spring transition), so nothing turns at the hand-over.
+ */
+function flyer(slab: HTMLElement, r: Box, endActive: boolean) {
+  const fly = pinned(slab, r, 'morph-fly');
+  const startActive = slab.hasAttribute('data-active') || Boolean(slab.closest('.group')?.matches(':hover'));
+  fly.toggleAttribute('data-active', startActive);
+  if (startActive !== endActive) requestAnimationFrame(() => requestAnimationFrame(() => fly.toggleAttribute('data-active', endActive)));
+  return fly;
 }
 
 function settle() {
@@ -215,8 +267,16 @@ function finish() {
   window.clearTimeout(state.safetyTimer);
   releaseEntrances(0);
   removeLayer();
+  root().style.removeProperty('scroll-behavior');
   root().removeAttribute('data-morph');
   announce({ phase: 'end' });
+}
+
+/** The page's own tile: hidden while its copy flies in, and never replays its entrance. */
+function pageSlab() {
+  const holder = document.querySelector<HTMLElement>('[data-morph-target] [data-morph-slab]');
+  const slab = holder?.querySelector<HTMLElement>('.slab-stage') ?? null;
+  return { holder, slab };
 }
 
 /* ---------- card → page ---------- */
@@ -230,47 +290,79 @@ export function expand({ source, go }: { source: HTMLElement | null; href?: stri
   const from = window.location.pathname;
   state.scroll.set(from, window.scrollY);
 
-  const rect = source.getBoundingClientRect();
+  const card = rectOf(source);
   const radius = getComputedStyle(source).borderTopLeftRadius || '26px';
   const hero = heroRect();
-  const parts = buildLayer(rect, radius, copyOf(source, rect));
+  const parts = buildLayer();
   root().dataset.morph = 'expand';
+
+  /* The card itself, inside the panel at its own place, its tile taken out to fly. */
+  const copy = pinned(source, card, 'morph-copy');
+  copy.querySelector<HTMLElement>('.slab-stage')?.style.setProperty('visibility', 'hidden');
+  parts.surface.append(copy);
+  parts.surface.style.clipPath = clip(card, radius);
+
+  /* The tile, drawn at the size it lands at (so it is crisp when it gets there) and
+     sent off from the card's tile by transform alone. */
+  const cardSlab = source.querySelector<HTMLElement>('.slab-stage');
+  const slabFrom = cardSlab ? rectOf(cardSlab) : null;
+  const aim = predictSlab(hero);
+  let flight: Animation | null = null;
+  if (cardSlab && slabFrom) {
+    const fly = flyer(cardSlab, aim, true);
+    fly.style.setProperty('--s-d', `${aim.width}px`);
+    fly.style.setProperty('--s-m', `${aim.width}px`);
+    fly.style.transform = over(slabFrom, aim);
+    parts.fly = fly;
+    parts.layer.append(fly);
+  }
 
   void (async () => {
     await frames(1);
     if (state.layer !== parts) return;
-    const grow = animate(parts.surface, [{ ...box(rect), borderRadius: radius }, { ...box(hero), borderRadius: '0px' }], {
-      duration: GROW_MS,
-      easing: spring(),
-      fill: 'forwards',
-    });
-    if (parts.copy) animate(parts.copy, [{ opacity: 1 }, { opacity: 0 }], { duration: 260, easing: 'ease-out', fill: 'forwards' });
-    animate(parts.shade, [{ opacity: 0 }, { opacity: 1 }], { duration: GROW_MS * 0.7, easing: SOFT, fill: 'forwards' });
-    animate(parts.dim, [{ opacity: 0 }, { opacity: 0.45 }], { duration: GROW_MS, easing: SOFT, fill: 'forwards' });
-    window.setTimeout(() => announce({ phase: 'covered', tone: 'dark' }), GROW_MS * 0.45);
 
-    await grow.finished.catch(() => {});
+    const open = animate(parts.surface, [{ clipPath: clip(card, radius) }, { clipPath: clip(hero, '0px') }], { duration: OPEN_MS, easing: IOS, fill: 'forwards' });
+    animate(copy, [{ opacity: 1 }, { opacity: 0 }], { duration: 140, easing: 'ease-out', fill: 'forwards' });
+    animate(parts.shade, [{ opacity: 0 }, { opacity: 1 }], { duration: 300, easing: 'cubic-bezier(0.2, 0, 0, 1)', fill: 'forwards' });
+    animate(parts.dim, [{ opacity: 0 }, { opacity: 0.25 }], { duration: OPEN_MS, easing: IOS, fill: 'forwards' });
+    if (parts.fly && slabFrom) {
+      flight = animate(parts.fly, [{ transform: over(slabFrom, aim) }, { transform: 'none' }], { duration: FLY_MS, easing: OUT, fill: 'forwards' });
+    }
+    window.setTimeout(() => announce({ phase: 'covered', tone: 'dark' }), OPEN_MS * 0.4);
+
+    /* By 60% of the opening the panel already covers the hero (the curve is
+       front-loaded): navigate under it then. The page is prefetched. */
+    await sleep(OPEN_MS * 0.6);
     if (state.layer !== parts) return;
-
     const arrived = waitForRoute({ mode: 'expand', from });
     go();
-    await arrived;
+    await Promise.all([arrived, sleep(OPEN_MS * 0.2)]);
     await frames(2);
     if (state.layer !== parts) return;
 
-    const target = document.querySelector('[data-morph-target]');
-    if (target) {
-      const to = target.getBoundingClientRect();
-      if (!near(to, hero)) {
-        await animate(parts.surface, [{ ...box(hero) }, { ...box(to) }], { duration: 260, easing: SOFT, fill: 'forwards' })
-          .finished.catch(() => {});
-      }
-    }
-    if (state.layer !== parts) return;
+    const { holder, slab } = pageSlab();
+    if (holder) holder.style.animation = 'none';
+    if (slab) slab.style.visibility = 'hidden';
 
+    /* The panel dissolves around the tile as the page's text rises in. The tile
+       stays solid, finishes its flight, and lands exactly where the page put
+       its own (remembered for next time) before handing over to it. */
     releaseEntrances();
-    await animate(parts.layer, [{ opacity: 1 }, { opacity: 0 }], { duration: REVEAL_MS, easing: SOFT, fill: 'forwards' })
-      .finished.catch(() => {});
+    const reveal = Promise.all([
+      done(open).then(() => done(animate(parts.surface, [{ opacity: 1 }, { opacity: 0 }], { duration: FADE_MS, easing: 'ease-out', fill: 'forwards' }))),
+      done(animate(parts.dim, [{ opacity: 0.25 }, { opacity: 0 }], { duration: FADE_MS, easing: 'ease-out', fill: 'forwards' })),
+    ]);
+    const land = (async () => {
+      if (flight) await done(flight);
+      if (!slab || !parts.fly || !inViewport(slab) || state.layer !== parts) return;
+      const real = rectOf(slab);
+      landed.set(sizeKey(), real);
+      const moved = Math.abs(real.left - aim.left) > 1 || Math.abs(real.top - aim.top) > 1 || Math.abs(real.width - aim.width) > 1;
+      if (moved) await done(animate(parts.fly, [{ transform: 'none' }, { transform: onto(aim, real) }], { duration: 220, easing: OUT, fill: 'forwards' }));
+    })();
+    await Promise.all([reveal, land]);
+    if (state.layer !== parts) return;
+    if (slab) slab.style.visibility = '';
     if (state.layer === parts) finish();
   })();
 }
@@ -279,7 +371,8 @@ export function expand({ source, go }: { source: HTMLElement | null; href?: stri
 
 export function collapse({ router, fallbackHref }: { router: { back: () => void; push: (h: string) => void }; fallbackHref: string }) {
   const here = window.location.pathname;
-  const back = Boolean(state.opened && state.opened.detail === here);
+  const top = state.opened[state.opened.length - 1];
+  const back = Boolean(top && top.detail === here);
   const go = () => (back ? router.back() : router.push(fallbackHref));
   const target = document.querySelector('[data-morph-target]');
   if (busy()) return;
@@ -288,58 +381,70 @@ export function collapse({ router, fallbackHref }: { router: { back: () => void;
     return;
   }
 
-  const rect = target.getBoundingClientRect();
-  const parts = buildLayer(rect, '0px', null);
+  const hero = rectOf(target);
+  const parts = buildLayer();
+  parts.surface.style.clipPath = clip(hero, '0px');
   parts.shade.style.opacity = '1';
-  parts.surface.style.opacity = '0';
   root().dataset.morph = 'collapse';
 
+  /* The page's tile lifts off into its own layer before anything changes underneath. */
+  const { slab } = pageSlab();
+  const slabFrom = slab && inViewport(slab) ? rectOf(slab) : null;
+  if (slab && slabFrom) {
+    parts.fly = flyer(slab, slabFrom, false);
+    parts.layer.append(parts.fly);
+  }
+
   void (async () => {
-    const cover = animate(parts.surface, [{ opacity: 0 }, { opacity: 1 }], { duration: DARKEN_MS, easing: 'ease-out', fill: 'forwards' });
-    const dark = animate(parts.dim, [{ opacity: 0 }, { opacity: 1 }], { duration: DARKEN_MS, easing: 'ease-out', fill: 'forwards' });
-    await Promise.all([cover.finished.catch(() => {}), dark.finished.catch(() => {})]);
+    /* The panel is the hero, pixel for pixel, so covering it is invisible. */
+    animate(parts.dim, [{ opacity: 0 }, { opacity: 0.25 }], { duration: 120, easing: 'ease-out', fill: 'forwards' });
+    await done(animate(parts.surface, [{ opacity: 0 }, { opacity: 1 }], { duration: 120, easing: 'ease-out', fill: 'forwards' }));
     if (state.layer !== parts) return;
     const arrived = waitForRoute({ mode: 'collapse', from: here, restore: back });
     go();
     await arrived;
     await frames(2);
-    await idle(160);
     if (state.layer !== parts) return;
 
     announce({ phase: 'reveal' });
     const card = morphSurface(document.querySelector(`[data-morph-key="${CSS.escape(here)}"]`));
-    animate(parts.dim, [{ opacity: 1 }, { opacity: 0 }], { duration: SHRINK_MS, easing: SOFT, fill: 'forwards' });
 
     if (!card || !inViewport(card)) {
-      await animate(parts.surface, [{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(0.94)' }], {
-        duration: REVEAL_MS,
-        easing: SOFT,
-        fill: 'forwards',
-      }).finished.catch(() => {});
+      await Promise.all([
+        done(animate(parts.surface, [{ opacity: 1, transform: 'scale(1)' }, { opacity: 0, transform: 'scale(0.96)' }], { duration: 360, easing: IOS, fill: 'forwards' })),
+        parts.fly ? done(animate(parts.fly, [{ opacity: 1 }, { opacity: 0 }], { duration: 240, easing: 'ease-out', fill: 'forwards' })) : Promise.resolve(),
+      ]);
       if (state.layer === parts) finish();
       return;
     }
 
-    const to = card.getBoundingClientRect();
+    const to = rectOf(card);
     const radius = getComputedStyle(card).borderTopLeftRadius || '26px';
-    const copy = copyOf(card, to);
+    const copy = pinned(card, to, 'morph-copy');
+    copy.querySelector<HTMLElement>('.slab-stage')?.style.setProperty('visibility', 'hidden');
     copy.style.opacity = '0';
-    parts.surface.append(copy);
+    parts.surface.insertBefore(copy, parts.shade);
 
-    await Promise.all(
-      [
-        animate(parts.surface, [{ ...box(rect), borderRadius: '0px' }, { ...box(to), borderRadius: radius }], {
-          duration: SHRINK_MS,
-          easing: spring(),
-          fill: 'forwards',
-        }),
-        animate(parts.shade, [{ opacity: 1 }, { opacity: 0 }], { duration: SHRINK_MS * 0.6, easing: SOFT, fill: 'forwards' }),
-        animate(copy, [{ opacity: 0 }, { opacity: 0, offset: 0.4 }, { opacity: 1 }], { duration: SHRINK_MS, easing: 'ease-in-out', fill: 'forwards' }),
-      ].map(a => a.finished.catch(() => {})),
-    );
-    if (state.layer !== parts) return;
-    await animate(parts.layer, [{ opacity: 1 }, { opacity: 0 }], { duration: HANDOFF_MS, easing: 'ease-out', fill: 'forwards' })
-      .finished.catch(() => {});
+    const cardSlab = card.querySelector<HTMLElement>('.slab-stage');
+    let flight: Promise<void> = Promise.resolve();
+    if (parts.fly && cardSlab && slabFrom) {
+      const dest = rectOf(cardSlab);
+      const fly = flyer(cardSlab, dest, false);
+      fly.removeAttribute('data-active');
+      parts.fly.replaceWith(fly);
+      parts.fly = fly;
+      cardSlab.style.visibility = 'hidden';
+      flight = done(animate(fly, [{ transform: over(slabFrom, dest) }, { transform: 'none' }], { duration: CLOSE_MS + 60, easing: OUT, fill: 'forwards' }));
+    }
+
+    animate(parts.dim, [{ opacity: 0.25 }, { opacity: 0 }], { duration: CLOSE_MS, easing: IOS, fill: 'forwards' });
+    await Promise.all([
+      done(animate(parts.surface, [{ clipPath: clip(hero, '0px') }, { clipPath: clip(to, radius) }], { duration: CLOSE_MS, easing: IOS, fill: 'forwards' })),
+      done(animate(parts.shade, [{ opacity: 1 }, { opacity: 0, offset: 0.45 }, { opacity: 0 }], { duration: CLOSE_MS, easing: 'ease-in-out', fill: 'forwards' })),
+      done(animate(copy, [{ opacity: 0 }, { opacity: 0, offset: 0.25 }, { opacity: 1, offset: 0.7 }, { opacity: 1 }], { duration: CLOSE_MS, easing: 'ease-out', fill: 'forwards' })),
+      flight,
+    ]);
+    if (cardSlab) cardSlab.style.visibility = '';
     if (state.layer === parts) finish();
   })();
 }
@@ -351,7 +456,10 @@ export function routeCommitted(pathname: string) {
   const pending = state.pending;
   if (!pending) return;
   if (pending.mode === 'expand') {
-    state.opened = { detail: pathname, from: pending.from };
+    /* Start the new page at its top, at once and under the panel — the page's
+       smooth scrolling would otherwise slide it up while the panel lifts. */
+    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    state.opened.push({ detail: pathname, from: pending.from });
     state.arrivedAt = performance.now();
     state.released = false;
     window.clearTimeout(state.arrivalTimer);
@@ -361,7 +469,9 @@ export function routeCommitted(pathname: string) {
     if (pending.restore && state.scroll.has(pathname)) {
       window.scrollTo({ top: state.scroll.get(pathname)!, behavior: 'instant' as ScrollBehavior });
     }
-    state.opened = null;
+    /* A real step back pops one card; a jump to the fallback page ends the trail. */
+    if (pending.restore) state.opened.pop();
+    else state.opened.length = 0;
   }
   settle();
 }
