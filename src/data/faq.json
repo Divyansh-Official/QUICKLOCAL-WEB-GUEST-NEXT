@@ -38,7 +38,7 @@
     {
       "audience": "customers",
       "q": "How long does an order take?",
-      "a": "Never more than {hours} hours — that ceiling is set on every order, and the platform checks for late ones every five minutes. Most arrive much sooner, because the shop is a few streets away.",
+      "a": "Never more than {hours} hours — that ceiling is set on every order, and if one runs late you are told. Most arrive much sooner, because the shop is a few streets away.",
       "home": true
     },
     {
@@ -61,7 +61,7 @@
     {
       "audience": "customers",
       "q": "Why does the rider ask me for a code?",
-      "a": "An order is only marked delivered when you give the rider the one-time code from your app. Five wrong attempts lock it for fifteen minutes, so it cannot be guessed — and nothing is ever delivered on a tap."
+      "a": "An order is only marked delivered when you give the rider the one-time code from your app — so nothing is ever delivered on a tap."
     },
     {
       "audience": "customers",
@@ -146,6 +146,26 @@
       "audience": "general",
       "q": "Why are there no customer numbers on this site?",
       "a": "Because we are early, and a figure like 50,000 customers would be a claim our own database contradicts. Every number here is a rule the platform enforces, not a boast."
+    },
+    {
+      "audience": "customers",
+      "q": "What are events?",
+      "a": "Occasions — a festival, a seasonal sale, late-night deals — that appear as a tab right after All in the app, with their own page of offers. Each has a window, and the tab leaves on its own when it ends."
+    },
+    {
+      "audience": "customers",
+      "q": "How do offers work?",
+      "a": "Shops set them on one product, a whole aisle or everything they sell — a percentage or a flat amount, sometimes above a minimum order or with a cap on the saving. Every offer is dated and applied at checkout while it runs; there is no code to type."
+    },
+    {
+      "audience": "customers",
+      "q": "Can I choose which notifications I get?",
+      "a": "Yes. Offers, marketing and updates can each be switched off in the app. Messages about your orders, delivery, payments and security always come through."
+    },
+    {
+      "audience": "customers",
+      "q": "When can I rate an order?",
+      "a": "Once it is delivered, for seven days. You can rate the shop and the rider, once each per order."
     }
   ]
 }

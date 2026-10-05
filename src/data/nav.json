@@ -13,16 +13,20 @@
       "href": "/services"
     },
     {
+      "label": "Events",
+      "href": "/events"
+    },
+    {
+      "label": "The App",
+      "href": "/app"
+    },
+    {
       "label": "Sell",
       "href": "/sell"
     },
     {
       "label": "Deliver",
       "href": "/deliver"
-    },
-    {
-      "label": "Pricing",
-      "href": "/pricing"
     },
     {
       "label": "Help",
@@ -43,16 +47,20 @@
           "href": "/how-it-works"
         },
         {
+          "label": "Inside the App",
+          "href": "/app"
+        },
+        {
+          "label": "Events & Offers",
+          "href": "/events"
+        },
+        {
           "label": "Services",
           "href": "/services"
         },
         {
           "label": "Toys",
           "href": "/services/toys"
-        },
-        {
-          "label": "Pricing",
-          "href": "/pricing"
         },
         {
           "label": "Help Centre",
@@ -105,6 +113,10 @@
           "href": "/deliver"
         },
         {
+          "label": "Pricing",
+          "href": "/pricing"
+        },
+        {
           "label": "Rider Documents",
           "href": "/deliver#documents"
         },
@@ -117,6 +129,10 @@
   ],
   "_primary": "The header shows primary minus Home (the logo is Home) and minus the header button's own destination. The phone menu shows primary large and secondary small.",
   "secondary": [
+    {
+      "label": "Pricing",
+      "href": "/pricing"
+    },
     {
       "label": "About",
       "href": "/about"

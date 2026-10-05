@@ -50,9 +50,9 @@
         "icon": "basket"
       },
       {
-        "label": "How",
-        "href": "/how-it-works",
-        "icon": "route"
+        "label": "Events",
+        "href": "/events",
+        "icon": "sparkle"
       },
       {
         "label": "Help",

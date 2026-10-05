@@ -11,6 +11,8 @@ import CtaBanner from '@/components/sections/shared/CtaBanner';
 import FactGrid from '@/components/sections/shared/FactGrid';
 import PageHero from '@/components/sections/shared/PageHero';
 import SectionHeader from '@/components/ui/SectionHeader';
+import AccentText from '@/components/ui/AccentText';
+import Button from '@/components/ui/Button';
 import { categories, fill, fillDeep, pages, ui } from '@/lib/data';
 
 const copy = fillDeep(pages.services);
@@ -35,6 +37,24 @@ export default function ServicesPage() {
             </Reveal>
           ))}
         </ul>
+        <div className="shell mt-5">
+          <Reveal className="glass glass-raised flex flex-col items-start gap-6 rounded-[var(--radius-panel)] p-7 sm:flex-row sm:items-center sm:justify-between sm:p-9">
+            <div className="flex items-start gap-5">
+              <span className="group hidden flex-none sm:block">
+                <Slab3D icon="calendar" hue="butter" size={96} />
+              </span>
+              <span>
+                <span className="t-title block text-[clamp(1.4rem,1.1rem+1vw,1.9rem)]">
+                  <AccentText text={copy.events.title} accent={copy.events.accent} />
+                </span>
+                <span className="t-small mt-2 block max-w-xl">{copy.events.text}</span>
+              </span>
+            </div>
+            <Button href={copy.events.cta.href} icon="arrow-right" className="flex-none">
+              {copy.events.cta.label}
+            </Button>
+          </Reveal>
+        </div>
       </section>
 
       <section id="delivery" className="tone-alt section scroll-mt-24">

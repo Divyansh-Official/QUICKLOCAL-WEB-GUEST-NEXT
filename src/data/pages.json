@@ -153,6 +153,15 @@
       "relatedTitle": "Other aisles",
       "deliveryTitle": "Delivery, from the shop to you",
       "deliveryNote": "Free over the shop's own threshold — {threshold} until it sets one."
+    },
+    "events": {
+      "title": "And when there is an occasion, a seventh tab.",
+      "accent": "a seventh tab.",
+      "text": "Festivals and seasonal sales open as events beside the aisles, with offers from the shops for as long as they run.",
+      "cta": {
+        "label": "Events & offers",
+        "href": "/events"
+      }
     }
   },
   "forBusiness": {
@@ -426,7 +435,7 @@
           "icon": "check-circle",
           "who": "At your door",
           "title": "Delivered on your code, not a tap.",
-          "text": "Give the rider the code from your app. Five wrong attempts lock it for fifteen minutes, so nobody can guess their way to a delivered order.",
+          "text": "Give the rider the code from your app. The order is only marked delivered when the code matches — never on a tap.",
           "screen": {
             "title": "Your delivery code",
             "chip": "At the door",
@@ -487,7 +496,7 @@
           "unit": "hrs",
           "max": 12,
           "title": "From order to door",
-          "text": "The ceiling on any order, checked every five minutes. Running late sends you an apology and the rider a nudge."
+          "text": "The ceiling on any order. If one runs late, you hear about it straight away."
         }
       ],
       "_max": "max is the dial: minutes on a 60-minute face, hours on a 12-hour face — so the ring reads like a clock."
@@ -773,7 +782,7 @@
         "icon": "shield-check",
         "eyebrow": "Before day one",
         "title": "Verified, document by document.",
-        "text": "Every shop and every rider is checked before taking an order — against the papers their role and vehicle actually call for. Each document is decided on its own, with the reason for any rejection written down, so nobody re-uploads five papers to fix one.",
+        "text": "Every shop and every rider is checked before taking an order — against the papers their role and vehicle actually call for. Documents are checked one by one, and anything missing is named, so nobody re-uploads a whole folder to fix one page.",
         "art": [
           "Aadhaar card",
           "PAN card",
@@ -786,7 +795,7 @@
         "icon": "key",
         "eyebrow": "At both ends",
         "title": "A code at the counter, and at your door.",
-        "text": "The rider confirms pickup with a one-time code at the shop, and delivery with the code in your app. Five wrong attempts lock it for fifteen minutes — so a delivered order is one that really was.",
+        "text": "The rider confirms pickup with a one-time code at the shop, and delivery with the code in your app. A delivered order is one where the codes matched — never one somebody tapped through.",
         "art": [
           "4",
           "8",
@@ -799,7 +808,7 @@
         "icon": "lock",
         "eyebrow": "Money",
         "title": "Money that waits for the order.",
-        "text": "Shops and riders are paid only after an order is delivered. A refund is marked done only once Razorpay has accepted it, and every payout carries a key that makes a retried request unable to pay twice.",
+        "text": "Shops and riders are paid only after an order is delivered, and a refund is marked done only once the payment provider has actually returned it.",
         "art": [
           "Order delivered",
           "Shop paid",
@@ -821,22 +830,22 @@
         {
           "icon": "radius",
           "title": "Nothing beyond {maxRadius} km",
-          "text": "Checkout refuses an order beyond {maxRadius} km, the same edge as search — so no rider is handed an absurd trip."
+          "text": "An order can only be placed with a shop that can actually reach you — so no rider is handed an impossible trip."
         },
         {
           "icon": "phone",
           "title": "A rider's number, masked",
-          "text": "On your tracking screen a rider's number shows only its last four digits — enough to recognise, not enough to keep."
+          "text": "Your tracking screen never shows a rider's full phone number."
         },
         {
-          "icon": "sparkle",
-          "title": "Abuse checks every fifteen minutes",
-          "text": "Automated detectors look for patterns of abuse every fifteen minutes — seeing pseudonyms, not names — and a person reviews what they find."
+          "icon": "shield-check",
+          "title": "Accounts watched for abuse",
+          "text": "Unusual activity is flagged for a person to look at, so a bad actor does not get far."
         },
         {
           "icon": "headset",
           "title": "Complaints that escalate",
-          "text": "A complaint is assigned to a person and escalated, not closed quietly to tidy a dashboard."
+          "text": "A complaint reaches a person and is followed through, not closed quietly."
         }
       ]
     },
@@ -882,6 +891,467 @@
       "cta": {
         "label": "Contact us",
         "href": "/contact"
+      }
+    }
+  },
+  "events": {
+    "_source": "Customer-facing behaviour only: events (V102/V103 — time-boxed occasions shown as a rail tab after All, each with its own page of banners) and shop offers (OfferService — product, aisle or shop-wide; percentage or flat; minimum order; cap; dated; applied at checkout). The example occasion copy is the app's own seeded example.",
+    "meta": {
+      "title": "Events & Offers",
+      "description": "Festivals, sales and late-night deals open as events in the {name} app — a tab of their own beside your aisles, with the shops' offers for the occasion."
+    },
+    "hero": {
+      "eyebrow": "Events & offers",
+      "title": "Every occasion gets a page of its own.",
+      "accent": "a page of its own.",
+      "intro": "Festivals, seasonal sales and late-night deals arrive in the app as events — a tab right beside your aisles, full of the offers for the occasion, there only while it lasts.",
+      "cta": {
+        "label": "Get the app",
+        "href": "/get-the-app"
+      },
+      "secondary": {
+        "label": "How offers work",
+        "href": "/events#offers"
+      }
+    },
+    "rail": {
+      "eyebrow": "In the app",
+      "title": "Right after All, for as long as it runs.",
+      "accent": "for as long as it runs.",
+      "points": [
+        {
+          "icon": "sparkle",
+          "title": "A tab beside your aisles",
+          "text": "A live event sits in the category rail immediately after All — one tap from wherever you are."
+        },
+        {
+          "icon": "gift",
+          "title": "A page of its own",
+          "text": "It opens its own page of banners and offers, chosen for the occasion rather than for an aisle."
+        },
+        {
+          "icon": "calendar",
+          "title": "Gone when it ends",
+          "text": "Every event has a window. When it closes, the tab leaves on its own — nothing lingers past its date."
+        }
+      ],
+      "screen": {
+        "place": "Home · {radius} km",
+        "search": "Search for modak, puja thali…",
+        "all": "All",
+        "event": "Ganeshotsav",
+        "aisles": [
+          "Grocery",
+          "Fashion",
+          "Toys"
+        ],
+        "kicker": "CELEBRATE",
+        "headline": "Ganesh Chaturthi, close to home",
+        "blurb": "Puja essentials · Decorations · Sweets",
+        "tiles": [
+          "Modak",
+          "Puja thali",
+          "Marigold",
+          "Decorations"
+        ]
+      }
+    },
+    "occasions": {
+      "eyebrow": "The kind of thing you will see",
+      "title": "Occasions, not just aisles.",
+      "accent": "not just aisles.",
+      "intro": "Examples of the occasions an event is made for. Which ones run, and when, is announced in the app.",
+      "items": [
+        {
+          "name": "Ganeshotsav",
+          "line": "Puja essentials · Decorations · Sweets",
+          "window": "For the festival's days",
+          "icon": "sparkle",
+          "tone": "festive"
+        },
+        {
+          "name": "Monsoon sale",
+          "line": "Umbrellas · Rainwear · Warm drinks",
+          "window": "While the rains last",
+          "icon": "gift",
+          "tone": "rain"
+        },
+        {
+          "name": "Midnight deals",
+          "line": "Snacks · Late essentials · Treats",
+          "window": "After dark",
+          "icon": "moon",
+          "tone": "night"
+        },
+        {
+          "name": "Your next festival",
+          "line": "Whatever your street celebrates",
+          "window": "Announced in the app",
+          "icon": "calendar",
+          "tone": "warm"
+        }
+      ]
+    },
+    "offers": {
+      "eyebrow": "Offers",
+      "title": "Offers, set by the shops you know.",
+      "accent": "set by the shops you know.",
+      "intro": "Every offer comes from a shop near you, has a start and an end, and is applied to the price at checkout — there is no code to remember.",
+      "tickets": [
+        {
+          "kind": "On one product",
+          "value": "20% off",
+          "detail": "A single item, marked down",
+          "icon": "tag"
+        },
+        {
+          "kind": "On a whole aisle",
+          "value": "₹50 off",
+          "detail": "Everything a shop sells in one category",
+          "icon": "basket"
+        },
+        {
+          "kind": "Shop-wide",
+          "value": "10% off",
+          "detail": "Across the shop's whole catalogue",
+          "icon": "store"
+        }
+      ],
+      "ticketNote": "Illustrative values — each shop sets its own.",
+      "rules": [
+        {
+          "icon": "tag",
+          "title": "A percentage, or a flat amount",
+          "text": "Some offers take a share off the price, others a fixed amount — the card says which."
+        },
+        {
+          "icon": "basket",
+          "title": "A minimum order, if the shop sets one",
+          "text": "Some offers start above a basket size. The offer shows it before you add a thing."
+        },
+        {
+          "icon": "shield-check",
+          "title": "A cap on big savings",
+          "text": "A percentage offer can carry a ceiling on the saving, written on the offer itself."
+        },
+        {
+          "icon": "clock",
+          "title": "Dated, start to finish",
+          "text": "Every offer has a start and an end. It is applied at checkout while it runs, with nothing to type."
+        }
+      ]
+    },
+    "more": {
+      "eyebrow": "More ways to save",
+      "title": "Savings that are always on.",
+      "accent": "always on.",
+      "items": [
+        {
+          "icon": "sparkle",
+          "title": "Best deals near you",
+          "text": "A home rail of the biggest savings within your radius."
+        },
+        {
+          "icon": "truck",
+          "title": "Free delivery, past the threshold",
+          "text": "Every shop sets a basket size above which it covers the delivery base — {threshold} until it picks its own."
+        },
+        {
+          "icon": "gift",
+          "title": "₹{referral} for every friend",
+          "text": "Share your code; when a friend's first order lands, ₹{referral} comes off your next one."
+        }
+      ]
+    },
+    "life": {
+      "eyebrow": "An event's life",
+      "title": "It opens, it runs, it closes.",
+      "accent": "it closes.",
+      "steps": [
+        {
+          "title": "It opens on its date",
+          "text": "The tab appears beside All the moment the window opens."
+        },
+        {
+          "title": "It runs with its offers",
+          "text": "Its page gathers the banners and deals made for the occasion."
+        },
+        {
+          "title": "It closes on its own",
+          "text": "When the window ends the tab leaves — and the app goes back to everyday."
+        }
+      ]
+    },
+    "banner": {
+      "eyebrow": "Do not miss the next one",
+      "title": "Events arrive in the app first.",
+      "accent": "in the app first.",
+      "text": "Turn on offer messages in the app's settings and you will hear when one opens.",
+      "cta": {
+        "label": "Get the app",
+        "href": "/get-the-app"
+      },
+      "secondary": {
+        "label": "Inside the app",
+        "href": "/app"
+      }
+    }
+  },
+  "app": {
+    "_source": "Customer app (Phase-02) screens — Home, Search, Barcode scan, Stores, Saved, Inbox, Notification settings, Collections — and the backend features behind them (home feed sections V85/V92, RecommendationService, SearchService, WishlistService, AutomaticMessages, ReviewEligibilityService). Customer-facing behaviour only.",
+    "meta": {
+      "title": "Inside the App",
+      "description": "A tour of the {name} app — a home page that knows the time of day, six aisles, forgiving search, every shop that can reach you, saved items, events and offers, and a message at every step."
+    },
+    "hero": {
+      "eyebrow": "Inside the app",
+      "title": "Everything your street sells, in one app.",
+      "accent": "in one app.",
+      "intro": "A tour of what a customer sees — from a home page that changes with the hour to a message at every step of an order."
+    },
+    "tour": {
+      "eyebrow": "The tour",
+      "title": "Eight screens worth knowing.",
+      "accent": "worth knowing.",
+      "progress": "Screen {n} of {total}",
+      "steps": [
+        {
+          "key": "feed",
+          "icon": "home",
+          "who": "Home",
+          "title": "A home page that knows the hour.",
+          "text": "Rails of what is popular near you, the best deals within your radius, what is just in, the highly rated and the closest to you — with breakfast essentials in the morning and still-open shops for midnight cravings.",
+          "screen": {
+            "title": "Good morning",
+            "chip": "{radius} km",
+            "rows": [
+              "Start your day right",
+              "Popular near you",
+              "Best deals near you",
+              "Just in"
+            ]
+          }
+        },
+        {
+          "key": "foryou",
+          "icon": "sparkle",
+          "who": "For you",
+          "title": "Picked for you — for a reason.",
+          "text": "“Because you bought…” appears only when it is true, and never shows what is already in your cart. New here? You get what is genuinely popular nearby, and the app says so instead of pretending.",
+          "screen": {
+            "title": "For you",
+            "chip": "Personal",
+            "rows": [
+              "Because you bought · crisps",
+              "Recommended for you"
+            ]
+          }
+        },
+        {
+          "key": "aisles",
+          "icon": "basket",
+          "who": "Aisles",
+          "title": "Six aisles, each with its own look.",
+          "text": "Pick an aisle and the whole home page takes on its colour and its shelves — and when an event is running, its tab sits right after All.",
+          "screen": {
+            "title": "Toys",
+            "chip": "Aisle",
+            "tabs": [
+              "All",
+              "Grocery",
+              "Fashion",
+              "Toys",
+              "Others"
+            ],
+            "kicker": "PLAY ALL DAY",
+            "headline": "Something to keep them busy",
+            "blurb": "Games · Puzzles · Outdoor",
+            "rows": [
+              "Building & blocks",
+              "Puzzles & games",
+              "Outdoor play",
+              "Soft toys"
+            ]
+          }
+        },
+        {
+          "key": "search",
+          "icon": "search",
+          "who": "Search",
+          "title": "Search that forgives a typo.",
+          "text": "Suggestions as you type, results even when the spelling is off, what your city is searching for — and a scan button that finds a product from its barcode.",
+          "screen": {
+            "title": "Search",
+            "chip": "Scan",
+            "query": "atta",
+            "rows": [
+              "Atta, 5 kg",
+              "Atta, multigrain",
+              "Atta noodles"
+            ],
+            "trendingLabel": "Trending near you",
+            "trending": [
+              "milk",
+              "fresh fruits",
+              "cooking oil"
+            ]
+          }
+        },
+        {
+          "key": "stores",
+          "icon": "store",
+          "who": "Stores",
+          "title": "Every shop that can reach you.",
+          "text": "Open, verified shops that deliver to where you are, nearest first. Widen the radius from {radius} to {maxRadius} km with one pill — and any promoted shop is clearly marked Sponsored.",
+          "screen": {
+            "title": "Stores near you",
+            "chip": "{radius} km",
+            "sponsored": "Sponsored",
+            "rows": [
+              "Corner store · 0.6 km",
+              "Hardware shop · 1.4 km",
+              "Toy shop · 2.1 km",
+              "Boutique · 2.8 km"
+            ]
+          }
+        },
+        {
+          "key": "saved",
+          "icon": "heart",
+          "who": "Saved",
+          "title": "Save it for later.",
+          "text": "Heart anything to keep it. If a shop goes offline, the item stays on your list — dimmed and marked unavailable, not quietly deleted.",
+          "screen": {
+            "title": "Saved",
+            "chip": "4 items",
+            "unavailable": "Currently unavailable",
+            "rows": [
+              "Wooden blocks",
+              "Ceramic mug",
+              "Steel flask",
+              "Cotton kurta"
+            ]
+          }
+        },
+        {
+          "key": "inbox",
+          "icon": "bell",
+          "who": "Inbox",
+          "title": "Messages with the whole picture.",
+          "text": "A phone's notification shade shows a line and one picture. The Inbox keeps the rest — the gallery, the full text and the buttons — so an offer never loses half its story.",
+          "screen": {
+            "title": "Inbox",
+            "chip": "New",
+            "rows": [
+              "Ganeshotsav is here",
+              "Your rider is nearby",
+              "Rate your order"
+            ],
+            "button": "See the offers"
+          }
+        },
+        {
+          "key": "control",
+          "icon": "settings",
+          "who": "Settings",
+          "title": "You decide what pings you.",
+          "text": "Offers, marketing and updates switch off one by one. Orders, delivery, payments and security stay on — the messages you are actually waiting for are never silenced by accident.",
+          "screen": {
+            "title": "Notifications",
+            "chip": "You choose",
+            "rows": [
+              "Offers",
+              "Marketing",
+              "Updates"
+            ],
+            "locked": [
+              "Orders & delivery",
+              "Payments",
+              "Security"
+            ]
+          }
+        }
+      ]
+    },
+    "messages": {
+      "eyebrow": "Every step, in a message",
+      "title": "You never have to wonder.",
+      "accent": "never have to wonder.",
+      "intro": "The app tells you as each thing happens — and only the things you would want to know.",
+      "now": "now",
+      "items": [
+        {
+          "icon": "basket",
+          "title": "Order placed",
+          "text": "Your shop has your order."
+        },
+        {
+          "icon": "check-circle",
+          "title": "Payment successful",
+          "text": "Paid securely through Razorpay."
+        },
+        {
+          "icon": "store",
+          "title": "The shop accepted your order",
+          "text": "It is being packed."
+        },
+        {
+          "icon": "bike",
+          "title": "A rider accepted your order",
+          "text": "On the way to the shop."
+        },
+        {
+          "icon": "pin",
+          "title": "Your rider is nearby",
+          "text": "Keep your delivery code handy."
+        },
+        {
+          "icon": "check",
+          "title": "Delivered",
+          "text": "Enjoy — and tell us how it went."
+        },
+        {
+          "icon": "star",
+          "title": "How was it?",
+          "text": "Rate the shop and the rider."
+        }
+      ],
+      "more": "And if anything changes — running late, cancelled, a refund issued — you hear that too."
+    },
+    "reviews": {
+      "eyebrow": "Ratings",
+      "title": "Ratings from real orders only.",
+      "accent": "real orders only.",
+      "items": [
+        {
+          "icon": "check-circle",
+          "title": "Only after delivery",
+          "text": "You can rate a shop and a rider once your order has arrived — never before."
+        },
+        {
+          "icon": "clock",
+          "title": "Within seven days",
+          "text": "The window stays open for a week after delivery, while it is fresh."
+        },
+        {
+          "icon": "star",
+          "title": "One each, per order",
+          "text": "One rating for the shop and one for the rider, so nobody's score is padded."
+        }
+      ]
+    },
+    "banner": {
+      "eyebrow": "Try it",
+      "title": "Your street, in your pocket.",
+      "accent": "in your pocket.",
+      "text": "The apps are on their way to the stores.",
+      "cta": {
+        "label": "Get the app",
+        "href": "/get-the-app"
+      },
+      "secondary": {
+        "label": "Events & offers",
+        "href": "/events"
       }
     }
   }

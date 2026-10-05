@@ -1,6 +1,6 @@
 /**
  * Home, top to bottom:
- *   HomeHero → Marquee → Statement → CategoryShelf → Bento → StatsBand →
+ *   HomeHero → Marquee → Statement → CategoryShelf → EventsTeaser → Bento → StatsBand →
  *   HowItWorks → OrderLifecycle → FeeEstimator → Audiences → RiderTiers →
  *   AboutSplit → Testimonials (only once real reviews exist) → AppBand →
  *   FAQ → Newsletter
@@ -12,6 +12,7 @@ import AppBand from '@/components/sections/home/AppBand';
 import Audiences from '@/components/sections/home/Audiences';
 import Bento from '@/components/sections/home/Bento';
 import CategoryShelf from '@/components/sections/home/CategoryShelf';
+import EventsTeaser from '@/components/sections/home/EventsTeaser';
 import FeeEstimator from '@/components/sections/home/FeeEstimator';
 import HomeHero from '@/components/sections/home/HomeHero';
 import HowItWorks from '@/components/sections/home/HowItWorks';
@@ -35,6 +36,7 @@ import {
   fillDeep,
   home,
   lifecycle,
+  pages,
   riders,
   stats,
   steps,
@@ -65,6 +67,7 @@ export default function HomePage() {
         items={categories.map(c => ({ slug: c.slug, name: c.name, icon: c.icon, hue: c.hue, tagline: c.tagline, badge: fill(ui.common.deliveryFrom), examples: c.examples }))}
         labels={{ explore: ui.common.explore, ...shelf }}
       />
+      <EventsTeaser copy={h.events} screen={fillDeep(pages.events.rail.screen)} />
       <Bento section={h.bento} tiles={h.bento.tiles} />
       <StatsBand section={h.stats} stats={stats} />
       <HowItWorks section={h.how} steps={steps} />

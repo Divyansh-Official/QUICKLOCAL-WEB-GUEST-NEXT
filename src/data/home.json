@@ -299,6 +299,10 @@
         "text": "Delivered within {hours} hours"
       },
       {
+        "icon": "sparkle",
+        "text": "Events and offers from shops near you"
+      },
+      {
         "icon": "shield-check",
         "text": "Every vendor document-verified"
       },
@@ -339,5 +343,19 @@
     "eyebrow": "What customers say",
     "title": "Loved by local shoppers.",
     "accent": "local shoppers."
+  },
+  "events": {
+    "eyebrow": "Events & offers",
+    "title": "When there is an occasion, there is a tab for it.",
+    "accent": "a tab for it.",
+    "text": "Festivals, seasonal sales and late-night deals open as events beside your aisles — each with the shops' offers for the moment, and gone when it ends.",
+    "cta": {
+      "label": "See events & offers",
+      "href": "/events"
+    },
+    "secondary": {
+      "label": "Inside the app",
+      "href": "/app"
+    }
   }
 }

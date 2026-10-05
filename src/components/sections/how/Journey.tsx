@@ -25,8 +25,31 @@ export type JourneyStep = {
   who: string;
   title: string;
   text: string;
-  screen: { title: string; chip: string; rows: string[]; code?: string; badge?: string; totalLabel?: string; button?: string; accept?: string; decline?: string };
+  screen: {
+    title: string;
+    chip: string;
+    rows: string[];
+    code?: string;
+    badge?: string;
+    totalLabel?: string;
+    button?: string;
+    accept?: string;
+    decline?: string;
+    tabs?: string[];
+    kicker?: string;
+    headline?: string;
+    blurb?: string;
+    query?: string;
+    trendingLabel?: string;
+    trending?: string[];
+    sponsored?: string;
+    unavailable?: string;
+    locked?: string[];
+  };
 };
+
+/* Which of the app's four tabs a screen lives under. */
+const TAB: Record<string, number> = { feed: 0, foryou: 0, aisles: 0, after: 0, browse: 1, search: 1, stores: 1, pay: 2, accept: 2, assign: 2, pickup: 2, route: 2, handoff: 2, saved: 3, inbox: 3, control: 3 };
 
 const ROUTE = 'M22 118 C 60 118 62 70 104 70 S 150 40 196 34';
 
@@ -229,6 +252,155 @@ function Body({ step }: { step: JourneyStep }) {
           </div>
         </>
       );
+    case 'feed':
+    case 'foryou':
+      return (
+        <div className="space-y-[4.4cqw]">
+          {s.rows.map((row, i) => {
+            const [label, reason] = split(row);
+            return (
+              <div key={row} className="sc-pop" style={k(i)}>
+                <p className="flex items-center gap-[2cqw] text-[3.9cqw] font-extrabold tracking-[-0.02em] text-fg">
+                  {label}
+                  {reason ? <span className="rounded-full bg-primary-soft px-[2.2cqw] py-[0.6cqw] text-[3cqw] font-extrabold text-primary-ink">{reason}</span> : null}
+                </p>
+                <div className="mt-[2cqw] grid grid-cols-3 gap-[2cqw]">
+                  {[0, 1, 2].map(t => (
+                    <span key={t} className="aspect-[5/4] rounded-[3.6cqw] bg-[color-mix(in_oklab,var(--fg)_6%,var(--card))] shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--fg)_5%,transparent)]" style={{ background: t === 0 && i === 0 ? 'color-mix(in oklab, var(--primary) 16%, var(--card))' : undefined }} />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      );
+    case 'aisles':
+      return (
+        <>
+          <div className="-mx-[6cqw] flex gap-[2cqw] overflow-hidden px-[6cqw]">
+            {(s.tabs ?? []).map((t, i) => (
+              <span key={t} className={`sc-pop flex-none rounded-full px-[3.4cqw] py-[1.8cqw] text-[3.4cqw] font-extrabold ${t === s.title ? 'bg-[#B4543F] text-white' : 'bg-[color-mix(in_oklab,var(--fg)_6%,transparent)] text-fg-2'}`} style={k(i)}>
+                {t}
+              </span>
+            ))}
+          </div>
+          <div className="sc-pop mt-[4.4cqw] rounded-[5cqw] bg-[#FBE0DA] px-[5cqw] py-[5cqw] text-[#3a1d16] dark:bg-[#3a2420] dark:text-[#fbe0da]" style={k(5)}>
+            <p className="text-[3cqw] font-extrabold tracking-[0.12em] text-[#B4543F] dark:text-[#f2a08c]">{s.kicker}</p>
+            <p className="mt-[1.4cqw] text-[5.6cqw] font-extrabold leading-tight tracking-[-0.03em]">{s.headline}</p>
+            <p className="mt-[1.4cqw] text-[3.3cqw] opacity-75">{s.blurb}</p>
+          </div>
+          <div className="mt-[4cqw] grid grid-cols-2 gap-[2.4cqw]">
+            {s.rows.map((r, i) => (
+              <span key={r} className="sc-pop rounded-[3.6cqw] bg-[color-mix(in_oklab,var(--fg)_5%,var(--card))] px-[3cqw] py-[3.4cqw] text-[3.3cqw] font-bold text-fg" style={k(6 + i)}>
+                {r}
+              </span>
+            ))}
+          </div>
+        </>
+      );
+    case 'search':
+      return (
+        <>
+          <div className="flex items-center gap-[2.4cqw] rounded-full bg-[color-mix(in_oklab,var(--fg)_6%,var(--card))] px-[4cqw] py-[3cqw]">
+            <Icon name="search" size={14} strokeWidth={2.2} className="text-fg-3" />
+            <span className="sc-type overflow-hidden whitespace-nowrap text-[3.8cqw] font-bold text-fg" style={{ ['--ch' as string]: (s.query ?? '').length }}>
+              {s.query}
+            </span>
+            <span className="sc-caret h-[4.4cqw] w-[0.5cqw] bg-primary" />
+            <span className="ml-auto grid h-[7.4cqw] w-[7.4cqw] place-items-center rounded-full bg-primary text-white">
+              <Icon name="scan" size={13} strokeWidth={2.2} />
+            </span>
+          </div>
+          <div className="mt-[3cqw]">
+            <Rows rows={s.rows} icon="search" start={2} />
+          </div>
+          <p className="sc-pop mt-[5cqw] text-[3.1cqw] font-extrabold uppercase tracking-[0.1em] text-fg-3" style={k(5)}>
+            {s.trendingLabel}
+          </p>
+          <div className="mt-[2cqw] flex flex-wrap gap-[2cqw]">
+            {(s.trending ?? []).map((t, i) => (
+              <span key={t} className="sc-pop rounded-full bg-primary-soft px-[3cqw] py-[1.4cqw] text-[3.3cqw] font-bold text-primary-ink" style={k(6 + i)}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </>
+      );
+    case 'stores':
+      return (
+        <ul className="space-y-[2.4cqw]">
+          {s.rows.map((row, i) => {
+            const [label, value] = split(row);
+            return (
+              <li key={row} className="sc-pop flex items-center gap-[3cqw] rounded-[4cqw] bg-[color-mix(in_oklab,var(--fg)_5%,var(--card))] px-[3.4cqw] py-[3cqw]" style={k(i)}>
+                <span className="grid h-[9cqw] w-[9cqw] flex-none place-items-center rounded-[2.6cqw] bg-primary-soft text-primary-ink">
+                  <Icon name="store" size={14} strokeWidth={2} />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[3.7cqw] font-bold text-fg">{label}</span>
+                  {i === 0 && s.sponsored ? <span className="mt-[0.6cqw] inline-block rounded-full bg-[color-mix(in_oklab,var(--fg)_8%,transparent)] px-[1.8cqw] py-[0.3cqw] text-[2.7cqw] font-extrabold text-fg-3">{s.sponsored}</span> : null}
+                </span>
+                <span className="tnum flex-none text-[3.4cqw] font-extrabold text-fg-2">{value}</span>
+              </li>
+            );
+          })}
+        </ul>
+      );
+    case 'saved':
+      return (
+        <div className="grid grid-cols-2 gap-[2.6cqw]">
+          {s.rows.map((r, i) => {
+            const gone = i === s.rows.length - 1;
+            return (
+              <div key={r} className={`sc-pop relative rounded-[4cqw] bg-[color-mix(in_oklab,var(--fg)_5%,var(--card))] p-[2.4cqw] ${gone ? 'opacity-50' : ''}`} style={k(i)}>
+                <span className="block aspect-square rounded-[3cqw] bg-[color-mix(in_oklab,var(--fg)_7%,transparent)]" />
+                <span className="sc-heart absolute right-[4cqw] top-[4cqw] grid h-[7cqw] w-[7cqw] place-items-center rounded-full bg-card text-[#e2553a] shadow-[0_2px_6px_rgb(0_0_0/0.15)]" style={k(i)}>
+                  <Icon name="heart" size={12} strokeWidth={2.4} />
+                </span>
+                <span className="mt-[1.8cqw] block truncate text-[3.3cqw] font-bold text-fg">{r}</span>
+                {gone ? <span className="block truncate text-[2.7cqw] font-semibold text-fg-3">{s.unavailable}</span> : null}
+              </div>
+            );
+          })}
+        </div>
+      );
+    case 'inbox':
+      return (
+        <div className="space-y-[2.6cqw]">
+          <div className="sc-pop overflow-hidden rounded-[4.4cqw] bg-[color-mix(in_oklab,var(--fg)_5%,var(--card))]" style={k(0)}>
+            <span className="block h-[26cqw] bg-[linear-gradient(135deg,#f8a24b,#e06f12_55%,#c1621b)]" />
+            <div className="p-[3.6cqw]">
+              <p className="text-[3.9cqw] font-extrabold text-fg">{s.rows[0]}</p>
+              <span className="btn-primary mt-[2.6cqw] flex items-center justify-center rounded-full py-[2.6cqw] text-[3.4cqw] font-extrabold">{s.button}</span>
+            </div>
+          </div>
+          {s.rows.slice(1).map((r, i) => (
+            <div key={r} className="sc-pop flex items-center gap-[3cqw] rounded-[4cqw] bg-[color-mix(in_oklab,var(--fg)_5%,var(--card))] px-[3.4cqw] py-[3cqw]" style={k(i + 1)}>
+              <span className="h-[2cqw] w-[2cqw] rounded-full bg-primary" />
+              <span className="text-[3.6cqw] font-bold text-fg">{r}</span>
+            </div>
+          ))}
+        </div>
+      );
+    case 'control':
+      return (
+        <ul className="space-y-[2.2cqw]">
+          {s.rows.map((r, i) => (
+            <li key={r} className="sc-pop flex items-center justify-between rounded-[4cqw] bg-[color-mix(in_oklab,var(--fg)_5%,var(--card))] px-[3.6cqw] py-[3cqw]" style={k(i)}>
+              <span className="text-[3.7cqw] font-bold text-fg">{r}</span>
+              <span className={`sc-toggle relative h-[6.6cqw] w-[11cqw] rounded-full ${i === 1 ? 'bg-[color-mix(in_oklab,var(--fg)_16%,transparent)]' : 'bg-ok'}`}>
+                <span className={`absolute top-[0.6cqw] h-[5.4cqw] w-[5.4cqw] rounded-full bg-white shadow ${i === 1 ? 'left-[0.6cqw]' : 'right-[0.6cqw]'}`} />
+              </span>
+            </li>
+          ))}
+          {(s.locked ?? []).map((r, i) => (
+            <li key={r} className="sc-pop flex items-center justify-between rounded-[4cqw] bg-[color-mix(in_oklab,var(--fg)_3%,var(--card))] px-[3.6cqw] py-[3cqw]" style={k(s.rows.length + i)}>
+              <span className="text-[3.7cqw] font-bold text-fg-2">{r}</span>
+              <Icon name="lock" size={13} strokeWidth={2.2} className="text-fg-3" />
+            </li>
+          ))}
+        </ul>
+      );
     default:
       return <Rows rows={s.rows} />;
   }
@@ -283,7 +455,7 @@ export default function Journey({ steps, progress }: { steps: JourneyStep[]; pro
             {/* the app's own tab bar, so the screen reads as the app */}
             <div className="absolute inset-x-[5cqw] bottom-[5cqw] flex h-[14cqw] items-center justify-around rounded-full bg-[color-mix(in_oklab,var(--fg)_6%,var(--card))] text-fg-3 shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--fg)_5%,transparent)]">
               {['home', 'search', 'basket', 'users'].map((icon, i) => (
-                <span key={icon} className={`grid h-[10cqw] w-[10cqw] place-items-center rounded-full ${i === (active < 1 ? 1 : active < 7 ? 2 : 0) ? 'bg-primary text-white' : ''}`}>
+                <span key={icon} className={`grid h-[10cqw] w-[10cqw] place-items-center rounded-full ${i === (TAB[steps[active]?.key] ?? 0) ? 'bg-primary text-white' : ''}`}>
                   <Icon name={icon} size={15} strokeWidth={2} />
                 </span>
               ))}

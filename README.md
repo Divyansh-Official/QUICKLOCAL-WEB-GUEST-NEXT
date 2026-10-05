@@ -9,7 +9,7 @@ Every route prerenders to static HTML; nothing talks to the backend.
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm run build   # 23 static pages
+npm run build   # 25 static pages
 npm run lint
 ```
 
@@ -43,6 +43,7 @@ default branch, which is far behind. The ones that matter most:
 
 - **Six permanent categories** — Grocery, Hardware, Furniture, Fashion,
   **Toys** and Others.
+- **Nothing private is published.** No commission, no admin-console workings, no security mechanics (lockout counts, internal check intervals), nothing about any customer, shop or rider — only what a customer can see in the app.
 - **Commission is never published.** No platform-fee or commission figure
   appears on the site, in its copy, or in the data its pages ship to the
   browser — by decision. `categories.json` and `fees.json` deliberately carry
@@ -70,7 +71,9 @@ section renders itself the day one is added.
 |---|---|
 | `/` | Hero with a 3D phone tracking a real order → guarantees ribbon → scroll-lit statement → category shelf → bento → numbers band → how it works → every order state → cost estimator → three audiences → rider tiers → about → app band → FAQ → newsletter |
 | `/how-it-works` | **One order as a scroll story** — a sticky handset whose screen changes scene as each of eight steps crosses the middle of the screen, turning as you go → every order state → the four clocks on every order |
-| `/services` | Six category cards → how delivery works → refer & earn |
+| `/services` | Six category cards → events band → how delivery works → refer & earn |
+| `/events` | **Events & offers** — a phone where an event's tab slides into the rail after All → example occasions → offer tickets and their rules → an event's life → always-on savings |
+| `/app` | **Inside the app** — an eight-screen tour in the scroll story (home rails, For you, aisles, search, stores, saved, inbox, notification settings) → a stack of order messages → how ratings work |
 | `/services/[slug]` | **The page a category card zooms open into** — 3D slab, what shops list, what delivery costs, the aisle's numbers, other aisles |
 | `/sell` | For shops — **free delivery, your call** (who funds a delivery at any threshold, order and distance) → documents → plans → paid boosts → four steps to live |
 | `/deliver` | For riders — what a delivery pays, on a slider → **pick your vehicle, see your papers** → 3D tier medals → the rules that protect a rider's time |
