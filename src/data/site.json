@@ -1,0 +1,23 @@
+{
+  "_source": "Site switchboard for the 2026 redesign. Nothing here is platform data: it is how the public site presents itself.",
+  "url": "",
+  "_url": "The live domain. Blank uses the Vercel deployment URL for canonical links and social cards.",
+  "locale": {
+    "htmlLang": "en-IN",
+    "openGraph": "en_IN",
+    "numberFormat": "en-IN"
+  },
+  "theme": {
+    "_default": "system follows the visitor's device; light or dark forces one. The toggle in the header and footer lets each visitor choose, remembered on their device.",
+    "default": "system",
+    "lightThemeColor": "#fdfaf6",
+    "darkThemeColor": "#12100d"
+  },
+  "features": {
+    "_comment": "Switch whole behaviours off without touching code.",
+    "scrollProgress": true,
+    "pageTransitions": true,
+    "tabBar": true,
+    "themeToggle": true
+  }
+}

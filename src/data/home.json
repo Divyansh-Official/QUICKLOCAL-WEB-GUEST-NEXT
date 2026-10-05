@@ -1,0 +1,323 @@
+{
+  "_source": "Copy for the home page, section by section, top to bottom. Figures are {tokens}, never typed numbers, so they follow info.json, fees.json and riders.json.",
+  "hero": {
+    "pill": "Now delivering in {city}",
+    "pillDetail": "within {radius} km",
+    "title": "Everything local, delivered.",
+    "accent": "delivered.",
+    "subtitle": "The shops on your street, your phone, and a rider who is paid properly — with every fee written down before you order.",
+    "primaryCta": {
+      "label": "Get the app",
+      "href": "/get-the-app",
+      "icon": "download"
+    },
+    "secondaryCta": {
+      "label": "See what an order costs",
+      "href": "/#what-it-costs",
+      "icon": "calculator"
+    },
+    "quickLabel": "Shop by category",
+    "phone": {
+      "eyebrow": "Arriving in",
+      "eta": "18 min",
+      "shop": "Your corner store",
+      "orderLabel": "Order #QL-2048",
+      "basket": "4 items",
+      "chips": [
+        {
+          "icon": "shield-check",
+          "title": "Vendor verified",
+          "text": "Documents checked",
+          "position": "tl"
+        },
+        {
+          "icon": "bike",
+          "title": "Rider earns ₹{riderMin}+",
+          "text": "On every order",
+          "position": "r"
+        },
+        {
+          "icon": "clock",
+          "title": "{hours} hrs, maximum",
+          "text": "Enforced by the platform",
+          "position": "bl"
+        }
+      ],
+      "fees": [
+        {
+          "label": "Delivery fee",
+          "value": "₹{minFee}"
+        },
+        {
+          "label": "Platform fee",
+          "value": "₹{platformFee}"
+        },
+        {
+          "label": "Rider earns",
+          "value": "₹{riderMin}+",
+          "strong": true
+        }
+      ],
+      "steps": 5
+    }
+  },
+  "marquee": [
+    {
+      "icon": "shield-check",
+      "text": "Verified vendors only"
+    },
+    {
+      "icon": "lock",
+      "text": "Secure payments by Razorpay"
+    },
+    {
+      "icon": "truck",
+      "text": "Delivered within {hours} hours"
+    },
+    {
+      "icon": "radius",
+      "text": "{radius} km delivery radius"
+    },
+    {
+      "icon": "tag",
+      "text": "Platform fee from {lowestFee}%"
+    },
+    {
+      "icon": "bike",
+      "text": "₹{riderMin} floor for every rider"
+    },
+    {
+      "icon": "gift",
+      "text": "₹{referral} for every friend who orders"
+    },
+    {
+      "icon": "headset",
+      "text": "Complaints escalated, never closed quietly"
+    }
+  ],
+  "statement": {
+    "eyebrow": "Why we built it",
+    "text": "The shops on your street should be as easy to order from as anything else on your phone — and they should keep more of what they earn.",
+    "accent": "keep more of what they earn."
+  },
+  "categories": {
+    "eyebrow": "What we offer",
+    "title": "Five aisles. One neighbourhood.",
+    "accent": "One neighbourhood.",
+    "intro": "Every category a local shop can open under — each with the platform fee it actually pays. Tap one to step inside.",
+    "cta": {
+      "label": "All categories",
+      "href": "/services"
+    }
+  },
+  "bento": {
+    "eyebrow": "Built different",
+    "title": "Fast is easy. Fair is the hard part.",
+    "accent": "Fair",
+    "intro": "Six things the platform enforces in code — not promises on a slide.",
+    "tiles": [
+      {
+        "kind": "radar",
+        "size": "large",
+        "icon": "radius",
+        "title": "Your neighbourhood, not the whole city.",
+        "text": "Shops within {radius} km by default, up to {maxRadius} km where a vendor covers it. Close enough that it arrives fresh.",
+        "stat": "{radius} km"
+      },
+      {
+        "kind": "stat",
+        "size": "tall",
+        "icon": "clock",
+        "title": "A hard ceiling on waiting.",
+        "text": "No order may take longer — it is a rule in the platform, not a target.",
+        "stat": "{hours} hrs",
+        "statLabel": "Maximum delivery window"
+      },
+      {
+        "kind": "stat",
+        "size": "wide",
+        "icon": "tag",
+        "title": "Shops keep up to 98%.",
+        "text": "Platform fees start at {lowestFee}% on grocery and never exceed 3%.",
+        "stat": "{lowestFee}%",
+        "statLabel": "Lowest platform fee"
+      },
+      {
+        "kind": "plain",
+        "size": "small",
+        "icon": "shield-check",
+        "title": "Verified before they sell.",
+        "text": "Every shop and every rider clears document checks first."
+      },
+      {
+        "kind": "plain",
+        "size": "small",
+        "icon": "lock",
+        "title": "Payments that close the loop.",
+        "text": "Razorpay, with refunds tracked end to end."
+      },
+      {
+        "kind": "stat",
+        "size": "wide",
+        "icon": "gift",
+        "title": "Bring a friend, earn ₹{referral}.",
+        "text": "Lands when their first order does.",
+        "stat": "₹{referral}",
+        "statLabel": "For every friend who orders"
+      }
+    ]
+  },
+  "stats": {
+    "eyebrow": "The numbers we stand behind",
+    "title": "Small promises, kept every time.",
+    "accent": "kept every time."
+  },
+  "how": {
+    "eyebrow": "How it works",
+    "title": "Four taps from shelf to doorstep.",
+    "accent": "shelf to doorstep."
+  },
+  "lifecycle": {
+    "eyebrow": "Every state, named",
+    "title": "What tracking actually means here.",
+    "accent": "actually means",
+    "intro": "The real states the platform moves an order through, in the real order — including the three that are not a happy ending.",
+    "unhappyTitle": "When it does not go to plan",
+    "unhappyText": "Three more states, and none of them is a dead end you have to phone about.",
+    "hint": "Tap a step to explore it"
+  },
+  "estimator": {
+    "eyebrow": "What it costs",
+    "title": "Work out a real order, to the rupee.",
+    "accent": "to the rupee.",
+    "intro": "The same arithmetic the platform runs when an order is placed — the flat base fee, the fuel-derived per-km beyond {freeKm} km, and your category's platform fee. Nothing is rounded for effect.",
+    "category": "Category",
+    "basket": "Basket",
+    "distance": "Distance",
+    "thresholdNote": "Free delivery from {threshold} — the default until a shop sets its own.",
+    "freeKmNote": "The first {freeKm} km are covered by the base fee.",
+    "extraNote": "{extraKm} km beyond it adds {extraFee}.",
+    "noExtraNote": "Nothing extra at this distance.",
+    "customer": "Customer pays",
+    "shop": "Shop keeps",
+    "rider": "Rider earns",
+    "customerNote": "{basket} basket · {delivery} delivery",
+    "customerNoteFree": "{basket} basket · {delivery} delivery (base covered by the shop)",
+    "shopNote": "after {fee} platform fee at {percent}%",
+    "shopNoteFree": "after {fee} platform fee and {absorbed} of delivery",
+    "riderNote": "The whole delivery fee, whoever funded it",
+    "freeBanner": "Over the threshold — the shop absorbs the {base} base and the customer sees free delivery.",
+    "moreBanner": "{remaining} more and the shop takes on the base fee instead.",
+    "footnote": "Per-km uses {petrol}/L at {mileage} km/L with the platform's {multiplier}× rider multiplier. In production the fuel price is your city's for the day.",
+    "thresholdMark": "Free delivery"
+  },
+  "audiences": {
+    "eyebrow": "One platform, three sides",
+    "title": "Made for everyone at the door.",
+    "accent": "everyone",
+    "tabs": [
+      {
+        "key": "customers",
+        "label": "Customers",
+        "icon": "basket",
+        "title": "Order from the shops you already trust.",
+        "cta": {
+          "label": "Get the app",
+          "href": "/get-the-app"
+        }
+      },
+      {
+        "key": "vendors",
+        "label": "Vendors",
+        "icon": "store",
+        "title": "Sell to your own neighbourhood.",
+        "cta": {
+          "label": "See vendor plans",
+          "href": "/pricing"
+        }
+      },
+      {
+        "key": "partners",
+        "label": "Riders",
+        "icon": "bike",
+        "title": "Know what a job pays before you take it.",
+        "cta": {
+          "label": "Ride with us",
+          "href": "/for-business#partners"
+        }
+      }
+    ]
+  },
+  "riders": {
+    "eyebrow": "Ride with us",
+    "title": "What a delivery actually pays.",
+    "accent": "actually pays.",
+    "intro": "₹{riderBase} a job before distance, ₹{riderPerKm} a kilometre on top, and never less than ₹{riderMin} however short the drop. The whole delivery fee reaches the rider, whoever funded it.",
+    "figures": [
+      "Base, every job",
+      "Per kilometre",
+      "Floor, whatever happens"
+    ],
+    "deliveries": "Deliveries",
+    "rating": "Rating",
+    "documentsTitle": "What you bring",
+    "documentsNote": "Checked against the issuing authority before your first job, not after.",
+    "caveatTitle": "A bad week is a bad week",
+    "caveatText": "A rating that dips below a tier's line does not demote you overnight — no nightly job takes a badge away. Where it matters, a person looks at it."
+  },
+  "about": {
+    "eyebrow": "About us",
+    "cta": {
+      "label": "Our story",
+      "href": "/about"
+    }
+  },
+  "app": {
+    "eyebrow": "The app",
+    "title": "Get the {name} app.",
+    "accent": "app.",
+    "text": "{slogan}. Track every order to your door, and earn ₹{referral} for each friend who orders.",
+    "points": [
+      {
+        "icon": "truck",
+        "text": "Delivered within {hours} hours"
+      },
+      {
+        "icon": "shield-check",
+        "text": "Every vendor document-verified"
+      },
+      {
+        "icon": "wallet",
+        "text": "Refunds tracked end to end"
+      }
+    ],
+    "cta": {
+      "label": "Selling or delivering? Start here",
+      "href": "/get-the-app"
+    }
+  },
+  "newsletter": {
+    "title": "Stay in the loop with {name}.",
+    "accent": "{name}",
+    "text": "New categories, new neighbourhoods, and the day the apps land in the stores.",
+    "placeholder": "Your email address",
+    "label": "Your email address",
+    "submit": "Notify me",
+    "sending": "Adding…",
+    "invalid": "That does not look like an email address.",
+    "hint": "Kept on your device only — this site has no server to send it to.",
+    "doneTitle": "You're on the list",
+    "doneText": "We have kept {email} on this device. The mailing list is not running yet, so nothing has been sent anywhere — if you want a person now, write to {contactEmail}.",
+    "reset": "Use a different address"
+  },
+  "faq": {
+    "eyebrow": "Questions",
+    "title": "Asked before you order.",
+    "accent": "before you order."
+  },
+  "testimonials": {
+    "eyebrow": "What customers say",
+    "title": "Loved by local shoppers.",
+    "accent": "local shoppers."
+  }
+}

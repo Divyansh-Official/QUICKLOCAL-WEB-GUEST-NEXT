@@ -1,0 +1,52 @@
+{
+  "_source": "DeliveryBadgeService — the exact thresholds it promotes on — and BadgeLevel.java. Payout figures come from app_config: delivery.base_payout_inr, delivery.payout_per_km_inr, delivery.min_payout_inr.",
+  "_why": "A rider deciding whether to sign up wants two numbers: what a drop pays, and what changes if they stick around. Both exist in the platform and neither is usually published.",
+  "payout": {
+    "baseInr": 20,
+    "perKmInr": 5,
+    "minimumInr": 30
+  },
+  "tiers": [
+    {
+      "level": "BRONZE",
+      "name": "Bronze",
+      "deliveries": "0 – 49",
+      "rating": "Any",
+      "detail": "Where every partner starts. Full access to jobs from day one.",
+      "tone": "bronze"
+    },
+    {
+      "level": "SILVER",
+      "name": "Silver",
+      "deliveries": "50+",
+      "rating": "3.5 and above",
+      "detail": "Consistency starts to count — a steady record moves you up.",
+      "tone": "silver"
+    },
+    {
+      "level": "GOLD",
+      "name": "Gold",
+      "deliveries": "200+",
+      "rating": "4.0 and above",
+      "detail": "A record built over months, not a good week.",
+      "tone": "gold"
+    },
+    {
+      "level": "PLATINUM",
+      "name": "Platinum",
+      "deliveries": "500+",
+      "rating": "4.5 and above",
+      "detail": "Top tier. Highest priority when a job is being assigned.",
+      "tone": "platinum"
+    }
+  ],
+  "_ratingNote": "A rating that dips below a threshold does not demote automatically — that is an administrator's decision, not a nightly job.",
+  "documents": [
+    { "type": "DRIVING_LICENSE", "label": "Driving licence" },
+    { "type": "VEHICLE_RC", "label": "Vehicle registration" },
+    { "type": "AADHAAR_CARD", "label": "Aadhaar" },
+    { "type": "PAN_CARD", "label": "PAN" },
+    { "type": "BANK_PROOF", "label": "Bank proof, for payouts" }
+  ],
+  "_documents": "DocumentType.java — the delivery-partner subset. Verified through Surepass before a partner can take a job."
+}

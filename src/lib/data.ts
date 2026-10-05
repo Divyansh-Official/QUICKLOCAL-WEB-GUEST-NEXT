@@ -1,131 +1,62 @@
 /**
  * The site's entire data layer.
  *
- * ── EVERY FIGURE COMES FROM A JSON FILE, AND NOTHING FETCHES ────────────────
- * There is no API client here and no environment variable pointing at one. The
- * JSON is imported at build time, so the whole site renders as static HTML and
- * cannot show a loading state, a stale value, or an error — there is nothing to
- * be slow or to fail.
+ * Every word and every figure on the site is read from a JSON file in
+ * `src/data/`, imported at build time — nothing fetches, so every route
+ * prerenders to static HTML and cannot show a spinner or a stale number.
  *
- * ── THE JSON CARRIES ITS OWN PROVENANCE ─────────────────────────────────────
- * Each file opens with a `_source` line naming the table or migration its
- * values came from. That is not decoration: this site makes public claims about
- * fees, delivery times and payouts, and the person updating a number six months
- * from now needs to know which column to check it against. Keys beginning with
- * an underscore are notes and are never rendered.
+ *   info, fees, riders, plans, categories, lifecycle   platform facts (each
+ *                                                       file names the table
+ *                                                       or migration it mirrors)
+ *   site.json                                           switchboard: theme, flags
+ *   ui.json, home.json, pages.json, faq.json            every line of copy
  *
- * ── TYPES ARE DECLARED, NOT INFERRED ────────────────────────────────────────
- * `resolveJsonModule` would infer a type from whatever the file happens to
- * contain today, so an accidentally deleted field would surface as a confusing
- * error inside a component rather than here. Declaring the shape means the JSON
- * is checked against what the components actually need.
+ * Copy may reference figures as {tokens}. `fill()` resolves them from the
+ * platform files, so "₹{riderMin}" in a sentence follows riders.json: change a
+ * fee once and every sentence that quotes it changes with it.
+ *
+ * Server components import from here. Client components receive the exact
+ * strings they print as props, so the JSON never ships to the browser whole.
  */
 import aboutJson from '@/data/about.json';
 import appJson from '@/data/app.json';
 import categoriesJson from '@/data/categories.json';
 import contactJson from '@/data/contact.json';
+import faqJson from '@/data/faq.json';
 import featuresJson from '@/data/features.json';
 import feesJson from '@/data/fees.json';
+import homeJson from '@/data/home.json';
 import infoJson from '@/data/info.json';
 import lifecycleJson from '@/data/lifecycle.json';
-import ridersJson from '@/data/riders.json';
 import navJson from '@/data/nav.json';
+import pagesJson from '@/data/pages.json';
 import plansJson from '@/data/plans.json';
+import ridersJson from '@/data/riders.json';
+import siteJson from '@/data/site.json';
 import statsJson from '@/data/stats.json';
 import stepsJson from '@/data/steps.json';
 import testimonialsJson from '@/data/testimonials.json';
 import trustJson from '@/data/trust.json';
+import uiJson from '@/data/ui.json';
 
 // ── shapes ──────────────────────────────────────────────────────────────────
-
-export type Info = {
-  name: string;
-  tagline: string;
-  slogan: string;
-  version: string;
-  headline: { lead: string; accent: string };
-  intro: string;
-  delivery: { defaultRadiusKm: number; maxRadiusKm: number; maxHours: number; minFeeInr: number };
-  fees: { platformFeeInr: number; lowestCategoryFeePercent: number };
-  referral: { rewardInr: number };
-  riderPayout: { baseInr: number; perKmInr: number; minimumInr: number };
-};
-
-/**
- * Everything the fee estimator needs to run the backend's own arithmetic.
- *
- * Mirrors DeliveryFeeCalculatorService rather than approximating it — see
- * fees.json, where every value names the constant it copies.
- */
-export type Fees = {
-  baseFeeInr: number;
-  freeRangeKm: number;
-  petrolPriceInrPerL: number;
-  bikeMileageKmpl: number;
-  driverMultiplier: number;
-  defaultFreeDeliveryThresholdInr: number;
-  categories: { slug: string; name: string; platformFeePercent: number }[];
-};
-
-/**
- * The states an order genuinely passes through.
- *
- * `status` is the real OrderStatus constant, so what the site says lines up
- * with what the app shows. `unhappy` is deliberately not hidden — the states
- * a customer most wants explained are the ones that are not the happy path.
- */
-export type OrderStep = {
-  status: string;
-  label: string;
-  detail: string;
-  icon: string;
-};
-
-export type Lifecycle = { happy: OrderStep[]; unhappy: OrderStep[] };
-
-/** What a delivery partner earns, and what moves them up. */
-export type Riders = {
-  payout: { baseInr: number; perKmInr: number; minimumInr: number };
-  tiers: {
-    level: string;
-    name: string;
-    deliveries: string;
-    rating: string;
-    detail: string;
-    tone: string;
-  }[];
-  documents: { type: string; label: string }[];
-};
-
-export type Social = { label: string; icon: string; handle: string; href: string };
-
-export type Contact = {
-  phone: string;
-  email: string;
-  address: string;
-  city: string;
-  state: string;
-  socials: Social[];
-};
 
 export type Category = {
   slug: string;
   name: string;
   icon: string;
   blurb: string;
+  tagline: string;
+  examples: string[];
+  hue: string;
   platformFeePercent: number;
   displayOrder: number;
 };
-
-export type Stat = { value: string; label: string; detail: string; icon: string };
-export type Trust = { title: string; detail: string; icon: string };
-export type Step = { n: number; title: string; body: string; status: string };
 
 export type Plan = {
   name: string;
   label: string;
   priceMonthly: number;
-  /** -1 in the schema means unlimited. */
   maxProducts: number;
   boostsPerMonth: number;
   popular?: boolean;
@@ -133,77 +64,130 @@ export type Plan = {
   features: Record<string, boolean | string | null>;
 };
 
-export type Testimonial = {
-  name: string;
-  city: string;
-  rating: number;
-  body: string;
-};
+export type OrderStep = { status: string; label: string; detail: string; icon: string };
+export type Link = { label: string; href: string; icon?: string };
+export type FooterColumn = { heading: string; links: Link[] };
+export type StoreListing = { available: boolean; url: string | null; store: string };
 
-export type StoreListing = {
-  /** False until the listing is published; the UI must not link to a 404. */
-  available: boolean;
-  url: string | null;
-  store: string;
-};
+// ── raw files ───────────────────────────────────────────────────────────────
 
-export type AppRole = {
-  key: string;
-  title: string;
-  blurb: string;
-  icon: string;
-  highlights: string[];
-  steps: string[];
-};
-
-export type NavLink = { label: string; href: string };
-export type FooterColumn = { heading: string; links: NavLink[] };
-
-// ── the data ────────────────────────────────────────────────────────────────
-
-export const info: Info = infoJson;
-export const contact: Contact = contactJson;
-export const categories: Category[] = [...categoriesJson.items].sort(
-  (a, b) => a.displayOrder - b.displayOrder,
-);
-export const stats: Stat[] = statsJson.items;
-export const trust: Trust[] = trustJson.items;
-export const steps: Step[] = [...stepsJson.items].sort((a, b) => a.n - b.n);
+export const info = infoJson;
+export const contact = contactJson;
+export const fees = feesJson;
+export const riders = ridersJson;
+export const lifecycle: { happy: OrderStep[]; unhappy: OrderStep[] } = lifecycleJson;
+export const features = featuresJson;
+export const about = aboutJson;
+export const site = siteJson;
+export const ui = uiJson;
+export const home = homeJson;
+export const pages = pagesJson;
+export const trust = trustJson.items;
+export const stats = statsJson.items;
+export const steps = [...stepsJson.items].sort((a, b) => a.n - b.n);
 export const plans: Plan[] = plansJson.items;
 export const featureLabels: Record<string, string> = plansJson.featureLabels;
-export const about = aboutJson;
-export const features = featuresJson;
-export const fees: Fees = feesJson;
-export const lifecycle: Lifecycle = lifecycleJson;
-export const riders: Riders = ridersJson;
+export const testimonials: { name: string; city: string; rating: number; body: string }[] =
+  testimonialsJson.items;
 export const appStores: { android: StoreListing; ios: StoreListing } = {
   android: appJson.android,
   ios: appJson.ios,
 };
-export const appRoles: AppRole[] = appJson.roles;
+export const appRoles = appJson.roles;
 
-export const nav: NavLink[] = navJson.primary;
+export const categories: Category[] = [...categoriesJson.items].sort(
+  (a, b) => a.displayOrder - b.displayOrder,
+);
+export const getCategory = (slug: string) => categories.find(c => c.slug === slug) ?? null;
+
+/** Header links: everything but Home, which the logo already is. */
+export const nav: Link[] = navJson.primary.filter(item => item.href !== '/');
+export const allNav: Link[] = navJson.primary;
 export const footerColumns: FooterColumn[] = navJson.footer;
 
-/**
- * Empty until a real review exists — see the note in testimonials.json.
- * Callers check `.length` and render nothing rather than an empty carousel.
- */
-export const testimonials: Testimonial[] = testimonialsJson.items;
+export const isEnabled = (flag: keyof typeof siteJson.features) => siteJson.features[flag] !== false;
 
 // ── formatting ──────────────────────────────────────────────────────────────
 
-/** Indian grouping: 12,45,320 — not 1,245,320. Matches the console. */
+/** Indian grouping: 12,45,320 — the console and the apps write money the same way. */
 export function inr(value: number): string {
   return `₹${value.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
-}
-
-/** The schema stores unlimited as -1; nobody should read "-1 products". */
-export function productLimit(max: number): string {
-  return max < 0 ? 'Unlimited products' : `Up to ${max} products`;
 }
 
 /** "2%" rather than "2.0%" — trailing zeros read as false precision. */
 export function feePercent(value: number): string {
   return `${Number(value.toFixed(2))}%`;
 }
+
+export const telHref = (phone: string) => `tel:${phone.replace(/[^\d+]/g, '')}`;
+export const mailHref = (email: string) => `mailto:${email}`;
+
+// ── copy tokens ─────────────────────────────────────────────────────────────
+
+const freePlan = plans.find(p => p.priceMonthly === 0);
+
+/** Every {token} a sentence in the JSON may use. */
+export const tokens: Record<string, string> = {
+  name: info.name,
+  tagline: info.tagline.toLowerCase(),
+  slogan: info.slogan,
+  version: info.version,
+  city: contact.city,
+  state: contact.state,
+  phone: contact.phone,
+  email: contact.email,
+  address: contact.address,
+  radius: String(info.delivery.defaultRadiusKm),
+  maxRadius: String(info.delivery.maxRadiusKm),
+  hours: String(info.delivery.maxHours),
+  minFee: String(info.delivery.minFeeInr),
+  platformFee: String(info.fees.platformFeeInr),
+  lowestFee: String(info.fees.lowestCategoryFeePercent),
+  referral: String(info.referral.rewardInr),
+  riderBase: String(riders.payout.baseInr),
+  riderPerKm: String(riders.payout.perKmInr),
+  riderMin: String(riders.payout.minimumInr),
+  twoKm: String(Math.max(riders.payout.minimumInr, riders.payout.baseInr + 2 * riders.payout.perKmInr)),
+  freeKm: String(fees.freeRangeKm),
+  base: inr(fees.baseFeeInr),
+  threshold: inr(fees.defaultFreeDeliveryThresholdInr),
+  petrol: inr(fees.petrolPriceInrPerL),
+  mileage: String(fees.bikeMileageKmpl),
+  multiplier: String(fees.driverMultiplier),
+  freeProducts: String(freePlan?.maxProducts ?? 25),
+  year: String(new Date().getFullYear()),
+};
+
+/**
+ * Resolve {tokens}. An unknown token is left in place: some are filled later
+ * on the client from live values (the estimator's {basket}), and a typo that
+ * stays visible gets noticed rather than silently vanishing.
+ */
+export function fill(template: string | undefined | null, extra: Record<string, string | number> = {}): string {
+  if (!template) return '';
+  const values: Record<string, string | number> = { ...tokens, ...extra };
+  return template.replace(/\{(\w+)\}/g, (match, key: string) => (key in values ? String(values[key]) : match));
+}
+
+/** fill() over every string in a tree — for passing a whole block of copy as props. */
+export function fillDeep<T>(node: T, extra: Record<string, string | number> = {}): T {
+  if (typeof node === 'string') return fill(node, extra) as T;
+  if (Array.isArray(node)) return node.map(item => fillDeep(item, extra)) as T;
+  if (node && typeof node === 'object') {
+    return Object.fromEntries(
+      Object.entries(node as Record<string, unknown>)
+        .filter(([key]) => !key.startsWith('_'))
+        .map(([key, value]) => [key, fillDeep(value, extra)]),
+    ) as T;
+  }
+  return node;
+}
+
+export const faq = fillDeep(faqJson.items);
+
+// ── urls ────────────────────────────────────────────────────────────────────
+
+const vercel = process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL;
+export const siteUrl = String(
+  siteJson.url || process.env.NEXT_PUBLIC_SITE_URL || (vercel ? `https://${vercel}` : '') || 'http://localhost:3000',
+).replace(/\/+$/, '');

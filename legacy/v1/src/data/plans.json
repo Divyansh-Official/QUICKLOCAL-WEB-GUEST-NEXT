@@ -1,0 +1,94 @@
+{
+  "_source": "subscription_plans table — V17__seed_plans.sql plus V37__subscription_starter_plan_and_pricing.sql. price_monthly, max_products, boosts_per_month and the features jsonb are the real column values.",
+  "_note": "max_products of -1 means unlimited in the schema; rendered as Unlimited.",
+  "currency": "INR",
+  "items": [
+    {
+      "name": "FREE",
+      "label": "Free",
+      "priceMonthly": 0,
+      "maxProducts": 25,
+      "boostsPerMonth": 0,
+      "blurb": "Open your shop and start selling.",
+      "features": {
+        "priority_support": false,
+        "priority_type": null,
+        "advanced_analytics": false,
+        "featured_badge": false,
+        "bulk_offers": false,
+        "custom_banner": false,
+        "export_orders": false,
+        "customer_history": false,
+        "sales_dashboard": false
+      }
+    },
+    {
+      "name": "STARTER",
+      "label": "Starter",
+      "priceMonthly": 99,
+      "maxProducts": 25,
+      "boostsPerMonth": 0,
+      "blurb": "For a shop finding its footing.",
+      "features": {
+        "priority_support": false,
+        "priority_type": null,
+        "advanced_analytics": false,
+        "featured_badge": false,
+        "bulk_offers": false,
+        "custom_banner": false,
+        "export_orders": false,
+        "customer_history": false,
+        "sales_dashboard": false
+      }
+    },
+    {
+      "name": "GROWTH",
+      "label": "Growth",
+      "priceMonthly": 299,
+      "maxProducts": 100,
+      "boostsPerMonth": 1,
+      "popular": true,
+      "blurb": "Four times the catalogue, and the numbers behind it.",
+      "features": {
+        "priority_support": true,
+        "priority_type": "chat",
+        "advanced_analytics": false,
+        "featured_badge": false,
+        "bulk_offers": false,
+        "custom_banner": false,
+        "export_orders": true,
+        "customer_history": true,
+        "sales_dashboard": true
+      }
+    },
+    {
+      "name": "PRO",
+      "label": "Pro",
+      "priceMonthly": 799,
+      "maxProducts": -1,
+      "boostsPerMonth": 4,
+      "blurb": "Everything, with your shop in front.",
+      "features": {
+        "priority_support": true,
+        "priority_type": "call_and_chat",
+        "advanced_analytics": true,
+        "featured_badge": true,
+        "bulk_offers": true,
+        "custom_banner": true,
+        "export_orders": true,
+        "customer_history": true,
+        "sales_dashboard": true
+      }
+    }
+  ],
+  "featureLabels": {
+    "priority_support": "Priority support",
+    "advanced_analytics": "Advanced analytics",
+    "featured_badge": "Featured badge",
+    "bulk_offers": "Bulk offers",
+    "custom_banner": "Custom shop banner",
+    "export_orders": "Export orders",
+    "customer_history": "Customer history",
+    "sales_dashboard": "Sales dashboard"
+  }
+}

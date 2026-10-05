@@ -1,0 +1,34 @@
+{
+  "_source": "app_config table, seeded by V21__seed_app_config.sql and V25__audit_fixes_config_and_index.sql. Every value below is the config_value the backend actually reads at runtime.",
+  "name": "QuickLocal",
+  "tagline": "Your Neighbourhood, Delivered Fast",
+  "slogan": "Fresh from local shops to your doorstep",
+  "version": "1.0.0",
+  "headline": {
+    "lead": "Everything Local,",
+    "accent": "Delivered."
+  },
+  "intro": "QuickLocal connects you with trusted local vendors, fast deliveries, and reliable services — all in one place.",
+  "delivery": {
+    "_source": "app_config: app.default_delivery_radius, app.max_delivery_radius, app.max_delivery_time_hours, app.min_delivery_fee",
+    "defaultRadiusKm": 5,
+    "maxRadiusKm": 15,
+    "maxHours": 3,
+    "minFeeInr": 15
+  },
+  "fees": {
+    "_source": "app_config: app.platform_fee (flat, per order) and categories.platform_fee_percent (per category, V34)",
+    "platformFeeInr": 10,
+    "lowestCategoryFeePercent": 2
+  },
+  "referral": {
+    "_source": "app_config: referral.reward_amount_inr",
+    "rewardInr": 50
+  },
+  "riderPayout": {
+    "_source": "app_config: delivery.base_payout_inr, delivery.payout_per_km_inr, delivery.min_payout_inr",
+    "baseInr": 20,
+    "perKmInr": 5,
+    "minimumInr": 30
+  }
+}

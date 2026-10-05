@@ -1,109 +1,95 @@
 /**
- * Contact.
- *
- * Every channel here is real and reachable — a tel: link, a mailto:, and the
- * operating address. There is no contact FORM, deliberately: with no backend a
- * form would collect a message and drop it, which is worse than sending someone
- * to an inbox that a person actually reads.
+ * /contact — every channel real and reachable, each with a copy button.
+ * No form, on purpose: nothing on a static site can store a message, so a
+ * form would take it and lose it.
  */
 import type { Metadata } from 'next';
-import { Icon, type IconName } from '@/components/Icon';
-import { Reveal } from '@/components/Reveal';
-import { Card, Container, IconTile, PageHeader } from '@/components/ui';
-import { contact, info } from '@/lib/data';
+import Reveal from '@/components/motion/Reveal';
+import FaqSection from '@/components/sections/shared/FaqSection';
+import PageHero from '@/components/sections/shared/PageHero';
+import CopyButton from '@/components/ui/CopyButton';
+import Icon from '@/components/ui/Icon';
+import Slab3D from '@/components/ui/Slab3D';
+import Tilt from '@/components/ui/Tilt';
+import { contact, faq, fillDeep, home, mailHref, pages, telHref, ui } from '@/lib/data';
 
-export const metadata: Metadata = {
-  title: 'Contact Us',
-  description: `Reach ${info.name} — ${contact.phone}, ${contact.email}, ${contact.address}.`,
-};
+const copy = fillDeep(pages.contact);
 
-const CHANNELS = [
-  {
-    icon: 'phone' as IconName,
-    title: 'Call us',
-    value: contact.phone,
-    href: `tel:${contact.phone.replace(/\s/g, '')}`,
-    note: 'For anything urgent about a live order',
-  },
-  {
-    icon: 'mail' as IconName,
-    title: 'Email us',
-    value: contact.email,
-    href: `mailto:${contact.email}`,
-    note: 'Vendor sign-ups, partner applications, support',
-  },
-  {
-    icon: 'pin' as IconName,
-    title: 'Find us',
-    value: contact.address,
-    note: `Serving ${contact.city} within ${info.delivery.maxRadiusKm} km`,
-  },
-];
+export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+
+const resolve = (field: string) =>
+  field === 'phone'
+    ? { value: contact.phone, href: telHref(contact.phone) }
+    : field === 'email'
+      ? { value: contact.email, href: mailHref(contact.email) }
+      : { value: contact.address, href: '' };
 
 export default function ContactPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Contact us"
-        title="Talk to a person"
-        intro="Whether you want to sell, deliver, or ask about an order — these all reach someone."
+      <PageHero
+        {...copy.hero}
+        crumbs={[{ label: copy.meta.title }]}
+        labels={{ home: ui.common.home, breadcrumb: ui.common.breadcrumb }}
+        art={<Slab3D icon="headset" hue="tangerine" size={300} />}
       />
 
-      <Container className="pb-20">
-        <div className="grid gap-4 md:grid-cols-3">
-          {CHANNELS.map((c, i) => (
-            <Reveal key={c.title} delay={i * 100}>
-              <Card className="h-full p-5">
-                <IconTile name={c.icon} size={46} />
-                <h2 className="mt-4 text-[15px] font-bold">{c.title}</h2>
-                {c.href ? (
-                  <a
-                    href={c.href}
-                    className="mt-1.5 block break-words text-[14px] font-semibold text-[var(--color-tangerine-600)] hover:underline">
-                    {c.value}
-                  </a>
-                ) : (
-                  <p className="mt-1.5 text-[14px] font-semibold">{c.value}</p>
-                )}
-                <p className="mt-2 text-[12px] leading-relaxed text-[var(--text-muted)]">{c.note}</p>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
+      <section className="tone-base pb-[var(--section-y)]">
+        <div className="shell">
+          <ul className="grid gap-4 md:grid-cols-3">
+            {copy.channels.map((c, i) => {
+              const r = resolve(c.field);
+              return (
+                <Reveal as="li" key={c.title} index={i} className="flex">
+                  <Tilt max={5} className="group glass hover-lift relative flex w-full flex-col rounded-[var(--radius-card)] p-7">
+                    <span className="icon-tile" style={{ ['--s' as string]: '52px' }}>
+                      <Icon name={c.icon} size={24} strokeWidth={1.9} effect="bounce" />
+                    </span>
+                    <h2 className="mt-6 text-[13px] font-extrabold uppercase tracking-[0.12em] text-fg-3">{c.title}</h2>
+                    {r.href ? (
+                      <a href={r.href} className="mt-2 break-words text-[clamp(1.2rem,1.05rem+0.5vw,1.45rem)] font-extrabold leading-snug tracking-[-0.025em] text-fg after:absolute after:inset-0 after:content-[''] hover:text-primary-ink">
+                        {r.value}
+                      </a>
+                    ) : (
+                      <p className="mt-2 text-[clamp(1.2rem,1.05rem+0.5vw,1.45rem)] font-extrabold leading-snug tracking-[-0.025em] text-fg">{r.value}</p>
+                    )}
+                    <p className="t-small mt-2 flex-1">{c.note}</p>
+                    <div className="mt-5">
+                      <CopyButton value={r.value} label={copy.copy} copiedLabel={copy.copied} />
+                    </div>
+                  </Tilt>
+                </Reveal>
+              );
+            })}
+          </ul>
 
-        <Reveal delay={200}>
-          <div className="ql-glint mt-4 grid gap-4 ql-glass rounded-2xl p-6 sm:grid-cols-2">
-            <div>
-              <h2 className="text-[15px] font-bold">Follow along</h2>
-              <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--text-muted)]">
-                New neighbourhoods and new categories get announced here first.
-              </p>
-              <ul className="mt-4 flex gap-2">
+          <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <Reveal className="glass rounded-[var(--radius-card)] p-7">
+              <h2 className="t-headline">{copy.follow.title}</h2>
+              <p className="t-small mt-2">{copy.follow.text}</p>
+              <ul className="mt-5 flex flex-wrap gap-2">
                 {contact.socials.map(s => (
-                  <li key={s.label}>
-                    <a
-                      href={s.href}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      aria-label={`${s.label} — ${s.handle}`}
-                      className="ql-glass ql-glint inline-flex items-center gap-2 rounded-xl px-3 py-2.5 text-[var(--color-ink-700)] transition hover:text-[var(--color-tangerine-600)]">
-                      <Icon name={s.icon as IconName} size={17} />
-                      <span className="text-[12.5px] font-semibold">{s.handle}</span>
+                  <li key={s.href}>
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="btn btn-md btn-glass" aria-label={`${s.label} — ${s.handle}`}>
+                      <Icon name={s.icon} size={18} />
+                      <span>{s.handle}</span>
                     </a>
                   </li>
                 ))}
               </ul>
-            </div>
-            <div className="ql-glass ql-glint rounded-2xl p-5">
-              <h3 className="text-[13.5px] font-bold">Why there is no form here</h3>
-              <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--text-muted)]">
-                This site is static — nothing on it stores what you type. A contact form would take
-                your message and lose it, so we send you to a mailbox somebody reads instead.
-              </p>
-            </div>
+            </Reveal>
+            <Reveal index={1} className="glass rounded-[var(--radius-card)] p-7">
+              <h2 className="t-headline flex items-center gap-2.5">
+                <Icon name="info" size={20} className="text-primary" />
+                {copy.noForm.title}
+              </h2>
+              <p className="t-small mt-2">{copy.noForm.text}</p>
+            </Reveal>
           </div>
-        </Reveal>
-      </Container>
+        </div>
+      </section>
+
+      <FaqSection section={fillDeep(home.faq)} items={faq} tone="tone-alt" />
     </>
   );
 }

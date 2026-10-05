@@ -1,239 +1,100 @@
 /**
- * Get the app — where "become a vendor" and "become a delivery partner" land.
- *
- * ── ONE PAGE, TWO ROLES, ONE ACTION ─────────────────────────────────────────
- * Signing up as a vendor or a rider happens IN THE APP, because both need
- * document verification and neither can be completed on a static marketing
- * site. So the honest destination for both buttons is the same: here is the
- * app, here is what your onboarding looks like, install it and start.
- *
- * A link that names a role targets it by HASH — /get-the-app#partner — rather
- * than a query the server reads. Reading searchParams would opt the route out
- * of static rendering for the sake of reordering two cards, and a hash does the
- * same job with the browser's own scrolling, no JavaScript and no server.
- *
- * ── THE STORE BUTTONS DO NOT LIE ────────────────────────────────────────────
- * `app.json` carries `available: false` for both listings, so they render as a
- * disabled control that says Coming soon rather than an anchor to a store page
- * that does not exist. When the listings go live, the flag and the URL are the
- * only things that change.
+ * /get-the-app — where "become a vendor" and "become a rider" land. Both sign
+ * up in the app, because both need document verification. Store buttons say
+ * Soon until app.json marks a listing available.
  */
 import type { Metadata } from 'next';
-import { Icon, type IconName } from '@/components/Icon';
-import { Reveal } from '@/components/Reveal';
-import { DownloadScene, RiderScene, ShopScene } from '@/components/Scenes';
-import { Card, Container, IconTile } from '@/components/ui';
-import { appRoles, appStores, contact, info } from '@/lib/data';
+import Phone3D from '@/components/art/Phone3D';
+import Reveal from '@/components/motion/Reveal';
+import CtaBanner from '@/components/sections/shared/CtaBanner';
+import PageHero from '@/components/sections/shared/PageHero';
+import Icon from '@/components/ui/Icon';
+import Slab3D from '@/components/ui/Slab3D';
+import StoreBadge from '@/components/ui/StoreBadge';
+import { appRoles, appStores, contact, fill, fillDeep, home, lifecycle, pages, ui } from '@/lib/data';
 
-export const metadata: Metadata = {
-  title: 'Get the App',
-  description: `Sell on ${info.name} or deliver for it — both start in the app. Here is what onboarding looks like for each.`,
-};
+const copy = fillDeep(pages.getTheApp);
+const phone = fillDeep(home.hero.phone);
+
+export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+
+const HUE: Record<string, string> = { vendor: 'butter', partner: 'ink' };
 
 export default function GetTheAppPage() {
+  const badges = (
+    <>
+      <StoreBadge listing={appStores.android} icon="play" top={ui.stores.googleTop} soon={ui.common.soon} soonTitle={ui.common.comingSoon} />
+      <StoreBadge listing={appStores.ios} icon="apple" top={ui.stores.appleTop} soon={ui.common.soon} soonTitle={ui.common.comingSoon} />
+    </>
+  );
+
   return (
     <>
-      {/* ── hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative overflow-hidden pt-[calc(var(--header-h)+36px)] pb-14">
-        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -right-[10%] -top-[30%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.20),transparent_66%)]" />
-        </div>
-
-        <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
-            <div>
-              <Reveal anim="scale">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--color-tangerine-300)] bg-[var(--color-tangerine-100)] px-3 py-1.5 text-[11.5px] font-bold text-[var(--color-tangerine-700)]">
-                  <Icon name="sparkle" size={13} />
-                  Partner onboarding
-                </span>
-              </Reveal>
-              <Reveal delay={80}>
-                <h1 className="mt-5 text-[34px] font-extrabold leading-[1.08] tracking-tight sm:text-[46px]">
-                  It all starts in the{' '}
-                  <span className="text-[var(--color-tangerine-500)]">app</span>.
-                </h1>
-              </Reveal>
-              <Reveal delay={150}>
-                <p className="mt-4 max-w-[480px] text-[14.5px] leading-relaxed text-[var(--color-ink-500)]">
-                  Selling or delivering both need document verification, so both
-                  are done in the app rather than on a web form. Install it, pick your
-                  role, and you are a few screens from live.
-                </p>
-              </Reveal>
-
-              <Reveal delay={220}>
-                <div className="mt-7 flex flex-wrap gap-3">
-                  <StoreButton listing={appStores.android} icon="play" top="Get it on" />
-                  <StoreButton listing={appStores.ios} icon="apple" top="Download on the" />
-                </div>
-              </Reveal>
-
-              <Reveal delay={280}>
-                <p className="mt-4 text-[12px] text-[var(--text-muted)]">
-                  Questions first?{' '}
-                  <a
-                    href={`mailto:${contact.email}`}
-                    className="font-semibold text-[var(--color-tangerine-600)] hover:underline">
-                    {contact.email}
-                  </a>
-                </p>
-              </Reveal>
-            </div>
-
-            <Reveal anim="left" delay={200}>
-              <DownloadScene className="mx-auto w-full max-w-[300px]" />
-            </Reveal>
+      <PageHero
+        {...copy.hero}
+        crumbs={[{ label: copy.meta.title }]}
+        labels={{ home: ui.common.home, breadcrumb: ui.common.breadcrumb }}
+        art={
+          <div className="w-full max-w-[420px]">
+            <Phone3D
+              steps={lifecycle.happy.slice(0, phone.steps)}
+              chips={[]}
+              fees={phone.fees}
+              labels={{ eyebrow: phone.eyebrow, eta: phone.eta, shop: phone.shop, order: phone.orderLabel, basket: phone.basket }}
+            />
           </div>
-        </Container>
+        }>
+        {badges}
+      </PageHero>
+
+      <section className="tone-base -mt-6 pb-4">
+        <p className="shell t-small text-center lg:text-left">
+          {fill(ui.stores.version)} · {copy.hero.question}{' '}
+          <a href={`mailto:${contact.email}`} className="font-bold text-primary-ink hover:underline">
+            {contact.email}
+          </a>
+        </p>
       </section>
 
-      {/* ── the two tracks ───────────────────────────────────────────────── */}
-      <Container className="pb-8">
-        <div className="grid gap-4 lg:grid-cols-2">
+      <section className="tone-base section">
+        <div className="shell grid gap-5 lg:grid-cols-2">
           {appRoles.map((r, i) => (
-            <Reveal key={r.key} delay={i * 120}>
-              <Card id={r.key} className="flex h-full scroll-mt-28 flex-col overflow-hidden p-0">
-                <div className="relative bg-[var(--color-cream-100)] px-6 pt-6">
-                  {r.key === 'vendor' ? (
-                    <ShopScene className="mx-auto h-[130px] w-full max-w-[240px]" />
-                  ) : (
-                    <RiderScene className="mx-auto h-[130px] w-full max-w-[280px]" />
-                  )}
-                </div>
-
-                <div className="flex flex-1 flex-col p-6">
-                  <div className="flex items-center gap-3">
-                    <IconTile name={r.icon as IconName} size={44} />
-                    <h2 className="text-[19px] font-extrabold tracking-tight">{r.title}</h2>
-                  </div>
-                  <p className="mt-3 text-[13px] leading-relaxed text-[var(--text-muted)]">
-                    {r.blurb}
-                  </p>
-
-                  <ul className="mt-5 space-y-2.5">
-                    {r.highlights.map(h => (
-                      <li key={h} className="flex items-start gap-2.5">
-                        <span className="mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-[var(--color-ok)] text-white">
-                          <Icon name="check" size={11} strokeWidth={2.8} />
-                        </span>
-                        <span className="text-[13px] leading-relaxed text-[var(--color-ink-700)]">
-                          {h}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <h3 className="mt-7 text-[11.5px] font-extrabold uppercase tracking-[0.14em] text-[var(--color-tangerine-600)]">
-                    How onboarding goes
-                  </h3>
-                  <ol className="mt-3 flex-1 space-y-0">
-                    {r.steps.map((step, n) => (
-                      <li key={step} className="flex gap-3">
-                        <div className="flex flex-col items-center">
-                          <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-[var(--color-ink-950)] text-[11px] font-extrabold text-white">
-                            {n + 1}
-                          </span>
-                          {n < r.steps.length - 1 ? (
-                            <span className="my-1 w-[2px] flex-1 rounded-full bg-[var(--color-cream-200)]" />
-                          ) : null}
-                        </div>
-                        <p className={`text-[12.5px] leading-relaxed text-[var(--color-ink-500)] ${
-                          n < r.steps.length - 1 ? 'pb-3.5' : ''
-                        }`}>
-                          {step}
-                        </p>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              </Card>
+            <Reveal key={r.key} index={i} className="group glass glass-raised relative scroll-mt-28 overflow-hidden rounded-[var(--radius-panel)]" id={r.key}>
+              <div className="flex items-center justify-center bg-[color-mix(in_oklab,var(--fg)_4%,transparent)] py-8">
+                <Slab3D icon={r.icon} hue={HUE[r.key] ?? 'tangerine'} size={180} />
+              </div>
+              <div className="p-7 sm:p-9">
+                <h2 className="t-title">{r.title}</h2>
+                <p className="t-body mt-3">{r.blurb}</p>
+                <ul className="mt-6 space-y-3">
+                  {r.highlights.map(h => (
+                    <li key={h} className="flex items-start gap-3">
+                      <span className="mt-0.5 grid h-6 w-6 flex-none place-items-center rounded-full bg-ok text-white">
+                        <Icon name="check" size={13} strokeWidth={2.8} />
+                      </span>
+                      <span className="text-[15.5px] leading-snug text-fg">{h}</span>
+                    </li>
+                  ))}
+                </ul>
+                <h3 className="mt-9 text-[12px] font-extrabold uppercase tracking-[0.14em] text-primary-ink">{copy.onboardingTitle}</h3>
+                <ol className="relative mt-5 space-y-5">
+                  <span aria-hidden="true" className="absolute bottom-3 left-[15px] top-3 w-[2px] rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]" />
+                  {r.steps.map((s, n) => (
+                    <li key={s} className="relative flex items-start gap-4">
+                      <span className="grid h-8 w-8 flex-none place-items-center rounded-full bg-fg text-[13px] font-extrabold text-bg shadow-[0_6px_14px_-6px_rgb(0_0_0/0.5)]">{n + 1}</span>
+                      <span className="pt-1 text-[15px] leading-snug text-fg-2">{s}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             </Reveal>
           ))}
         </div>
-      </Container>
+      </section>
 
-      {/* ── closing band ─────────────────────────────────────────────────── */}
-      <Container className="py-14">
-        <Reveal anim="scale">
-          <div className="relative overflow-hidden rounded-[26px] bg-[var(--color-ink-950)] px-6 py-11 text-center sm:px-10">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -left-[6%] -top-[50%] h-[420px] w-[420px] rounded-full bg-[radial-gradient(circle,rgba(240,134,38,.28),transparent_66%)]"
-            />
-            <div className="relative">
-              <h2 className="text-[24px] font-extrabold tracking-tight text-white sm:text-[29px]">
-                Verified once, then you are live
-              </h2>
-              <p className="mx-auto mt-3 max-w-[480px] text-[13.5px] leading-relaxed text-[var(--color-cream-300)]">
-                Every shop and every rider clears document checks before taking an order — which is
-                the reason a customer can trust the one that turns up.
-              </p>
-              <div className="mt-7 flex flex-wrap justify-center gap-3">
-                <StoreButton listing={appStores.android} icon="play" top="Get it on" onDark />
-                <StoreButton listing={appStores.ios} icon="apple" top="Download on the" onDark />
-              </div>
-            </div>
-          </div>
-        </Reveal>
-      </Container>
+      <CtaBanner eyebrow={copy.banner.eyebrow} title={copy.banner.title} accent={copy.banner.accent} text={copy.banner.text}>
+        {badges}
+      </CtaBanner>
     </>
-  );
-}
-
-/**
- * A store button that is a link when the listing exists and a labelled,
- * disabled control when it does not — never an anchor to a page that 404s.
- */
-function StoreButton({
-  listing,
-  icon,
-  top,
-  onDark = false,
-}: {
-  listing: { available: boolean; url: string | null; store: string };
-  icon: IconName;
-  top: string;
-  onDark?: boolean;
-}) {
-  const shell = onDark
-    ? 'border-white/15 bg-white/6 text-white hover:border-[var(--color-tangerine-500)] hover:bg-[var(--color-tangerine-500)]'
-    : 'border-[var(--line)] bg-[var(--surface)] text-[var(--color-ink-900)] hover:border-[var(--color-tangerine-300)] hover:bg-[var(--color-cream-100)]';
-  const sub = onDark ? 'text-[var(--color-cream-300)]' : 'text-[var(--text-muted)]';
-
-  const inner = (
-    <>
-      <Icon name={icon} size={23} />
-      <span className="text-left leading-tight">
-        <span className={`block text-[9.5px] uppercase tracking-wide ${sub}`}>{top}</span>
-        <span className="block text-[13.5px] font-bold">{listing.store}</span>
-      </span>
-      {!listing.available ? (
-        <span className="ml-1 rounded-md bg-[var(--color-tangerine-500)] px-1.5 py-0.5 text-[9px] font-extrabold uppercase text-white">
-          Soon
-        </span>
-      ) : null}
-    </>
-  );
-
-  if (listing.available && listing.url) {
-    return (
-      <a
-        href={listing.url}
-        target="_blank"
-        rel="noreferrer noopener"
-        className={`ql-glint inline-flex items-center gap-2.5 rounded-xl border px-4 py-2.5 transition ${shell}`}>
-        {inner}
-      </a>
-    );
-  }
-
-  return (
-    <span
-      title={`${listing.store} listing coming soon`}
-      aria-disabled="true"
-      className={`inline-flex cursor-default items-center gap-2.5 rounded-xl border px-4 py-2.5 opacity-90 ${shell}`}>
-      {inner}
-    </span>
   );
 }

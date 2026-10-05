@@ -1,0 +1,590 @@
+@import "tailwindcss";
+
+/**
+ * QuickLocal public site — "Cream & Tangerine".
+ *
+ * The same tokens as the admin console and the mobile apps, so somebody who
+ * signs up here and then opens the app is looking at one product rather than
+ * two that share a logo. Values are copied exactly, not re-picked by eye.
+ *
+ * Three-layer logic: CREAM field (warm canvas, never flat white) → CHARCOAL
+ * anchor (footer, app band, primary text) → TANGERINE accent (actions).
+ */
+@theme {
+  --color-cream-50: #fcfaf7;
+  --color-cream-100: #f8f4ef;
+  --color-cream-200: #f1eae1;
+  --color-cream-300: #e6dcce;
+
+  --color-ink-300: #8a8178;
+  --color-ink-500: #575047;
+  --color-ink-700: #3c362f;
+  --color-ink-900: #2f2b26;
+  --color-ink-950: #1a1713;
+
+  --color-tangerine-100: #fdebd7;
+  --color-tangerine-300: #f7bc7c;
+  --color-tangerine-500: #f08626;
+  --color-tangerine-600: #de7314;
+  --color-tangerine-700: #b85c0f;
+
+  --color-butter-400: #f5c645;
+  --color-ok: #3e9f5c;
+  --color-warn: #e09b26;
+  --color-bad: #e25534;
+
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+:root {
+  --bg: #fdfaf6;
+  --surface: #ffffff;
+  --line: #efe7dc;
+  --text: #2f2b26;
+  --text-muted: #8a8178;
+
+  /* Header height, so anchor links land below it instead of behind it. */
+  --header-h: 72px;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* An id targeted from the nav must clear the fixed header. */
+  scroll-padding-top: calc(var(--header-h) + 16px);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  /* Nothing on this page may cause a sideways scrollbar; several sections
+     deliberately overhang their container to bleed decoration off the edge. */
+  overflow-x: hidden;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-tangerine-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/**
+ * Every section establishes its own position, so content animating near a
+ * boundary is ordered by the document rather than by whichever box happened to
+ * be painted last.
+ */
+section {
+  position: relative;
+}
+
+/* ── Motion ──────────────────────────────────────────────────────────────────
+   Hand-rolled rather than pulling in an animation library, which is how the
+   admin console does it too. Everything below animates transform and opacity
+   ONLY, so it runs on the compositor and never forces layout while the page is
+   scrolling — the single biggest cause of janky marketing sites.
+
+   The easing is shared: cubic-bezier(.22,1,.36,1) decelerates hard and settles,
+   which reads as an object arriving rather than a value being interpolated. */
+
+@keyframes ql-rise {
+  from { opacity: 0; transform: translate3d(0, 22px, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes ql-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ql-scale-in {
+  from { opacity: 0; transform: scale(.94); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes ql-slide-left {
+  from { opacity: 0; transform: translate3d(28px, 0, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes ql-slide-right {
+  from { opacity: 0; transform: translate3d(-28px, 0, 0); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* The hero's soft colour wash, drifting so the page is never quite static. */
+@keyframes ql-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(2%, -3%, 0) scale(1.06); }
+}
+
+/* A slow shine across the stats band. */
+@keyframes ql-sheen {
+  0%   { transform: translateX(-120%) skewX(-18deg); }
+  100% { transform: translateX(320%)  skewX(-18deg); }
+}
+
+@keyframes ql-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* ── Scene keyframes ─────────────────────────────────────────────────────────
+   Driving the illustrations in Scenes.tsx. Kept here rather than inline so the
+   reduced-motion block at the bottom can switch all of them off in one place. */
+
+@keyframes ql-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+/* The rider follows the route: across, up over the crest, then down and off. */
+@keyframes ql-ride {
+  0%   { transform: translate(8px, 118px); opacity: 0; }
+  8%   { opacity: 1; }
+  50%  { transform: translate(116px, 60px); opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translate(232px, 104px); opacity: 0; }
+}
+
+@keyframes ql-draw {
+  0%   { stroke-dashoffset: 300; }
+  55%  { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@keyframes ql-stamp {
+  0%, 12%  { transform: translateY(-16px) scale(.7); opacity: 0; }
+  26%      { transform: translateY(0) scale(1.08); opacity: 1; }
+  34%, 88% { transform: translateY(0) scale(1); opacity: 1; }
+  100%     { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes ql-scroll-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-102px); }
+}
+
+@keyframes ql-lift {
+  0%, 100% { transform: translateY(4px); }
+  50%      { transform: translateY(-9px); }
+}
+
+@keyframes ql-drop {
+  0%   { transform: translateY(-26px); opacity: 0; }
+  35%  { transform: translateY(0); opacity: 1; }
+  75%  { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(6px); opacity: 0; }
+}
+
+@keyframes ql-pulse-ring {
+  0%   { transform: scale(.9); opacity: .55; }
+  70%  { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/**
+ * Scroll reveal.
+ *
+ * The element is hidden by default and gets `.is-in` when it enters the
+ * viewport — see the Reveal component. Being hidden by default is deliberate:
+ * anything that starts visible and then animates flashes at full opacity on
+ * first paint before the observer runs.
+ */
+.reveal {
+  opacity: 0;
+  /**
+   * NO `will-change` HERE.
+   *
+   * It looks like a free performance win and is the opposite. `will-change:
+   * transform` promotes an element to its own compositor layer AND gives it a
+   * stacking context — permanently, on all forty-odd revealed elements. That is
+   * forty-odd layers the compositor keeps for the life of the page, and forty
+   * odd new stacking contexts whose paint order no longer follows the document,
+   * which is what made cards appear to slide behind neighbouring sections.
+   *
+   * A transform/opacity animation is composited anyway. The hint buys nothing
+   * and costs correctness.
+   */
+}
+
+.reveal.is-in {
+  animation: ql-rise .7s cubic-bezier(.22, 1, .36, 1) forwards;
+}
+
+.reveal[data-anim="fade"].is-in       { animation-name: ql-fade; }
+.reveal[data-anim="scale"].is-in      { animation-name: ql-scale-in; }
+.reveal[data-anim="left"].is-in       { animation-name: ql-slide-left; }
+.reveal[data-anim="right"].is-in      { animation-name: ql-slide-right; }
+
+.ql-drift  { animation: ql-drift 18s ease-in-out infinite; }
+.ql-marquee { animation: ql-marquee 38s linear infinite; }
+
+.ql-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 32%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .28), transparent);
+  animation: ql-sheen 6.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Cards lift toward the pointer. Transform only — no box-shadow transition,
+   which is the expensive one because it repaints on every frame. */
+.ql-lift {
+  transition: transform .3s cubic-bezier(.22, 1, .36, 1), border-color .3s ease;
+}
+
+.ql-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* ── Glass, without a backdrop pass ──────────────────────────────────────────
+   The look of glass from PAINT ALONE, so it can be used as many times as a
+   page needs. Every refracting surface is a GPU pass redone whenever anything
+   behind it moves; these cost nothing per frame, which is what makes it safe
+   to put glass on every container on the site.
+
+   What sells it without a backdrop filter is the light, not the blur. Four
+   things, all of them background layers:
+
+     · a specular band down from the top edge, where a curved surface catches
+       the light
+     · a soft bloom off the top-left corner, the direction everything else on
+       this site is lit from
+     · a faint warm tint at the bottom, so the surface has depth rather than
+       being uniformly white
+     · the translucent fill itself
+
+   They are BACKGROUND layers rather than a ::before, deliberately. An absolutely
+   positioned pseudo-element paints above in-flow content, so the highlight
+   would sit on top of the text; a background cannot, ever. It also leaves both
+   pseudo-elements free for .ql-glint and .ql-live.
+
+   Only large surfaces that stay put get the real refraction — see
+   GlassPane.tsx for where that line is drawn and what happened when it was not. */
+.ql-glass {
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 44%),
+    radial-gradient(130% 70% at 12% -12%, rgba(255, 255, 255, .42), transparent 62%),
+    linear-gradient(to top, rgba(253, 246, 237, .45), transparent 55%),
+    linear-gradient(0deg, rgba(255, 255, 255, .56), rgba(255, 255, 255, .56));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .68),
+    inset 0 -1px 0 rgba(255, 255, 255, .22),
+    inset 0 0 0 .5px rgba(255, 255, 255, .42),
+    0 1px 2px rgba(26, 23, 19, .05),
+    0 6px 18px -8px rgba(26, 23, 19, .14);
+}
+
+/* A block that should sit clearly above the field — feature panels, the
+   newsletter, a plan table. Same material, more lift. */
+.ql-glass-raised {
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, .58), rgba(255, 255, 255, 0) 46%),
+    radial-gradient(130% 70% at 10% -14%, rgba(255, 255, 255, .5), transparent 64%),
+    linear-gradient(to top, rgba(253, 246, 237, .5), transparent 58%),
+    linear-gradient(0deg, rgba(255, 255, 255, .6), rgba(255, 255, 255, .6));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .72),
+    inset 0 -1px 0 rgba(255, 255, 255, .24),
+    inset 0 0 0 .5px rgba(255, 255, 255, .46),
+    0 2px 6px rgba(26, 23, 19, .07),
+    0 18px 44px -22px rgba(26, 23, 19, .3);
+}
+
+/* The same material inverted, for glass sitting on charcoal or tangerine —
+   the footer and the app band. White at these opacities over a dark fill goes
+   grey and muddy, so the fill is barely-there white and the rim carries it. */
+.ql-glass-dark {
+  background-image:
+    linear-gradient(to bottom, rgba(255, 255, 255, .16), rgba(255, 255, 255, 0) 48%),
+    radial-gradient(130% 70% at 12% -12%, rgba(255, 255, 255, .13), transparent 62%),
+    linear-gradient(0deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .08));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .22),
+    inset 0 0 0 .5px rgba(255, 255, 255, .16),
+    0 10px 30px -14px rgba(0, 0, 0, .45);
+}
+
+/* A hairline divider that reads as an edge in the glass rather than a border
+   drawn on top of it. */
+.ql-glass-line {
+  border-color: rgba(255, 255, 255, .5);
+}
+
+/* ── Glass motion ────────────────────────────────────────────────────────────
+   Added with the glass surfaces. Names are deliberately NOT ql-sheen/ql-float:
+   both already exist above with different jobs (the stats band's endless band,
+   and the scene illustrations' bob), and reusing either would have changed
+   them everywhere they are already used.
+
+   All transform/opacity, all switched off below. */
+
+/* A highlight travelling across a glass surface as the pointer arrives. This
+   is the one thing real glass does that refraction alone cannot show — a
+   displacement map bends what is behind the surface, it does not light the
+   surface itself. Pseudo-element, so it never touches layout; `inherit` on the
+   radius so the sweep cannot escape a rounded corner. */
+.ql-glint {
+  position: relative;
+  isolation: isolate;
+}
+
+.ql-glint::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 34%,
+    rgba(255, 255, 255, .5) 47%,
+    rgba(255, 255, 255, .8) 50%,
+    rgba(255, 255, 255, .5) 53%,
+    transparent 66%
+  );
+  background-size: 260% 100%;
+  background-position: 130% 0;
+  transition: opacity .2s ease;
+}
+
+.ql-glint:hover::after,
+.ql-glint:focus-within::after {
+  opacity: 1;
+  animation: ql-glint-sweep .9s cubic-bezier(.22, 1, .36, 1);
+}
+
+@keyframes ql-glint-sweep {
+  from { background-position: 130% 0; }
+  to   { background-position: -60% 0; }
+}
+
+/* A slow buoyant rise and fall, for a piece that should feel like it is
+   floating on the field rather than pinned to it.
+
+   NOT for a refracting surface. Moving an element that carries backdrop-filter
+   re-samples its backdrop every frame, so a bobbing glass pane pays for a full
+   GPU pass sixty times a second for ever — exactly the cost the rest of this
+   file is arranged to avoid. Bob things that are painted. */
+.ql-bob {
+  animation: ql-bob 9s ease-in-out infinite alternate;
+}
+
+@keyframes ql-bob {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(0, -9px, 0); }
+}
+
+/* The ring around the one step in a timeline that is happening now. Reuses the
+   scene keyframes rather than declaring a second identical set. */
+.ql-live::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 2px solid var(--color-tangerine-500);
+  animation: ql-pulse-ring 2s ease-out infinite;
+  pointer-events: none;
+}
+
+/* Children arrive one after another instead of all at once. Set --i per child;
+   anything past the list length simply takes the largest delay, which is the
+   right way for it to fail. */
+.ql-stagger > * {
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+/**
+ * Everything above is decoration, so all of it goes when the reader has asked
+ * for less motion. `.reveal` must still end up VISIBLE — turning the animation
+ * off without this would leave the whole page at opacity 0.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .reveal,
+  .reveal.is-in {
+    opacity: 1;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .ql-drift,
+  .ql-marquee,
+  .ql-bob,
+  .ql-live::before,
+  .ql-sheen::after,
+  .ql-glint::after,
+  /* Every scene animation, including the SMIL-driven ones. */
+  svg *,
+  svg {
+    animation: none !important;
+  }
+
+  .ql-lift:hover { transform: none; }
+
+  .ql-glint::after { display: none; }
+  .ql-stagger > * { animation-delay: 0ms !important; }
+
+  *, *::before, *::after {
+    transition-duration: .01ms !important;
+  }
+}
+
+/* ── The backdrop ────────────────────────────────────────────────────────────
+   See Backdrop.tsx. Fixed behind the whole document so glass surfaces always
+   have structure to refract, and so there are no seams between sections.
+
+   Everything here is painted once and composited; the drift animates transform
+   only. `contain: strict` keeps it from participating in layout at all. */
+.ql-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  background:
+    radial-gradient(120% 80% at 50% -10%, #fffdfa 0%, transparent 60%),
+    linear-gradient(180deg, #fdfaf6 0%, #f8f3ec 55%, #fdfaf6 100%);
+}
+
+/**
+ * The blooms DO NOT MOVE, and that is a performance decision rather than a
+ * taste one.
+ *
+ * Anything animating behind a backdrop-filtered surface invalidates that
+ * surface's backdrop every frame, so its GPU pass has to be recomputed every
+ * frame — for ever, whether or not anybody is scrolling. With glass surfaces
+ * on the page that turned a still, idle page into a permanent recomposite of
+ * the whole viewport. The drift was worth a few pixels of life and cost the
+ * entire site's smoothness.
+ *
+ * `filter: blur()` is gone for the same family of reasons: it forces its own
+ * offscreen pass on a very large element. The gradients are soft enough that
+ * blurring them was buying nothing visible.
+ */
+.ql-bloom {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.ql-bloom-a {
+  right: -18%;
+  top: -24%;
+  width: 62vw;
+  height: 62vw;
+  max-width: 760px;
+  max-height: 760px;
+  background: radial-gradient(circle, rgba(240, 134, 38, 0.22), transparent 66%);
+}
+
+.ql-bloom-b {
+  left: -20%;
+  top: 28%;
+  width: 52vw;
+  height: 52vw;
+  max-width: 620px;
+  max-height: 620px;
+  background: radial-gradient(circle, rgba(245, 198, 69, 0.20), transparent 68%);
+}
+
+.ql-bloom-c {
+  right: 6%;
+  bottom: -18%;
+  width: 46vw;
+  height: 46vw;
+  max-width: 540px;
+  max-height: 540px;
+  background: radial-gradient(circle, rgba(62, 159, 92, 0.12), transparent 70%);
+}
+
+/* The fine grid. Two 1px lines on a 26px pitch, at an opacity where it reads as
+   texture rather than as a grid — but sharp enough for the displacement map to
+   have something to bend. Doubled in size on coarse pointers so it does not
+   turn into moiré on a phone's pixel density. */
+.ql-weave {
+  position: absolute;
+  inset: -2px;
+  background-image:
+    linear-gradient(to right, rgba(60, 54, 47, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(60, 54, 47, 0.045) 1px, transparent 1px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(130% 100% at 50% 0%, #000 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(130% 100% at 50% 0%, #000 30%, transparent 78%);
+}
+
+@media (pointer: coarse) {
+  .ql-weave {
+    background-size: 34px 34px;
+  }
+}
+
+
+/* ── Range inputs ────────────────────────────────────────────────────────────
+   The estimator's two sliders. Styled rather than left to the browser because
+   the default control is a different shape, weight and colour in every engine,
+   and this one sits inside a glass card where a grey system track reads as a
+   rendering bug. The thumb is 24px so it clears the 24px minimum touch target
+   on a phone without the track having to grow with it. */
+.ql-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 24px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.ql-range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(60, 54, 47, 0.14);
+  box-shadow: inset 0 1px 2px rgba(26, 23, 19, 0.12);
+}
+
+.ql-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(60, 54, 47, 0.14);
+  box-shadow: inset 0 1px 2px rgba(26, 23, 19, 0.12);
+}
+
+.ql-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -9px;
+  height: 24px;
+  width: 24px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--color-tangerine-500), var(--color-tangerine-700));
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(240, 134, 38, 0.5);
+  transition: transform 140ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ql-range::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--color-tangerine-500), var(--color-tangerine-700));
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(240, 134, 38, 0.5);
+}
+
+.ql-range:active::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ql-range::-webkit-slider-thumb {
+    transition: none;
+  }
+}

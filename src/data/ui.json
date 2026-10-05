@@ -1,0 +1,71 @@
+{
+  "_source": "Interface copy: every label, button and caption the chrome and the shared sections print. {tokens} are filled from info.json, contact.json and fees.json at build time, so a figure changed there changes here too.",
+  "common": {
+    "skipToContent": "Skip to content",
+    "home": "Home",
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "close": "Close",
+    "back": "Back",
+    "breadcrumb": "Breadcrumb",
+    "primaryNav": "Primary",
+    "learnMore": "Learn more",
+    "previous": "Previous",
+    "next": "Next",
+    "soon": "Soon",
+    "comingSoon": "Coming soon to the stores",
+    "perMonth": "/month",
+    "free": "Free",
+    "platformFee": "platform fee",
+    "explore": "Explore"
+  },
+  "header": {
+    "cta": { "label": "Get the app", "href": "/get-the-app", "icon": "download" },
+    "ctaShort": "Get app"
+  },
+  "theme": {
+    "label": "Appearance",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "Auto",
+    "toggle": "Switch appearance"
+  },
+  "tabBar": {
+    "label": "Quick navigation",
+    "items": [
+      { "label": "Home", "href": "/", "icon": "home" },
+      { "label": "Shops", "href": "/services", "icon": "basket" },
+      { "label": "Pricing", "href": "/pricing", "icon": "tag" },
+      { "label": "Get app", "href": "/get-the-app", "icon": "download", "primary": true }
+    ]
+  },
+  "footer": {
+    "blurb": "Connecting {city} with trusted local shops and reliable riders — inside {radius} km, within {hours} hours.",
+    "contactHeading": "Contact",
+    "copyright": "© {year} {name}. All rights reserved.",
+    "madeFor": "Made with care for local communities",
+    "cta": { "label": "Get the app", "href": "/get-the-app" },
+    "ctaTitle": "Your street, delivered.",
+    "ctaText": "Shops you already trust, riders paid fairly, and every fee written down."
+  },
+  "stores": {
+    "googleTop": "Get it on",
+    "appleTop": "Download on the",
+    "version": "Version {version} · Android and iOS"
+  },
+  "notFound": {
+    "eyebrow": "404",
+    "title": "This street isn't on our map.",
+    "accent": "on our map.",
+    "body": "The page you asked for does not exist — perhaps it moved, perhaps it was never here. Everything else is a tap away.",
+    "cta": { "label": "Back to home", "href": "/" },
+    "secondary": { "label": "Browse categories", "href": "/services" }
+  },
+  "error": {
+    "eyebrow": "Something went wrong",
+    "title": "That did not load.",
+    "body": "A part of this page failed to render. Try again — and if it keeps happening, write to us.",
+    "retry": "Try again"
+  }
+}

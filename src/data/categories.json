@@ -8,7 +8,15 @@
       "icon": "basket",
       "blurb": "Daily essentials from shops on your street",
       "platformFeePercent": 2.0,
-      "displayOrder": 1
+      "displayOrder": 1,
+      "tagline": "The corner store, without the walk.",
+      "examples": [
+        "Fruit & vegetables",
+        "Staples & grains",
+        "Dairy & bakery",
+        "Household essentials"
+      ],
+      "hue": "tangerine"
     },
     {
       "slug": "hardware",
@@ -16,7 +24,15 @@
       "icon": "tools",
       "blurb": "Tools, fittings and repairs when you need them",
       "platformFeePercent": 3.0,
-      "displayOrder": 2
+      "displayOrder": 2,
+      "tagline": "The right fitting, the same afternoon.",
+      "examples": [
+        "Hand & power tools",
+        "Plumbing fittings",
+        "Electricals",
+        "Paint & adhesives"
+      ],
+      "hue": "ink"
     },
     {
       "slug": "furniture",
@@ -24,7 +40,15 @@
       "icon": "sofa",
       "blurb": "Home pieces from local makers and stores",
       "platformFeePercent": 3.0,
-      "displayOrder": 3
+      "displayOrder": 3,
+      "tagline": "Pieces made a few streets away.",
+      "examples": [
+        "Chairs & tables",
+        "Storage",
+        "Home décor",
+        "Made-to-order work"
+      ],
+      "hue": "butter"
     },
     {
       "slug": "fashion",
@@ -32,7 +56,15 @@
       "icon": "shirt",
       "blurb": "Clothing and accessories from nearby boutiques",
       "platformFeePercent": 3.0,
-      "displayOrder": 4
+      "displayOrder": 4,
+      "tagline": "Your neighbourhood boutique, on your phone.",
+      "examples": [
+        "Everyday wear",
+        "Ethnic wear",
+        "Footwear",
+        "Accessories"
+      ],
+      "hue": "rose"
     },
     {
       "slug": "others",
@@ -40,7 +72,16 @@
       "icon": "box",
       "blurb": "Everything else your neighbourhood sells",
       "platformFeePercent": 1.0,
-      "displayOrder": 5
+      "displayOrder": 5,
+      "tagline": "Everything else your street sells.",
+      "examples": [
+        "Stationery",
+        "Gifts",
+        "Pet supplies",
+        "Local specialities"
+      ],
+      "hue": "green"
     }
-  ]
+  ],
+  "_note_redesign": "tagline, examples and hue were added for the 2026 redesign: examples describe what a shop in the category typically lists, hue picks the colour of its 3D tile. platformFeePercent is unchanged."
 }

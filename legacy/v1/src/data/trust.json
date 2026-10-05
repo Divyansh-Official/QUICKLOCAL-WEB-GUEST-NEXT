@@ -1,0 +1,25 @@
+{
+  "_source": "Platform guarantees enforced in the backend, not marketing claims.",
+  "items": [
+    {
+      "title": "Verified vendors only",
+      "detail": "Every shop is document-checked before it opens",
+      "icon": "shield-check"
+    },
+    {
+      "title": "Secure payments",
+      "detail": "Razorpay, with refunds tracked end to end",
+      "icon": "lock"
+    },
+    {
+      "title": "Delivered within 3 hrs",
+      "detail": "The platform's hard ceiling on any order",
+      "icon": "truck"
+    },
+    {
+      "title": "Support that answers",
+      "detail": "Complaints are escalated, not closed quietly",
+      "icon": "headset"
+    }
+  ]
+}

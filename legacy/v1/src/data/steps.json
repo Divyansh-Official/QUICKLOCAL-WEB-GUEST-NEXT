@@ -1,0 +1,29 @@
+{
+  "_source": "The real order lifecycle — these are the OrderStatus values the backend moves an order through: PLACED → VENDOR_ACCEPTED → DELIVERY_ASSIGNED / OUT_FOR_DELIVERY → DELIVERED.",
+  "items": [
+    {
+      "n": 1,
+      "title": "Choose what you need",
+      "body": "Browse shops near you and add to your cart.",
+      "status": "PLACED"
+    },
+    {
+      "n": 2,
+      "title": "Place your order",
+      "body": "Pay securely, or on delivery where the vendor allows it.",
+      "status": "PLACED"
+    },
+    {
+      "n": 3,
+      "title": "The shop accepts",
+      "body": "A verified local vendor confirms and packs it.",
+      "status": "VENDOR_ACCEPTED"
+    },
+    {
+      "n": 4,
+      "title": "A rider brings it",
+      "body": "Assigned to a partner near the shop and tracked to your door.",
+      "status": "OUT_FOR_DELIVERY"
+    }
+  ]
+}

@@ -1,44 +1,40 @@
 /**
- * The shell every page renders inside.
+ * The shell every page renders inside: the field, the header, the page, the
+ * footer, and on phones the tab bar. All copy arrives from JSON via lib/data.
  *
- * Manrope, the same face the console and the mobile apps use, loaded through
- * next/font so it is self-hosted and there is no render-blocking request to a
- * font CDN — and no third party learning who visited the site.
- *
- * The header is fixed, so the body carries top padding equal to its height
- * rather than each page remembering to leave room.
+ * Manrope — the face the console and the mobile apps use — self-hosted by
+ * next/font, so there is no request to a font CDN at runtime.
  */
 import type { Metadata, Viewport } from 'next';
 import { Manrope } from 'next/font/google';
 import './globals.css';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
-import { Backdrop } from '@/components/Backdrop';
-import { contact, info } from '@/lib/data';
+import Backdrop from '@/components/layout/Backdrop';
+import JsonLd from '@/components/layout/JsonLd';
+import SiteFooter from '@/components/layout/SiteFooter';
+import SiteHeader from '@/components/layout/SiteHeader';
+import TabBar from '@/components/layout/TabBar';
+import HeadScript from '@/components/motion/HeadScript';
+import MorphProvider from '@/components/motion/MorphProvider';
+import ScrollProgress from '@/components/motion/ScrollProgress';
+import { allNav, contact, fill, footerColumns, info, isEnabled, mailHref, nav, site, siteUrl, telHref, ui } from '@/lib/data';
 
-const manrope = Manrope({
-  variable: '--font-manrope',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  display: 'swap',
-});
+const manrope = Manrope({ variable: '--font-manrope', subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], display: 'swap' });
 
 export const metadata: Metadata = {
-  title: {
-    default: `${info.name} — ${info.headline.lead} ${info.headline.accent}`,
-    template: `%s · ${info.name}`,
-  },
+  metadataBase: new URL(siteUrl),
+  title: { default: `${info.name} — ${info.headline.lead} ${info.headline.accent}`, template: `%s · ${info.name}` },
   description: info.intro,
-  keywords: ['local delivery', 'grocery delivery', contact.city, 'local vendors', info.name],
+  applicationName: info.name,
+  keywords: ['local delivery', 'grocery delivery', contact.city, 'local vendors', 'delivery partner', info.name],
   openGraph: {
     title: `${info.name} — ${info.tagline}`,
     description: info.intro,
     type: 'website',
-    locale: 'en_IN',
+    locale: site.locale.openGraph,
+    siteName: info.name,
     images: [{ url: '/logo-512.png', width: 512, height: 512, alt: `${info.name} logo` }],
   },
-  // The same artwork as the console tab, the iOS home screen and any install
-  // prompt — one mark across every surface of the product.
+  twitter: { card: 'summary', title: `${info.name} — ${info.tagline}`, description: info.intro, images: ['/logo-512.png'] },
   icons: {
     icon: [
       { url: '/logo-32.png', sizes: '32x32', type: 'image/png' },
@@ -47,30 +43,95 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: '/logo-180.png', sizes: '180x180', type: 'image/png' }],
   },
+  appleWebApp: { capable: true, title: info.name, statusBarStyle: 'default' },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#f08626',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: site.theme.lightThemeColor },
+    { media: '(prefers-color-scheme: dark)', color: site.theme.darkThemeColor },
+  ],
   width: 'device-width',
   initialScale: 1,
+  viewportFit: 'cover',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const contactProps = {
+    phone: contact.phone,
+    phoneHref: telHref(contact.phone),
+    email: contact.email,
+    emailHref: mailHref(contact.email),
+    address: contact.address,
+  };
+  const showTheme = isEnabled('themeToggle');
+  const theme = ui.theme;
+
   return (
-    <html lang="en-IN" className={manrope.variable}>
-      <body className="min-h-screen font-sans antialiased">
-        {/* First stop for a keyboard, before six nav links. */}
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-lg focus:bg-[var(--color-ink-950)] focus:px-4 focus:py-2.5 focus:text-[13px] focus:font-bold focus:text-white">
-          Skip to content
+    <html lang={site.locale.htmlLang} className={manrope.variable} suppressHydrationWarning>
+      <head>
+        <HeadScript fallback={site.theme.default} />
+      </head>
+      <body data-tabbar={isEnabled('tabBar') ? 'on' : 'off'}>
+        <JsonLd
+          schema={{
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: info.name,
+            slogan: info.tagline,
+            description: info.intro,
+            url: siteUrl,
+            logo: `${siteUrl}/logo-512.png`,
+            email: contact.email,
+            areaServed: `${contact.city}, ${contact.state}`,
+            sameAs: contact.socials.map(s => s.href),
+          }}
+        />
+        <a href="#main" className="skip-link">
+          {ui.common.skipToContent}
         </a>
-        {/* Painted once, behind everything, so glass has something to bend
-            and no section carries a wash of its own. */}
         <Backdrop />
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
+        {isEnabled('scrollProgress') ? <ScrollProgress /> : null}
+
+        <SiteHeader
+          items={nav}
+          all={allNav}
+          cta={ui.header.cta}
+          contact={contactProps}
+          showTheme={showTheme}
+          labels={{
+            brand: `${info.name} — ${ui.common.home}`,
+            menu: ui.common.menu,
+            primaryNav: ui.common.primaryNav,
+            openMenu: ui.common.openMenu,
+            closeMenu: ui.common.closeMenu,
+            ctaShort: ui.header.ctaShort,
+            theme,
+          }}
+        />
+
+        <main id="main" tabIndex={-1} className="min-h-[60vh] outline-none">
+          {children}
+        </main>
+        <MorphProvider />
+
+        <SiteFooter
+          brandLabel={`${info.name} — ${ui.common.home}`}
+          tagline={`${info.headline.lead} ${info.headline.accent}`}
+          blurb={fill(ui.footer.blurb)}
+          cta={ui.footer.cta}
+          ctaTitle={fill(ui.footer.ctaTitle)}
+          ctaText={fill(ui.footer.ctaText)}
+          columns={footerColumns}
+          contact={contactProps}
+          socials={contact.socials}
+          copyright={fill(ui.footer.copyright)}
+          madeFor={ui.footer.madeFor}
+          showTheme={showTheme}
+          labels={{ contact: ui.footer.contactHeading, theme }}
+        />
+
+        {isEnabled('tabBar') ? <TabBar items={ui.tabBar.items} label={ui.tabBar.label} /> : null}
       </body>
     </html>
   );

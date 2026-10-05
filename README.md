@@ -1,243 +1,127 @@
 # QuickLocal — public site
 
-The marketing front door: what QuickLocal is, what it costs, and how to join it
-as a customer, a vendor or a delivery partner.
+The front door for customers, shop owners and delivery partners: what
+QuickLocal is, what it costs, and how to join it.
 
-Same stack and same design system as the admin console
-(`QUICKLOCAL-WEB-FRONTEND-REACT`), so the two read as one product — Next.js
-16.2 App Router, React 19.2, Tailwind v4, TypeScript, Manrope.
+Next.js 16 App Router · React 19 · Tailwind v4 · TypeScript · Manrope.
+Every route prerenders to static HTML; nothing talks to the backend.
 
 ```bash
 npm install
-npm run dev     # http://localhost:3200
-npm run build   # 7 static routes, no server needed
+npm run dev     # http://localhost:3000
+npm run build   # 16 static routes
+npm run lint
 ```
+
+The previous version of the site is kept, untouched and unused, in
+[`legacy/`](legacy/README.md).
 
 ---
 
-## It does not talk to the backend
+## Every word comes from JSON
 
-There is no API client in this project, no `NEXT_PUBLIC_API_BASE_URL`, and
-nothing to configure. Every figure on every page is imported from a JSON file
-in `src/data/` at build time, so the whole site prerenders to static HTML: it
-cannot show a spinner, cannot show a stale number, and cannot break when the
-backend is down.
+Nothing visible is typed into a component. `src/data/` holds two kinds of file:
 
-| File | Holds | Where the values came from |
-|---|---|---|
-| `info.json` | name, tagline, delivery radius/time, fees, referral, rider payout | `app_config` — V21 and V25 seeds |
-| `categories.json` | the 5 live categories + their platform fee | `categories` after V34 |
-| `plans.json` | FREE / STARTER / GROWTH / PRO and their feature flags | `subscription_plans` — V17 and V37 |
-| `contact.json` | phone, email, address, socials | published support contacts |
-| `stats.json` | the four figures in the orange band | `app_config` (see below) |
-| `fees.json` | every constant the cost estimator runs on | `DeliveryFeeCalculatorService`, V34, `VendorDeliveryThresholdService` |
-| `lifecycle.json` | the nine order states, happy and not | `OrderStatus.java`, `PaymentStatus.java` |
-| `riders.json` | payout model, badge tiers, documents required | `DeliveryBadgeService`, `BadgeLevel.java`, `DocumentType.java`, `app_config` |
-| `trust.json`, `steps.json`, `features.json`, `about.json` | the copy blocks | platform behaviour |
-| `testimonials.json` | customer quotes | `reviews` — **empty** |
-| `nav.json` | header and footer links | — |
-
-Every file opens with a `_source` key naming the table or migration behind it.
-Keys beginning with `_` are notes and are never rendered. **When a fee or a
-radius changes in the backend, change it in the JSON here too** — that is the
-one maintenance cost of not fetching.
-
-## Three places this deviates from the mock, and why
-
-The design was built before the data existed. Where the two disagreed, the data
-won.
-
-**The stats band.** The mock reads *50K+ Happy Customers · 5K+ Local Vendors ·
-25K+ Orders Delivered Daily · 15+ Cities*. The platform has a handful of test
-records. Printing those numbers would be a claim the database flatly
-contradicts, so the band carries four facts that are true and still worth
-saying: 5 km delivery radius, a 3-hour ceiling, a ₹15 minimum delivery fee, and
-a 2% platform fee on grocery. Same rhythm, nothing invented.
-
-**Testimonials.** The mock has three named customers with quotes and five-star
-ratings. There are no reviews, and an invented endorsement attributed to a named
-person is the one thing a testimonial cannot be. `Testimonials` returns `null`
-while `testimonials.json` is empty, and the section will appear by itself the
-day a real review is added to it.
-
-**The hero image.** The mock shows a screenshot of the operations console. That
-screen is for staff, and a real capture of it would publish internal figures and
-vendor names to anyone who loads the page. The hero instead draws the order
-tracking a customer actually gets, built from the real `OrderStatus` sequence.
-
-Smaller ones: the nav has no **Blog** (no posts, and a link to an empty page is
-worse than no link), **Contact** has no form (nothing here can store a message,
-so it sends you to a mailbox somebody reads), and the store badges say **Soon**
-because the apps are not published.
-
-## The cost estimator
-
-`FeeEstimator` runs the **same arithmetic the backend runs** when an order is
-placed, rather than an approximation of it:
-
-```
-fuelCostPerKm = petrolPrice / mileage            106 / 45
-extraFee      = ceil(extraKm × fuelCostPerKm × multiplier)    × 2.5
-deliveryFee   = baseFee + extraFee               30 + extraFee
-```
-
-Cross the vendor's free-delivery threshold and the **base** moves from the
-customer to the shop; the per-km part stays with the customer and the rider is
-paid the whole fee either way. That rule is the most surprising thing in the
-model and the hardest to explain in a sentence, so the basket is a slider with
-the threshold marked on it and you can watch the split jump as it crosses.
-
-Every constant lives in `fees.json` and names the backend constant it mirrors,
-because a public page that quotes a fee has to be checkable. **If the service
-changes, change `fees.json`** — the estimator will otherwise keep confidently
-quoting the old number.
-
-## Two sections that publish the enums
-
-**`OrderLifecycle`** lists the nine real `OrderStatus` constants in their real
-order, with the constant printed beside each label so what the site says can be
-matched against what the app shows. The three that are not a happy ending —
-`CANCELLED`, `REFUND_INITIATED`, `REFUNDED` — are on the page too, because they
-are the states a nervous customer most wants named *before* ordering. The
-timeline walks itself while it is on screen and hands control over permanently
-on the first click; under Reduce Motion it is still and shown complete.
-
-**`RiderTiers`** publishes the payout model (₹20 base, ₹5/km, ₹30 floor) and
-the exact promotion thresholds `DeliveryBadgeService` uses — 50, 200 and 500
-deliveries at 3.5, 4.0 and 4.5. Rounding those to "hundreds of deliveries"
-would make the ladder unfalsifiable, which is the opposite of the point. The
-caveat that a dipping rating does not demote automatically is on the page as
-well: it is true, it is in the rider's favour, and hiding it would make the
-tiers read as harsher than they are.
-
-## Liquid glass
-
-The site uses the console's glass material, ported as-is: `lib/liquidGlass.ts`
-ray-traces a light ray through a curved bezel with Snell's law and bakes the
-2D offset field into a PNG that `feDisplacementMap` consumes, and `GlassPane`
-applies it through `backdrop-filter`.
-
-The thing to know before moving any of it: **refraction bends a backdrop, so
-bending a flat backdrop shows nothing.** Glass over plain cream is an expensive
-border. That is what `Backdrop` is for — a fixed field of warm drifting colour
-and a 26px weave, painted once behind the whole document, giving every glass
-surface something to bend. Move a pane off it and the effect silently
-disappears.
-
-Maps are cached by size on an 8×4px grid and built a few per frame; anything
-below the fold only refracts once it is on screen. Only Chromium resolves an
-SVG filter inside `backdrop-filter` — everywhere else it degrades to tint, blur
-and rim, which still reads as glass, just without the bend.
-
-### The rule, learned the hard way
-
-**Each refracting surface is a GPU pass redone whenever anything behind it
-moves.** This site briefly carried **35** backdrop-filtered elements over a
-backdrop that was itself animating, which meant 35 passes recomputed every
-frame for ever — including while the page sat still. It is now **2** at rest
-and 4 with a large pane in view, and no page has an infinite animation behind
-glass.
-
-Three separate faults produced that, and all three are worth not repeating:
-
-1. **`Card` was a `GlassPane`.** It is the most repeated component on the site
-   — grids of four, rails of five — so making it refract multiplied the cost by
-   everything on the page. Anything that comes in multiples now takes
-   `.ql-glass`: fill, rim lights and a shadow. That is paint, and at card size
-   the bend was barely legible anyway. Refraction shows on big surfaces.
-2. **The blooms drifted.** Movement *behind* glass invalidates its backdrop, so
-   an animating field makes every glass surface recompute continuously. They
-   are static now, and the same applies to `ql-bob`: never put it on a pane
-   that refracts.
-3. **SSR emitted a `blur()` that hydration never removed.** `supports…()`
-   returns false on the server, so the fallback blur went into the HTML;
-   React's first hydration pass does not reconcile attributes, so a **lazy**
-   pane that never scrolled into view kept a backdrop pass no client code had
-   asked for. `useHydrated()` (a `useSyncExternalStore` subscription) makes the
-   server emit no filter at all and lets the client decide once it knows.
-
-A `requestAnimationFrame` probe reported a steady 60fps through all of it — the
-cost is on the compositor, where script cannot see it. Count the surfaces
-instead.
-
-### The budget, and how to spend it
-
-| | Per page |
+| File | Holds |
 |---|---|
-| **Refracting surfaces** (`GlassPane`) | **2** — the header, and one large slab: the hero tracker on home, the banner on every inner page |
-| **Painted glass** (`.ql-glass`) | unlimited — 38 on home, 7–8 on an inner page |
-| **Infinite animations behind glass** | **0** |
+| `info.json`, `fees.json`, `riders.json`, `plans.json`, `categories.json`, `lifecycle.json`, `stats.json`, `steps.json`, `trust.json`, `features.json`, `about.json`, `contact.json`, `app.json`, `testimonials.json`, `nav.json` | **Platform facts.** Each opens with a `_source` naming the table, migration or class it mirrors. Keys starting with `_` are notes and never render. |
+| `site.json` | Switchboard: default appearance (system / light / dark), feature flags (`themeToggle`, `tabBar`, `scrollProgress`, `pageTransitions`). |
+| `ui.json` | Interface copy — header, menu, tab bar, footer, 404, errors. |
+| `home.json` | Every section of the home page, top to bottom. |
+| `pages.json` | Every inner page. |
+| `faq.json` | Questions, answered only from rules the platform enforces. |
 
-Adding glass to a container means reaching for `.ql-glass`,
-`.ql-glass-raised` (feature blocks) or `.ql-glass-dark` (on charcoal or
-tangerine). Reaching for `GlassPane` means taking one of the two slots, so it
-has to be large, stationary, and worth it — the bend is not legible below
-roughly a third of the viewport anyway.
+Copy refers to figures as **`{tokens}`** — `"₹{riderMin} floor for every rider"`.
+`fill()` in `src/lib/data.ts` resolves them from the platform files, so a fee
+changed in `fees.json` changes in every sentence that quotes it. The token list
+is `tokens` in the same file.
+
+`testimonials.json` is empty on purpose: there are no real reviews yet, and the
+section renders itself the day one is added.
+
+## Pages
+
+| Route | Sections |
+|---|---|
+| `/` | Hero with a 3D phone tracking a real order → guarantees ribbon → scroll-lit statement → category shelf → bento → numbers band → how it works → every order state → cost estimator → three audiences → rider tiers → about → app band → FAQ → newsletter |
+| `/services` | Category cards → how delivery works → refer & earn |
+| `/services/[slug]` | **The page a category card zooms open into** — 3D slab, fee, what shops list, what a shop keeps, the aisle's numbers, other aisles |
+| `/for-business` | Vendor and rider tracks → earnings with a distance slider |
+| `/pricing` | Plan cards → full comparison → platform fee by category |
+| `/get-the-app` | Store badges (marked *Soon* until `app.json` says otherwise) → onboarding for each role |
+| `/about`, `/contact` | Story, principles · channels with copy buttons, FAQ |
+
+Plus `sitemap.xml`, `robots.txt`, a 404 and an error boundary.
+
+## Design
+
+Cream & Tangerine — the palette the console and the apps ship — now with a
+night form. Every colour is a token in `globals.css`, defined once for light
+and once for dark; components never know which they are drawn in. Visitors
+choose Light, Dark or Auto from the header or the footer; the new theme opens
+out of the button as a widening circle (a View Transition), and the choice is
+applied by an inline script before first paint, so nothing flashes.
+
+**3D, in CSS.** `Slab3D` is a rounded tile with real thickness — layers along
+Z, seen from an isometric angle — that turns under the pointer. `Phone3D` is a
+handset with a body, glare and glass chips floating at different depths; it
+leans toward the pointer on a spring and straightens as the page scrolls, and
+its screen walks the real `OrderStatus` sequence with a rider riding the route.
+`Tilt` makes cards lean toward the pointer and catch the light.
+
+**Liquid glass.** `LiquidGlass` refracts the page behind it (ray-traced
+displacement map, chromatic dispersion, Fresnel rim — `lib/liquidGlass.ts`) in
+Chromium and falls back to frosted glass elsewhere. Its tint comes from the
+theme, so it reads on cream and on charcoal, and the header turns to dark glass
+over night sections.
+
+### The performance rule
+
+Every backdrop-filtered surface is a GPU pass redone whenever anything behind
+it moves. So **real backdrop glass is reserved for the chrome**: the header,
+the phone tab bar and the Back control. Every other glass surface — cards,
+chips, buttons, panels — is `.glass`: light, rim and shadow from paint alone,
+free per frame. Removing the backdrop passes from the content took the
+measured scroll frame time from ~60 ms to ~17 ms in software rendering.
+
+## Motion
+
+No animation library. Motion is CSS, Web Animations and View Transitions:
+
+| What | How | Where |
+|---|---|---|
+| Category card zooms open into its page; Back shrinks it home | fixed overlay beneath the header, Web Animations | `lib/morph.ts`, `motion/MorphLink`, `motion/MorphBack` |
+| Content rises in and vanishes under the header | scroll-driven animations on registered properties | `motion/Reveal`, `[data-reveal]` |
+| Hero copy recedes as you scroll | scroll timeline | `[data-vanish]` |
+| The statement lights up word by word | view timeline | `sections/shared/Statement` |
+| Icons draw themselves / hop on hover (SF Symbols style) | stroke dash on a view timeline | `Icon effect="draw" \| "bounce"` |
+| Figures count up on arrival | one-shot observer | `ui/CountUp` |
+| Springs on presses, menus, segmented pills | SwiftUI curves sampled into `linear()` | `--spring-*` in `globals.css` |
+| Tab bar minimises while scrolling down | one passive listener | `layout/TabBar` |
+
+Nothing is hidden waiting for JavaScript. With scripts off, with reduced motion,
+or with `?nomotion` in the URL (clean screenshots), every element renders in
+its final state.
 
 ## Layout
 
 ```
 src/
-  app/               one route per nav item, all statically rendered
-  components/        Header, Footer, Hero, Categories, Newsletter, sections, ui, Icon, Logo, Reveal
-    Backdrop.tsx        the field every glass surface sits on
-    FeeEstimator.tsx    the order-cost calculator
-    OrderLifecycle.tsx  the nine real order states, walking
-    RiderTiers.tsx      payout model and badge ladder
-    glass/           GlassPane + GlassFilter, ported from the console
-  data/              the JSON above — the only source of content
-  lib/data.ts        typed loaders + ₹ formatting
-  lib/liquidGlass.ts the refraction maths
+  app/            one route per page, plus sitemap, robots, 404, error
+  components/
+    layout/       SiteHeader, MobileMenu, TabBar, SiteFooter, Logo, Backdrop
+    motion/       Enter, Reveal, MorphLink, MorphBack, MorphProvider, PageTransition, HeadScript
+    glass/        LiquidGlass, GlassFilter
+    ui/           Button, Icon, Slab3D, Tilt, SegmentedControl, Shelf, Accordion, CountUp, ThemeToggle…
+    art/          Phone3D, Trio
+    sections/     home/* and shared/*
+  data/           the JSON above
+  lib/            data (tokens, fill), morph, liquidGlass, liquidMotion, hooks, format
+legacy/           the previous site, excluded from build, lint and type-check
 ```
 
-Client-side: `Header` (scroll state, mobile sheet), `Categories` (the scroll
-rail), `Newsletter` (form state), `FeeEstimator` (the sliders),
-`OrderLifecycle` (the walk), `Reveal`, and
-`ui` — the shared `Card` is a glass surface, so the module carries the
-boundary. Everything else renders on the server.
+## Verified
 
-## Motion
-
-Hand-rolled in `globals.css` rather than pulling in an animation library, the
-same way the console does it. Everything animates `transform` and `opacity`
-only, so it runs on the compositor and never forces layout mid-scroll.
-
-The glass surfaces added their own small vocabulary, deliberately **not**
-reusing the names already in the file — `ql-sheen` and `ql-float` were taken,
-by the stats band's endless band and the scene illustrations' bob, and
-redefining either would have changed them everywhere they were already used:
-
-| Class | Does |
-|---|---|
-| `ql-glint` | a highlight sweeping across a glass surface on hover — the one thing real glass does that a displacement map cannot show, since refraction bends what is *behind* a surface rather than lighting the surface itself |
-| `ql-bob` | a slow buoyant rise and fall, for a piece that should read as floating on the field |
-| `ql-live` | the pulsing ring around the one timeline step that is happening now |
-| `ql-stagger` | children arrive one after another; set `--i` per child |
-
-All four are switched off in the reduced-motion block at the bottom.
-
-`Reveal` shares **one** IntersectionObserver across every element on the page
-and unobserves each after it fires. It marks everything visible if
-`IntersectionObserver` is missing — the failure mode of an animation must never
-be an invisible page — and the whole system is disabled under
-`prefers-reduced-motion`, with `.reveal` forced back to `opacity: 1`.
-
-## Responsiveness
-
-Verified at **320px and 375px** on all seven routes and at desktop width: zero
-horizontal page scroll anywhere (`scrollWidth === clientWidth`), nothing
-overflowing its container, and the category rail swipes natively on touch. The
-estimator's controls stack below `md` and its sliders carry 24px thumbs so they
-clear the minimum touch target without the track growing with them.
-
-The mobile menu is a full sheet that locks the page behind it and closes on
-Escape, on the backdrop and on any link. It is a **sibling** of the bar, not a
-child: the bar carries `backdrop-filter`, which makes an element a containing
-block for its `position: fixed` descendants, and nesting the sheet inside it
-collapses the sheet to the height of the bar the moment you scroll.
-
-## CI
-
-Typecheck, lint and a production build on every push — see
-`.github/workflows/ci.yml`. This site is the front door, so a broken build here
-is not an internal inconvenience.
+At 320, 375, 390, 768, 1024, 1280, 1440 and 2560 px, in light and dark, on
+every route: no horizontal page scroll, no console errors. Type-check, lint and
+production build run in CI on every push (`.github/workflows/ci.yml`).

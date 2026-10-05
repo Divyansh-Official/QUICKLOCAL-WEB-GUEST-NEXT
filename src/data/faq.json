@@ -1,0 +1,12 @@
+{
+  "_source": "Answers drawn only from rules the platform enforces (app_config, fees.json, lifecycle.json, riders.json). If a rule changes there, change the answer here.",
+  "items": [
+    { "q": "Where does QuickLocal deliver?", "a": "{city} for now. Shops deliver within {radius} km by default, and up to {maxRadius} km where a vendor chooses to cover it. We would rather start in one city properly than in fifteen badly." },
+    { "q": "How long does an order take?", "a": "Never more than {hours} hours — that ceiling is enforced by the platform on every order. Most are much quicker, because the shop is a few streets away." },
+    { "q": "What does delivery cost?", "a": "A flat {base} base covers the first {freeKm} km. Beyond that, a per-km charge derived from the day's fuel price is added. Cross the shop's free-delivery threshold and the shop pays the base instead of you. The estimator on the home page works out any order to the rupee." },
+    { "q": "What happens if something goes wrong?", "a": "An order can be cancelled before pickup and anything authorised is released. Refunds are raised against the original payment with a reference you can quote, and complaints are escalated rather than closed quietly." },
+    { "q": "How much does a shop pay to sell?", "a": "Listing is free for up to 25 products. On top of the monthly plan, the platform takes {lowestFee}–3% of each sale depending on the category — the lowest is grocery." },
+    { "q": "How are riders paid?", "a": "₹{riderBase} a job, ₹{riderPerKm} a kilometre on top, and never less than ₹{riderMin} per order. The whole delivery fee reaches the rider whoever funded it, paid out weekly to their bank." },
+    { "q": "When will the apps be in the stores?", "a": "Soon. The listings are not published yet, which is why the store buttons say so instead of linking to a page that does not exist. Leave your email at the foot of the home page and we will tell you the day they land." }
+  ]
+}

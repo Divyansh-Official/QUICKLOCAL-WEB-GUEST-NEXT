@@ -1,0 +1,315 @@
+{
+  "_source": "Copy for every inner page. {tokens} are filled from info.json, contact.json, fees.json and riders.json.",
+  "about": {
+    "meta": {
+      "title": "About Us",
+      "description": "QuickLocal connects {city} with trusted local shops and fairly paid riders."
+    },
+    "hero": {
+      "eyebrow": "About us",
+      "title": "We're building stronger local communities.",
+      "accent": "local communities.",
+      "intro": "{name} — {tagline}."
+    },
+    "story": {
+      "eyebrow": "Our story",
+      "title": "Started on one street. Built for every one.",
+      "accent": "every one."
+    },
+    "where": {
+      "title": "Where we operate",
+      "text": "One city, honestly stated. The map grows when the vendors do.",
+      "categoriesTitle": "Categories a shop can open under",
+      "detail": "{radius} km default · up to {maxRadius} km"
+    },
+    "statement": {
+      "eyebrow": "What we believe",
+      "text": "Convenience for the customer should never come out of the seller's margin or the rider's pocket.",
+      "accent": "the rider's pocket."
+    },
+    "principles": {
+      "eyebrow": "What we hold to",
+      "title": "Four commitments, written into the platform.",
+      "accent": "written into the platform.",
+      "intro": "Each of these is a value the backend enforces, not a line on a slide.",
+      "items": [
+        {
+          "icon": "store",
+          "title": "The shop keeps more",
+          "text": "Platform fees start at {lowestFee}% on grocery and never exceed 3%. Convenience for the customer should not come out of the seller's margin."
+        },
+        {
+          "icon": "bike",
+          "title": "The rider is paid a floor",
+          "text": "₹{riderMin} minimum per order, on top of ₹{riderBase} base and ₹{riderPerKm} a kilometre. Not a per-drop lottery."
+        },
+        {
+          "icon": "shield-check",
+          "title": "Nobody sells unverified",
+          "text": "Every vendor and every delivery partner clears document verification before they can take a single order."
+        },
+        {
+          "icon": "clock",
+          "title": "{hours} hours, and we mean it",
+          "text": "{hours} hours is the platform's hard ceiling on any order, inside a {radius} km default radius."
+        }
+      ]
+    },
+    "banner": {
+      "eyebrow": "For shop owners",
+      "title": "Own a shop in {city}?",
+      "accent": "{city}?",
+      "text": "List free, keep up to 98% of every sale, and get paid straight to your bank.",
+      "cta": {
+        "label": "Become a vendor",
+        "href": "/get-the-app#vendor"
+      }
+    }
+  },
+  "services": {
+    "meta": {
+      "title": "Services",
+      "description": "Every category a local shop can open under on {name}, with the platform fee it pays and how delivery works."
+    },
+    "hero": {
+      "eyebrow": "Services",
+      "title": "Everything your neighbourhood already sells.",
+      "accent": "already sells.",
+      "intro": "Five categories, each with its own platform fee. Delivered inside {radius} km by default and within {hours} hours, always."
+    },
+    "delivery": {
+      "eyebrow": "Delivery",
+      "title": "How delivery actually works.",
+      "accent": "actually works.",
+      "intro": "Platform-wide values, not per-vendor promises.",
+      "items": [
+        {
+          "icon": "radius",
+          "value": "{radius} km",
+          "label": "Default radius from the shop"
+        },
+        {
+          "icon": "pin",
+          "value": "{maxRadius} km",
+          "label": "The furthest a vendor may serve"
+        },
+        {
+          "icon": "clock",
+          "value": "{hours} hours",
+          "label": "Maximum time for any order"
+        },
+        {
+          "icon": "wallet",
+          "value": "₹{minFee}",
+          "label": "Minimum delivery fee"
+        }
+      ]
+    },
+    "referral": {
+      "eyebrow": "Refer & earn",
+      "title": "Refer a friend, earn ₹{referral}.",
+      "accent": "₹{referral}.",
+      "text": "The reward lands when they place their first order. The amount is set by the platform, so it is the same for everybody.",
+      "cta": {
+        "label": "Get the app",
+        "href": "/get-the-app"
+      }
+    },
+    "detail": {
+      "eyebrow": "Category",
+      "feeLabel": "Platform fee",
+      "deliveryLabel": "Delivery from",
+      "examplesTitle": "What shops here list",
+      "factsTitle": "The numbers for this aisle",
+      "facts": [
+        {
+          "icon": "tag",
+          "label": "Platform fee, charged to the shop",
+          "key": "fee"
+        },
+        {
+          "icon": "wallet",
+          "label": "Minimum delivery fee",
+          "key": "minFee"
+        },
+        {
+          "icon": "radius",
+          "label": "Default delivery radius",
+          "key": "radius"
+        },
+        {
+          "icon": "clock",
+          "label": "Maximum delivery window",
+          "key": "hours"
+        }
+      ],
+      "keepTitle": "On a ₹1,000 sale the shop keeps",
+      "keepNote": "Before any delivery the shop chooses to absorb.",
+      "costCta": {
+        "label": "Work out an order",
+        "href": "/#what-it-costs"
+      },
+      "sellCta": {
+        "label": "Sell in this category",
+        "href": "/get-the-app#vendor"
+      },
+      "relatedTitle": "Other aisles"
+    }
+  },
+  "forBusiness": {
+    "meta": {
+      "title": "For Business",
+      "description": "Sell on {name} or deliver for it — platform fees from {lowestFee}%, and ₹{riderMin} minimum per delivery."
+    },
+    "hero": {
+      "eyebrow": "For business",
+      "title": "Sell on it, or deliver for it.",
+      "accent": "deliver for it.",
+      "intro": "Two ways to work with {name}, each with its numbers stated up front."
+    },
+    "vendors": {
+      "title": "Become a vendor",
+      "text": "List your shop, set your catalogue, and get paid to your bank. Start on the free plan — {freeProducts} products, no monthly cost.",
+      "cta": {
+        "label": "Start selling",
+        "href": "/get-the-app#vendor"
+      },
+      "secondary": {
+        "label": "See the plans",
+        "href": "/pricing"
+      }
+    },
+    "partners": {
+      "title": "Become a delivery partner",
+      "text": "Take the jobs that suit you, inside a {radius} km radius, and know what each one pays before you accept it.",
+      "cta": {
+        "label": "Apply to deliver",
+        "href": "/get-the-app#partner"
+      }
+    },
+    "earnings": {
+      "eyebrow": "Partner earnings",
+      "title": "What a delivery pays.",
+      "accent": "pays.",
+      "intro": "Set by the platform and applied to every order, so the figure does not move shop to shop.",
+      "items": [
+        {
+          "icon": "wallet",
+          "value": "₹{riderBase}",
+          "label": "Base, every order"
+        },
+        {
+          "icon": "radius",
+          "value": "₹{riderPerKm}/km",
+          "label": "On top, by distance"
+        },
+        {
+          "icon": "shield-check",
+          "value": "₹{riderMin} min",
+          "label": "Guaranteed floor"
+        }
+      ],
+      "example": "A 2 km delivery pays ₹{twoKm}; the floor lifts anything below ₹{riderMin} up to it.",
+      "calcTitle": "Try a distance",
+      "calcLabel": "Distance",
+      "calcResult": "You earn",
+      "legend": {
+        "base": "{amount} base",
+        "distance": "+ {amount} distance",
+        "floor": "+ {amount} floor top-up"
+      }
+    }
+  },
+  "pricing": {
+    "meta": {
+      "title": "Pricing",
+      "description": "Vendor plans on {name} — from free to ₹799 a month, plus a platform fee that starts at {lowestFee}%."
+    },
+    "hero": {
+      "eyebrow": "Pricing",
+      "title": "Plans for the shop. Fees for the sale.",
+      "accent": "Fees for the sale.",
+      "intro": "A monthly plan decides how much you can list and what tools you get. On top, the platform takes {lowestFee}–3% of each sale, by category."
+    },
+    "popular": "Most chosen",
+    "startFree": "Start free",
+    "choose": "Choose {plan}",
+    "boosts": "{count} shop boost a month",
+    "boostsPlural": "{count} shop boosts a month",
+    "noBoosts": "No shop boosts",
+    "compareTitle": "Compare every plan",
+    "compareFeature": "Feature",
+    "products": "Products",
+    "unlimited": "Unlimited",
+    "fee": {
+      "eyebrow": "Platform fee",
+      "title": "What each sale costs.",
+      "accent": "each sale",
+      "intro": "Charged per order on top of the monthly plan. Set per category, the same for every shop in it.",
+      "flat": "Flat platform fee per order"
+    },
+    "boostsRow": "Shop boosts a month"
+  },
+  "getTheApp": {
+    "meta": {
+      "title": "Get the App",
+      "description": "Sell on {name} or deliver for it — both start in the app. Here is what onboarding looks like for each."
+    },
+    "hero": {
+      "eyebrow": "Partner onboarding",
+      "title": "It all starts in the app.",
+      "accent": "the app.",
+      "intro": "Selling or delivering both need document verification, so both are done in the app rather than on a web form. Install it, pick your role, and you are a few screens from live.",
+      "question": "Questions first?"
+    },
+    "onboardingTitle": "How onboarding goes",
+    "banner": {
+      "eyebrow": "Trust, built in",
+      "title": "Verified once, then you are live.",
+      "accent": "you are live.",
+      "text": "Every shop and every rider clears document checks before taking an order — which is the reason a customer can trust the one that turns up."
+    }
+  },
+  "contact": {
+    "meta": {
+      "title": "Contact Us",
+      "description": "Reach {name} — {phone}, {email}, {address}."
+    },
+    "hero": {
+      "eyebrow": "Contact us",
+      "title": "Talk to a person.",
+      "accent": "a person.",
+      "intro": "Whether you want to sell, deliver, or ask about an order — these all reach someone."
+    },
+    "channels": [
+      {
+        "icon": "phone",
+        "title": "Call us",
+        "field": "phone",
+        "note": "For anything urgent about a live order"
+      },
+      {
+        "icon": "mail",
+        "title": "Email us",
+        "field": "email",
+        "note": "Vendor sign-ups, partner applications, support"
+      },
+      {
+        "icon": "pin",
+        "title": "Find us",
+        "field": "address",
+        "note": "Serving {city} within {maxRadius} km"
+      }
+    ],
+    "follow": {
+      "title": "Follow along",
+      "text": "New neighbourhoods and new categories get announced here first."
+    },
+    "noForm": {
+      "title": "Why there is no form here",
+      "text": "This site is static — nothing on it stores what you type. A contact form would take your message and lose it, so we send you to a mailbox somebody reads instead."
+    },
+    "copy": "Copy",
+    "copied": "Copied"
+  }
+}
