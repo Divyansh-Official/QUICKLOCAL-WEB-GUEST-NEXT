@@ -25,7 +25,7 @@ export type JourneyStep = {
   who: string;
   title: string;
   text: string;
-  screen: { title: string; chip: string; rows: string[]; code?: string; badge?: string; totalLabel?: string; button?: string };
+  screen: { title: string; chip: string; rows: string[]; code?: string; badge?: string; totalLabel?: string; button?: string; accept?: string; decline?: string };
 };
 
 const ROUTE = 'M22 118 C 60 118 62 70 104 70 S 150 40 196 34';
@@ -153,16 +153,25 @@ function Body({ step }: { step: JourneyStep }) {
     case 'assign':
       return (
         <>
-          <div className="relative mx-auto grid h-[40cqw] w-[40cqw] place-items-center">
+          <div className="relative mx-auto grid h-[32cqw] w-[32cqw] place-items-center">
             <span className="sc-pulse absolute inset-0 rounded-full bg-[color-mix(in_oklab,var(--primary)_12%,transparent)]" />
             <span className="sc-pulse absolute inset-[16%] rounded-full bg-[color-mix(in_oklab,var(--primary)_16%,transparent)]" style={{ animationDelay: '-0.8s' }} />
-            <span className="sc-pop relative grid h-[20cqw] w-[20cqw] place-items-center rounded-full bg-[#1a1713] text-white shadow-[0_10px_24px_-10px_rgb(0_0_0/0.6)] dark:bg-[#f8f4ef] dark:text-[#1a1713]" style={k(0)}>
-              <Icon name="bike" size={28} strokeWidth={1.9} />
+            <span className="sc-pop relative grid h-[17cqw] w-[17cqw] place-items-center rounded-full bg-[#1a1713] text-white shadow-[0_10px_24px_-10px_rgb(0_0_0/0.6)] dark:bg-[#f8f4ef] dark:text-[#1a1713]" style={k(0)}>
+              <Icon name="bike" size={24} strokeWidth={1.9} />
             </span>
           </div>
-          <div className="mt-[6cqw]">
+          <div className="mt-[5cqw]">
             <Rows rows={s.rows} icon="route" start={1} />
           </div>
+          {s.accept ? (
+            <div className="sc-pop mt-[5cqw] grid grid-cols-2 gap-[2.6cqw]" style={k(4)}>
+              <span className="grid place-items-center rounded-full bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] py-[3.2cqw] text-[3.9cqw] font-extrabold text-fg-2">{s.decline}</span>
+              <span className="sc-press btn-primary flex items-center justify-center gap-[1.6cqw] rounded-full py-[3.2cqw] text-[3.9cqw] font-extrabold">
+                <Icon name="check" size={13} strokeWidth={2.6} />
+                {s.accept}
+              </span>
+            </div>
+          ) : null}
         </>
       );
     case 'pickup':

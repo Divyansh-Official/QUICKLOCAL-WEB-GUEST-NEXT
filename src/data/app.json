@@ -32,7 +32,7 @@
     {
       "key": "partner",
       "title": "Deliver with QuickLocal",
-      "blurb": "Choose the jobs that suit you, and see what each one pays — and how far it goes — before you accept it.",
+      "blurb": "Jobs come to you as offers, after the shop has accepted. See what each one pays and how far it goes — then accept it or pass.",
       "icon": "bike",
       "highlights": [
         "{base} for any delivery up to {freeKm} km",
@@ -43,7 +43,7 @@
         "Install the app and pick Delivery Partner when you sign up",
         "Tell us what you ride — it decides the papers you need",
         "Add a bank account or UPI id, then upload your documents",
-        "Go online and start accepting jobs"
+        "Go online — and accept only the jobs you want"
       ]
     }
   ]

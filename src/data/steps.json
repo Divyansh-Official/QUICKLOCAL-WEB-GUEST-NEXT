@@ -21,9 +21,9 @@
     },
     {
       "n": 4,
-      "title": "A rider brings it",
-      "body": "Assigned to a partner near the shop and tracked to your door.",
-      "status": "IN_TRANSIT"
+      "title": "A rider accepts it",
+      "body": "Offered to a rider near the shop, who chooses to take it — then tracked to your door.",
+      "status": "DELIVERY_ASSIGNED"
     }
   ]
 }

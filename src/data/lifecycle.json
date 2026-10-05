@@ -16,8 +16,8 @@
     },
     {
       "status": "DELIVERY_ASSIGNED",
-      "label": "Rider assigned",
-      "detail": "A partner nearby took the job. They can see the shop, you, and the distance between all three before accepting.",
+      "label": "Rider accepted",
+      "detail": "Once the shop has accepted, a nearby rider is offered the job — shop, you and every distance on screen — and chooses to take it. Nobody is handed an order they did not say yes to.",
       "icon": "bike"
     },
     {
@@ -58,5 +58,6 @@
       "detail": "Back on the card or account it came from.",
       "icon": "wallet"
     }
-  ]
+  ],
+  "_offer": "DeliveryAssignmentService: a rider is sought only once the order is VENDOR_ACCEPTED; the job is offered (PENDING, 60 s) to one verified rider at a time, and the order becomes DELIVERY_ASSIGNED only when that rider accepts. A decline or no answer passes it on, up to three riders."
 }

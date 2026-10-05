@@ -180,7 +180,7 @@
     },
     "partners": {
       "title": "Become a delivery partner",
-      "text": "Take the jobs that suit you, see the distances and the fee before you accept, and keep all of it.",
+      "text": "Jobs reach you as offers after the shop accepts — see the distances and the fee, then take only the ones you want.",
       "cta": {
         "label": "Deliver with QuickLocal",
         "href": "/deliver"
@@ -360,7 +360,7 @@
           "icon": "store",
           "who": "The shop",
           "title": "The shop says yes.",
-          "text": "A verified shop confirms it has everything and starts packing. Until pickup, you or the shop can still cancel, and anything authorised is released.",
+          "text": "A verified shop confirms it has everything and starts packing — and only now does the order go out to riders. Until pickup, you or the shop can still cancel, and anything authorised is released.",
           "screen": {
             "title": "Shop accepted",
             "chip": "Packing",
@@ -375,16 +375,18 @@
           "key": "assign",
           "icon": "bike",
           "who": "A rider",
-          "title": "A rider nearby takes the job.",
-          "text": "Riders see the shop, you and every distance before they accept, and each carries one order at a time. If nobody takes it within fifteen minutes, the order is cancelled and refunded on its own.",
+          "title": "A rider says yes, too.",
+          "text": "Only once the shop has accepted is a rider looked for — and the job arrives as an offer, not an order. The rider sees the shop, you, every distance and the fee, and has a minute to accept or pass; a pass sends it to the next rider. If nobody accepts within fifteen minutes, the order is cancelled and refunded on its own.",
           "screen": {
-            "title": "Rider assigned",
-            "chip": "1 order",
+            "title": "New job offer",
+            "chip": "0:60",
             "rows": [
               "Shop · 0.8 km away",
-              "You · 2.3 km from shop",
-              "Refund if unassigned · 15 min"
-            ]
+              "You · 2.3 km from the shop",
+              "You earn · {base}"
+            ],
+            "accept": "Accept",
+            "decline": "Pass"
           }
         },
         {
@@ -464,7 +466,7 @@
           "unit": "min",
           "max": 60,
           "title": "To find a rider",
-          "text": "Nobody assigned by then? The order is cancelled and refunded."
+          "text": "Riders are offered it one at a time and choose. Nobody accepts by then? Cancelled and refunded."
         },
         {
           "value": 30,
@@ -663,7 +665,7 @@
       "eyebrow": "For riders",
       "title": "Ride your own streets. Keep the whole fee.",
       "accent": "Keep the whole fee.",
-      "intro": "See the shop, the customer and both distances before you accept. Deliver it, and the order's entire delivery fee is yours — paid after every drop.",
+      "intro": "Jobs reach you as offers, only after the shop has accepted. See the shop, the customer, both distances and the fee — accept it or pass. Deliver it, and the order's whole delivery fee is yours.",
       "cta": {
         "label": "Apply to deliver",
         "href": "/get-the-app#partner"
@@ -708,9 +710,9 @@
       "accent": "your time.",
       "items": [
         {
-          "icon": "route",
-          "title": "Every distance, before you accept",
-          "text": "You to the shop, the shop to the customer, you to the customer — on the screen before you say yes."
+          "icon": "check-circle",
+          "title": "Every job is an offer",
+          "text": "A job reaches you only after the shop accepts, with the shop, the customer, both distances and the fee on screen. You have a minute to accept or pass — nothing is assigned until you say yes."
         },
         {
           "icon": "clock",

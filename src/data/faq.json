@@ -66,7 +66,7 @@
     {
       "audience": "customers",
       "q": "What if no rider takes my order?",
-      "a": "If no rider is assigned within fifteen minutes, the order is cancelled and refunded automatically. You are never left waiting on a job nobody accepted."
+      "a": "Once the shop accepts, riders nearby are offered the job one at a time, and each chooses whether to take it. If nobody accepts within fifteen minutes, the order is cancelled and refunded automatically."
     },
     {
       "audience": "customers",
@@ -115,6 +115,11 @@
       "audience": "riders",
       "q": "Can I deliver on a bicycle?",
       "a": "Yes. A bicycle needs no licence, registration or number plate — just your Aadhaar, PAN, bank proof and three photographs of the bike. A motorbike, scooter, auto or CNG auto also needs a driving licence and its registration certificate."
+    },
+    {
+      "audience": "riders",
+      "q": "Can I be given an order I do not want?",
+      "a": "No. A job only reaches you after the shop has accepted the order, and it arrives as an offer — the shop, the customer, both distances and what it pays. You have a minute to accept or decline; decline, or let it pass, and it goes to the next rider. Nothing is assigned to you until you say yes."
     },
     {
       "audience": "riders",

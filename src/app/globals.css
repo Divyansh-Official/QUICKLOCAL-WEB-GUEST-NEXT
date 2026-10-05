@@ -2415,6 +2415,22 @@ html:not(.no-motion) .scene[data-active] .sc-ride {
   animation: sc-ride 2.2s var(--ease-out) both 0.2s;
 }
 
+/* The rider's Accept button presses itself once the offer has landed. */
+@keyframes sc-press {
+  0%, 100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.9);
+    box-shadow: 0 0 0 6px color-mix(in oklab, var(--primary) 28%, transparent);
+  }
+}
+
+html:not(.no-motion) .scene[data-active] .sc-press {
+  animation: sc-press 0.5s var(--spring-snappy) 1.3s both;
+}
+
 html:not(.no-motion) :is(.scene[data-active], .scene-inline) .sc-pulse {
   animation: sc-pulse 2.4s ease-out infinite;
 }
