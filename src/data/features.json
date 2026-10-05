@@ -1,27 +1,27 @@
 {
   "_source": "Capabilities that exist in the running platform — each maps to a module the backend actually implements.",
   "customers": [
-    "Vendors are verified against their documents before they can sell",
-    "Live order tracking from acceptance to your door",
-    "Secure payments with refunds tracked end to end",
-    "Rate every order — ratings decide which shops surface first",
-    "Earn ₹50 for every friend who orders",
+    "Every shop is verified against its documents before it can sell",
+    "Live tracking along real roads, from acceptance to your door",
+    "A one-time code at your door — nothing is delivered on a tap",
+    "Secure payments by Razorpay, with refunds tracked end to end",
+    "₹{referral} off your next order for every friend who orders",
     "Complaints escalate rather than disappearing"
   ],
   "vendors": [
-    "List up to 25 products free, unlimited on Pro",
-    "Platform fee from 2% — among the lowest for grocery",
-    "Payouts settled to your bank, reconciled automatically",
-    "Sales dashboard and order exports from Growth",
-    "Boost your shop to the top of local results",
-    "Subscription you can change or cancel any month"
+    "List {freeProducts} products free, 25 on Starter, unlimited on Pro",
+    "Platform fee from {lowestFee}%, never above {highestFee}% — the customer pays none",
+    "Paid after every delivered order, reconciled automatically",
+    "Set your own free-delivery threshold, with a planner that warns you",
+    "Boost a product or the whole shop, on Growth and Pro",
+    "Change or cancel your plan any month"
   ],
   "partners": [
-    "₹30 minimum on every order you deliver",
-    "₹20 base plus ₹5 per kilometre, paid transparently",
-    "Choose the jobs you take — acceptance is yours",
-    "Work inside a 5 km radius by default",
-    "Weekly payouts direct to your bank account",
-    "Document verification once, then you are live"
+    "{base} for any delivery up to {freeKm} km",
+    "Beyond {freeKm} km, ₹{perKm} more for every kilometre",
+    "The whole delivery fee is yours — the platform takes none of it",
+    "See the shop, the customer and both distances before you accept",
+    "Paid after every delivered order, to your bank or UPI",
+    "A motorbike, a scooter, an auto — or a bicycle"
   ]
 }

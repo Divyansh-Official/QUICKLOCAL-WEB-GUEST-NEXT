@@ -21,7 +21,7 @@ import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Shelf from '@/components/ui/Shelf';
 import Slab3D from '@/components/ui/Slab3D';
-import { categories, feePercent, fillDeep, getCategory, info, inr, pages, ui } from '@/lib/data';
+import { categories, feePercent, fees, fillDeep, getCategory, info, inr, pages, ui } from '@/lib/data';
 
 const copy = fillDeep(pages.services);
 
@@ -46,7 +46,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   const facts = d.facts.map(f => ({
     icon: f.icon,
     label: f.label,
-    value: { fee, minFee: inr(info.delivery.minFeeInr), radius: `${info.delivery.defaultRadiusKm} km`, hours: `${info.delivery.maxHours} hrs` }[f.key] ?? '',
+    value: { fee, base: inr(fees.baseFeeInr), radius: `${info.delivery.defaultRadiusKm} km`, hours: `${info.delivery.maxHours} hrs` }[f.key] ?? '',
   }));
   const related = categories.filter(x => x.slug !== c.slug);
 
@@ -95,7 +95,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
                 </span>
                 <span className="glass inline-flex h-10 items-center gap-2 rounded-full px-4 text-[14px] font-bold text-fg">
                   <Icon name="wallet" size={16} className="text-[#f7b16d]" />
-                  {d.deliveryLabel} {inr(info.delivery.minFeeInr)}
+                  {d.deliveryLabel} {inr(fees.baseFeeInr)}
                 </span>
               </Enter>
             </div>

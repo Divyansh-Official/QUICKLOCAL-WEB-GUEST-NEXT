@@ -23,13 +23,13 @@
     {
       "status": "DELIVERY_PICKED",
       "label": "Picked up",
-      "detail": "Collected from the shop and on the way.",
+      "detail": "Collected from the shop and confirmed with a one-time code at the counter.",
       "icon": "truck"
     },
     {
       "status": "IN_TRANSIT",
       "label": "Out for delivery",
-      "detail": "Live on the map until it reaches you.",
+      "detail": "Routed along real roads and live on the map until it reaches you.",
       "icon": "pin"
     },
     {

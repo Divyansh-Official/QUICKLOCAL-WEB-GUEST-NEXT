@@ -1,4 +1,5 @@
 import Reveal from '@/components/motion/Reveal';
+import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 
@@ -13,7 +14,7 @@ export default function HowItWorks({
   section,
   steps,
 }: {
-  section: { eyebrow: string; title: string; accent: string };
+  section: { eyebrow: string; title: string; accent: string; cta?: { label: string; href: string } };
   steps: { n: number; title: string; body: string; status: string }[];
 }) {
   return (
@@ -45,6 +46,13 @@ export default function HowItWorks({
             ))}
           </ol>
         </div>
+        {section.cta ? (
+          <Reveal className="mt-14 flex justify-center">
+            <Button href={section.cta.href} variant="glass" icon="arrow-right">
+              {section.cta.label}
+            </Button>
+          </Reveal>
+        ) : null}
       </div>
     </section>
   );

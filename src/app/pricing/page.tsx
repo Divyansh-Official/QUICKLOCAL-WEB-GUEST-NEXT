@@ -11,7 +11,9 @@ import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
-import { categories, featureLabels, feePercent, fill, fillDeep, info, inr, pages, plans, ui } from '@/lib/data';
+import { categories, featureLabels, feePercent, fill, fillDeep, inr, pages, plans, ui } from '@/lib/data';
+
+const topFee = Math.max(...categories.map(c => c.platformFeePercent));
 
 const copy = fillDeep(pages.pricing);
 const ORDER = ['sales_dashboard', 'export_orders', 'customer_history', 'priority_support', 'advanced_analytics', 'featured_badge', 'bulk_offers', 'custom_banner'];
@@ -158,7 +160,7 @@ export default function PricingPage() {
                   </span>
                   <span className="relative flex flex-1 items-center justify-end gap-4">
                     <span className="hidden h-2 max-w-[160px] flex-1 overflow-hidden rounded-full bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] xs:block">
-                      <span className="block h-full rounded-full bg-gradient-to-r from-[#de7314] to-[#f2a53c]" style={{ width: `${(c.platformFeePercent / 3) * 100}%` }} />
+                      <span className="block h-full rounded-full bg-gradient-to-r from-[#de7314] to-[#f2a53c]" style={{ width: `${(c.platformFeePercent / topFee) * 100}%` }} />
                     </span>
                     <span className="tnum w-12 text-right text-[18px] font-extrabold text-primary-ink">{feePercent(c.platformFeePercent)}</span>
                   </span>
@@ -167,7 +169,7 @@ export default function PricingPage() {
             </ul>
             <div className="flex items-center justify-between gap-4 bg-[color-mix(in_oklab,var(--fg)_4%,transparent)] px-6 py-4">
               <span className="text-[14px] font-semibold text-fg-2">{copy.fee.flat}</span>
-              <span className="tnum text-[16px] font-extrabold text-fg">{inr(info.fees.platformFeeInr)}</span>
+              <span className="text-right text-[15px] font-extrabold text-fg">{copy.fee.payer}</span>
             </div>
           </Reveal>
         </div>

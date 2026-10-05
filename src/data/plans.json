@@ -1,5 +1,5 @@
 {
-  "_source": "subscription_plans table — V17__seed_plans.sql plus V37__subscription_starter_plan_and_pricing.sql. price_monthly, max_products, boosts_per_month and the features jsonb are the real column values.",
+  "_source": "subscription_plans table — V17__seed_plans.sql as changed by V37__subscription_starter_plan_and_pricing.sql: Free now lists 5 products, Starter is new at ₹99 for 25, Growth is unchanged, Pro dropped from ₹799 to ₹499.",
   "_note": "max_products of -1 means unlimited in the schema; rendered as Unlimited.",
   "currency": "INR",
   "items": [
@@ -7,7 +7,7 @@
       "name": "FREE",
       "label": "Free",
       "priceMonthly": 0,
-      "maxProducts": 25,
+      "maxProducts": 5,
       "boostsPerMonth": 0,
       "blurb": "Open your shop and start selling.",
       "features": {
@@ -64,7 +64,7 @@
     {
       "name": "PRO",
       "label": "Pro",
-      "priceMonthly": 799,
+      "priceMonthly": 499,
       "maxProducts": -1,
       "boostsPerMonth": 4,
       "blurb": "Everything, with your shop in front.",

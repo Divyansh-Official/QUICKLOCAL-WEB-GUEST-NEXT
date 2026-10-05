@@ -29,6 +29,7 @@ type Labels = MenuProps['labels'] & { brand: string; ctaShort: string };
 export default function SiteHeader({
   items,
   all,
+  secondary,
   cta,
   contact,
   labels,
@@ -36,6 +37,7 @@ export default function SiteHeader({
 }: {
   items: { label: string; href: string }[];
   all: { label: string; href: string }[];
+  secondary: { label: string; href: string }[];
   cta: { label: string; href: string; icon?: string };
   contact: MenuProps['contact'];
   labels: Labels;
@@ -144,6 +146,7 @@ export default function SiteHeader({
         onClose={close}
         toggleRef={toggleRef}
         items={all}
+        secondary={secondary}
         cta={cta}
         contact={contact}
         labels={labels}

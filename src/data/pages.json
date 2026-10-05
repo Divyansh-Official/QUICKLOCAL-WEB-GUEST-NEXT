@@ -36,17 +36,17 @@
         {
           "icon": "store",
           "title": "The shop keeps more",
-          "text": "Platform fees start at {lowestFee}% on grocery and never exceed 3%. Convenience for the customer should not come out of the seller's margin."
+          "text": "Platform fees start at {lowestFee}% and never exceed {highestFee}%, and the customer pays none of it. Convenience for the customer should not come out of the seller's margin."
         },
         {
           "icon": "bike",
-          "title": "The rider is paid a floor",
-          "text": "₹{riderMin} minimum per order, on top of ₹{riderBase} base and ₹{riderPerKm} a kilometre. Not a per-drop lottery."
+          "title": "The rider keeps the fee",
+          "text": "Every delivery pays {base} for the first {freeKm} km and about ₹{perKm} a kilometre after — and the whole fee reaches the rider. Not a per-drop lottery."
         },
         {
           "icon": "shield-check",
-          "title": "Nobody sells unverified",
-          "text": "Every vendor and every delivery partner clears document verification before they can take a single order."
+          "title": "Nobody operates unverified",
+          "text": "Every shop and every rider clears document verification — the papers their role and their vehicle actually call for — before a single order."
         },
         {
           "icon": "clock",
@@ -59,10 +59,10 @@
       "eyebrow": "For shop owners",
       "title": "Own a shop in {city}?",
       "accent": "{city}?",
-      "text": "List free, keep up to 98% of every sale, and get paid straight to your bank.",
+      "text": "List free, keep up to {bestKeep}% of every sale, and get paid after every delivered order.",
       "cta": {
-        "label": "Become a vendor",
-        "href": "/get-the-app#vendor"
+        "label": "Start selling",
+        "href": "/sell"
       }
     }
   },
@@ -75,7 +75,7 @@
       "eyebrow": "Services",
       "title": "Everything your neighbourhood already sells.",
       "accent": "already sells.",
-      "intro": "Five categories, each with its own platform fee. Delivered inside {radius} km by default and within {hours} hours, always."
+      "intro": "{Aisles} categories, each with its own platform fee for the shop. Delivered inside {radius} km by default and within {hours} hours, always."
     },
     "delivery": {
       "eyebrow": "Delivery",
@@ -86,12 +86,12 @@
         {
           "icon": "radius",
           "value": "{radius} km",
-          "label": "Default radius from the shop"
+          "label": "Default radius from you"
         },
         {
           "icon": "pin",
           "value": "{maxRadius} km",
-          "label": "The furthest a vendor may serve"
+          "label": "As far as you can widen it"
         },
         {
           "icon": "clock",
@@ -100,16 +100,16 @@
         },
         {
           "icon": "wallet",
-          "value": "₹{minFee}",
-          "label": "Minimum delivery fee"
+          "value": "{base}",
+          "label": "Delivery for the first {freeKm} km"
         }
       ]
     },
     "referral": {
       "eyebrow": "Refer & earn",
-      "title": "Refer a friend, earn ₹{referral}.",
+      "title": "Refer a friend, save ₹{referral}.",
       "accent": "₹{referral}.",
-      "text": "The reward lands when they place their first order. The amount is set by the platform, so it is the same for everybody.",
+      "text": "When their first order lands, ₹{referral} comes off your next one. The amount is set by the platform, so it is the same for everybody.",
       "cta": {
         "label": "Get the app",
         "href": "/get-the-app"
@@ -124,13 +124,13 @@
       "facts": [
         {
           "icon": "tag",
-          "label": "Platform fee, charged to the shop",
+          "label": "Platform fee, paid by the shop",
           "key": "fee"
         },
         {
           "icon": "wallet",
-          "label": "Minimum delivery fee",
-          "key": "minFee"
+          "label": "Delivery for the first {freeKm} km",
+          "key": "base"
         },
         {
           "icon": "radius",
@@ -151,7 +151,7 @@
       },
       "sellCta": {
         "label": "Sell in this category",
-        "href": "/get-the-app#vendor"
+        "href": "/sell"
       },
       "relatedTitle": "Other aisles"
     }
@@ -159,20 +159,20 @@
   "forBusiness": {
     "meta": {
       "title": "For Business",
-      "description": "Sell on {name} or deliver for it — platform fees from {lowestFee}%, and ₹{riderMin} minimum per delivery."
+      "description": "Sell on {name} or deliver for it — platform fees from {lowestFee}%, and the whole delivery fee for every rider."
     },
     "hero": {
       "eyebrow": "For business",
       "title": "Sell on it, or deliver for it.",
       "accent": "deliver for it.",
-      "intro": "Two ways to work with {name}, each with its numbers stated up front."
+      "intro": "Two ways to work with {name}, each with its numbers stated up front — and a page of its own for each."
     },
     "vendors": {
       "title": "Become a vendor",
       "text": "List your shop, set your catalogue, and get paid to your bank. Start on the free plan — {freeProducts} products, no monthly cost.",
       "cta": {
-        "label": "Start selling",
-        "href": "/get-the-app#vendor"
+        "label": "Sell on QuickLocal",
+        "href": "/sell"
       },
       "secondary": {
         "label": "See the plans",
@@ -181,49 +181,48 @@
     },
     "partners": {
       "title": "Become a delivery partner",
-      "text": "Take the jobs that suit you, inside a {radius} km radius, and know what each one pays before you accept it.",
+      "text": "Take the jobs that suit you, see the distances and the fee before you accept, and keep all of it.",
       "cta": {
-        "label": "Apply to deliver",
-        "href": "/get-the-app#partner"
+        "label": "Deliver with QuickLocal",
+        "href": "/deliver"
       }
     },
     "earnings": {
       "eyebrow": "Partner earnings",
       "title": "What a delivery pays.",
       "accent": "pays.",
-      "intro": "Set by the platform and applied to every order, so the figure does not move shop to shop.",
+      "intro": "A rider is paid the order's whole delivery fee — set by the platform and applied to every order, so it does not move shop to shop.",
       "items": [
         {
           "icon": "wallet",
-          "value": "₹{riderBase}",
-          "label": "Base, every order"
+          "value": "{base}",
+          "label": "Any delivery up to {freeKm} km"
         },
         {
           "icon": "radius",
-          "value": "₹{riderPerKm}/km",
-          "label": "On top, by distance"
+          "value": "₹{perKm}/km",
+          "label": "Each kilometre beyond it"
         },
         {
           "icon": "shield-check",
-          "value": "₹{riderMin} min",
-          "label": "Guaranteed floor"
+          "value": "100%",
+          "label": "Of the fee is the rider's"
         }
       ],
-      "example": "A 2 km delivery pays ₹{twoKm}; the floor lifts anything below ₹{riderMin} up to it.",
+      "example": "A {sampleKm} km delivery pays {sampleFee}: the {base} base, plus {sampleExtra} for the {sampleExtraKm} km past {freeKm}. Per-km follows the day's fuel price.",
       "calcTitle": "Try a distance",
       "calcLabel": "Distance",
       "calcResult": "You earn",
       "legend": {
-        "base": "{amount} base",
-        "distance": "+ {amount} distance",
-        "floor": "+ {amount} floor top-up"
+        "base": "{amount} base, first {freeKm} km",
+        "distance": "+ {amount} for {km} km beyond"
       }
     }
   },
   "pricing": {
     "meta": {
       "title": "Pricing",
-      "description": "Vendor plans on {name} — from free to ₹799 a month, plus a platform fee that starts at {lowestFee}%."
+      "description": "Vendor plans on {name} — from free to ₹{proPrice} a month, plus a platform fee from {lowestFee}% that the customer never pays."
     },
     "hero": {
       "eyebrow": "Pricing",
@@ -234,9 +233,9 @@
     "popular": "Most chosen",
     "startFree": "Start free",
     "choose": "Choose {plan}",
-    "boosts": "{count} shop boost a month",
-    "boostsPlural": "{count} shop boosts a month",
-    "noBoosts": "No shop boosts",
+    "boosts": "Up to {count} boost a month",
+    "boostsPlural": "Up to {count} boosts a month",
+    "noBoosts": "No boosts",
     "compareTitle": "Compare every plan",
     "compareFeature": "Feature",
     "products": "Products",
@@ -245,10 +244,11 @@
       "eyebrow": "Platform fee",
       "title": "What each sale costs.",
       "accent": "each sale",
-      "intro": "Charged per order on top of the monthly plan. Set per category, the same for every shop in it.",
-      "flat": "Flat platform fee per order"
+      "intro": "Charged per order on top of the monthly plan, as a share of the sale. Set per category, the same for every shop in it — and never added to the customer's bill.",
+      "flat": "Who pays it",
+      "payer": "The shop — never the customer"
     },
-    "boostsRow": "Shop boosts a month",
+    "boostsRow": "Paid boosts a month",
     "freeNote": "No monthly fee",
     "billedNote": "Billed monthly · cancel any month"
   },
@@ -313,5 +313,603 @@
     },
     "copy": "Copy",
     "copied": "Copied"
+  },
+  "howItWorks": {
+    "meta": {
+      "title": "How It Works",
+      "description": "Follow one order on {name} from the first tap to the code at your door — every step, and what the platform does at each."
+    },
+    "hero": {
+      "eyebrow": "How it works",
+      "title": "From the shelf to your door, step by step.",
+      "accent": "step by step.",
+      "intro": "One order, followed end to end — what you see, what the shop and the rider see, and the rules the platform holds everyone to along the way."
+    },
+    "journey": {
+      "eyebrow": "One order",
+      "title": "Eight moments between a tap and a knock.",
+      "accent": "a tap and a knock.",
+      "progress": "Step {n} of {total}",
+      "steps": [
+        {
+          "key": "browse",
+          "icon": "search",
+          "who": "You",
+          "title": "Find the shop down the road.",
+          "text": "The app shows open, verified shops within {radius} km of the address you are ordering to. Widen it to {maxRadius} km, four kilometres at a time.",
+          "screen": {
+            "title": "Shops near you",
+            "chip": "{radius} km",
+            "rows": [
+              "Corner store · 0.6 km",
+              "Hardware shop · 1.4 km",
+              "Toy shop · 2.1 km"
+            ]
+          }
+        },
+        {
+          "key": "pay",
+          "icon": "lock",
+          "who": "You",
+          "title": "Pay, and see every rupee first.",
+          "text": "Your basket and your share of delivery — no platform fee on your side. Payment goes through Razorpay, and an order left unpaid is cancelled after thirty minutes so its stock goes back on the shelf.",
+          "screen": {
+            "title": "Checkout",
+            "chip": "Razorpay",
+            "rows": [
+              "Basket · ₹640",
+              "Delivery · {base}",
+              "Platform fee · ₹0"
+            ],
+            "totalLabel": "Total",
+            "button": "Pay with Razorpay"
+          }
+        },
+        {
+          "key": "accept",
+          "icon": "store",
+          "who": "The shop",
+          "title": "The shop says yes.",
+          "text": "A verified shop confirms it has everything and starts packing. Until pickup, you or the shop can still cancel, and anything authorised is released.",
+          "screen": {
+            "title": "Shop accepted",
+            "chip": "Packing",
+            "rows": [
+              "4 items confirmed",
+              "Verified shop",
+              "Cancel free until pickup"
+            ]
+          }
+        },
+        {
+          "key": "assign",
+          "icon": "bike",
+          "who": "A rider",
+          "title": "A rider nearby takes the job.",
+          "text": "Riders see the shop, you and every distance before they accept, and each carries one order at a time. If nobody takes it within fifteen minutes, the order is cancelled and refunded on its own.",
+          "screen": {
+            "title": "Rider assigned",
+            "chip": "1 order",
+            "rows": [
+              "Shop · 0.8 km away",
+              "You · 2.3 km from shop",
+              "Refund if unassigned · 15 min"
+            ]
+          }
+        },
+        {
+          "key": "pickup",
+          "icon": "key",
+          "who": "At the counter",
+          "title": "Collected — with a code.",
+          "text": "The rider confirms pickup with a one-time code at the counter. A rider who has not collected within thirty minutes is released, and the job passes to someone else.",
+          "screen": {
+            "title": "Pickup code",
+            "chip": "Verified",
+            "code": "4 8 1 7",
+            "rows": [
+              "Matched at the counter"
+            ],
+            "badge": "Picked up"
+          }
+        },
+        {
+          "key": "route",
+          "icon": "route",
+          "who": "On the road",
+          "title": "Routed along real roads.",
+          "text": "The route follows the streets, not a straight line, and the map is live until the rider reaches you. You hear when they are close.",
+          "screen": {
+            "title": "On the way",
+            "chip": "Live",
+            "rows": [
+              "Rider nearby · 4 min",
+              "Along real roads",
+              "Tracked to your door"
+            ]
+          }
+        },
+        {
+          "key": "handoff",
+          "icon": "check-circle",
+          "who": "At your door",
+          "title": "Delivered on your code, not a tap.",
+          "text": "Give the rider the code from your app. Five wrong attempts lock it for fifteen minutes, so nobody can guess their way to a delivered order.",
+          "screen": {
+            "title": "Your delivery code",
+            "chip": "At the door",
+            "code": "2 0 4 8",
+            "rows": [
+              "Share it only with the rider"
+            ],
+            "badge": "Delivered"
+          }
+        },
+        {
+          "key": "after",
+          "icon": "star",
+          "who": "Afterwards",
+          "title": "Everyone is paid. You rate it.",
+          "text": "The shop and the rider are paid once the order is delivered — never before. Your rating counts toward the rider's tier.",
+          "screen": {
+            "title": "Delivered",
+            "chip": "Paid out",
+            "rows": [
+              "Shop paid · after delivery",
+              "Rider paid · the whole fee",
+              "Rate your order ★★★★★"
+            ]
+          }
+        }
+      ]
+    },
+    "clocks": {
+      "eyebrow": "The clocks",
+      "title": "Four timers run on every order.",
+      "accent": "every order.",
+      "intro": "So nothing is ever left waiting on somebody else — each one ends in something happening, automatically.",
+      "items": [
+        {
+          "value": 15,
+          "unit": "min",
+          "max": 60,
+          "title": "To find a rider",
+          "text": "Nobody assigned by then? The order is cancelled and refunded."
+        },
+        {
+          "value": 30,
+          "unit": "min",
+          "max": 60,
+          "title": "To collect it",
+          "text": "An accepted order not picked up passes to another rider."
+        },
+        {
+          "value": 30,
+          "unit": "min",
+          "max": 60,
+          "title": "To finish paying",
+          "text": "An unpaid order is cancelled and its stock released."
+        },
+        {
+          "value": "{hours}",
+          "unit": "hrs",
+          "max": 12,
+          "title": "From order to door",
+          "text": "The ceiling on any order, checked every five minutes. Running late sends you an apology and the rider a nudge."
+        }
+      ],
+      "_max": "max is the dial: minutes on a 60-minute face, hours on a 12-hour face — so the ring reads like a clock."
+    },
+    "lifecycle": {
+      "eyebrow": "Every state, named",
+      "title": "What tracking actually means here.",
+      "accent": "actually means",
+      "intro": "The real states the platform moves an order through, in the real order — including the three that are not a happy ending.",
+      "unhappyTitle": "When it does not go to plan",
+      "unhappyText": "Three more states, and none of them is a dead end you have to phone about.",
+      "hint": "Tap a step to explore it"
+    },
+    "banner": {
+      "eyebrow": "Your turn",
+      "title": "Work out what your order would cost.",
+      "accent": "your order",
+      "text": "The same arithmetic the platform runs at checkout, to the rupee.",
+      "cta": {
+        "label": "Open the estimator",
+        "href": "/#what-it-costs"
+      },
+      "secondary": {
+        "label": "Get the app",
+        "href": "/get-the-app"
+      }
+    }
+  },
+  "sell": {
+    "meta": {
+      "title": "Sell on QuickLocal",
+      "description": "Open your shop to your own neighbourhood — {freeProducts} products free, platform fees from {lowestFee}%, and paid after every delivered order."
+    },
+    "hero": {
+      "eyebrow": "For shops",
+      "title": "Your shop, one tap from your street.",
+      "accent": "one tap from your street.",
+      "intro": "List what you already sell, take orders from customers a few kilometres away, and get paid after every delivered order — with every fee written down first.",
+      "cta": {
+        "label": "Start selling",
+        "href": "/get-the-app#vendor"
+      },
+      "secondary": {
+        "label": "See the plans",
+        "href": "/pricing"
+      },
+      "note": "Free for up to {freeProducts} products. The customer never pays a platform fee — you pay {lowestFee}–{highestFee}% of the sale."
+    },
+    "planner": {
+      "eyebrow": "Free-delivery planner",
+      "title": "Set a threshold that protects your margin.",
+      "accent": "protects your margin.",
+      "intro": "The same check the vendor app runs before you save: what a free-delivery order costs you, the smallest safe threshold for your aisle, and a warning when an order would give too much away.",
+      "category": "Your aisle",
+      "threshold": "Free delivery from",
+      "order": "An order of",
+      "cost": "Your cost of goods",
+      "costHint": "Optional — as a share of the price",
+      "costOff": "Not set",
+      "platformFee": "Platform fee",
+      "absorbed": "Delivery base you cover",
+      "net": "You receive",
+      "profit": "Your profit",
+      "given": "Given away",
+      "recommended": "Smallest safe threshold for {category}",
+      "useRecommended": "Use it",
+      "none": "No safe threshold exists at this fee",
+      "healthy": "Healthy",
+      "check": "Worth a second look",
+      "free": "Free delivery applies",
+      "paid": "The customer pays delivery",
+      "warnings": {
+        "thresholdLow": "{chosen} is below the {recommended} minimum for {category}: a small order could qualify for free delivery and give away more than {ceiling}%.",
+        "loss": "This order would lose you {loss}. Raise your price or your threshold.",
+        "thin": "A thin margin — {margin}% after the platform fee and delivery.",
+        "nonPositive": "After the platform fee and delivery you would receive {net} — nothing left.",
+        "giveaway": "You would give away {given}% of this order. A higher threshold would protect it.",
+        "cliff": "Free delivery applies, so you cover the {base} base on top of the {fee} platform fee. An order just under {chosen} would net you {base} more."
+      },
+      "footnote": "Mirrors the backend's profit simulator: a {ceiling}% ceiling on what a free order gives away, a {floor}% margin floor, and a smallest safe threshold of ⌈{baseRaw} ÷ ({ceiling}% − fee)⌉.",
+      "_tokens": "Live values filled in the browser: {chosen} {recommended} {category} {loss} {margin} {net} {given} {fee}. {ceiling} {floor} {baseRaw} {base} are filled at build."
+    },
+    "documents": {
+      "eyebrow": "Verification",
+      "title": "What a shop brings.",
+      "accent": "brings.",
+      "intro": "Checked once, before your first order. A reviewer decides each document on its own, so one blurred photo never sends the whole folder back.",
+      "items": [
+        {
+          "label": "Aadhaar card",
+          "icon": "id"
+        },
+        {
+          "label": "PAN card",
+          "icon": "id"
+        },
+        {
+          "label": "Bank proof",
+          "icon": "wallet"
+        },
+        {
+          "label": "Shop licence",
+          "icon": "receipt"
+        },
+        {
+          "label": "The shop, from outside",
+          "icon": "camera"
+        },
+        {
+          "label": "The shop, from inside",
+          "icon": "camera"
+        }
+      ],
+      "first": "Before any of it: a bank account or UPI id, so there is somewhere to pay you, and a finished shop profile. The app names exactly what is still missing."
+    },
+    "plans": {
+      "eyebrow": "Plans",
+      "title": "Start free. Grow when it pays.",
+      "accent": "Grow when it pays.",
+      "products": "{count} products",
+      "unlimited": "Unlimited products",
+      "cta": {
+        "label": "Compare every plan",
+        "href": "/pricing"
+      }
+    },
+    "boosts": {
+      "eyebrow": "Boosts",
+      "title": "Put your shop in front, when you choose.",
+      "accent": "in front",
+      "intro": "A paid boost lifts one product in search, or the whole shop in local results and the home feed, for the days you choose. Your plan sets how many you can run a month — one on Growth, four on Pro — and a boosted shop is labelled Sponsored.",
+      "product": "Boost a product",
+      "shop": "Boost the shop",
+      "days": "{days} days",
+      "items": {
+        "product": [
+          {
+            "days": 7,
+            "price": 99
+          },
+          {
+            "days": 15,
+            "price": 199
+          },
+          {
+            "days": 30,
+            "price": 299
+          }
+        ],
+        "shop": [
+          {
+            "days": 7,
+            "price": 149
+          },
+          {
+            "days": 15,
+            "price": 249
+          },
+          {
+            "days": 30,
+            "price": 399
+          }
+        ]
+      },
+      "_items": "app_config boost.price.* and boost.shop.price.* (V21).",
+      "_allowance": "BoostService: boosts are bought; subscription_plans.boosts_per_month is the monthly ALLOWANCE (Free/Starter 0, Growth 1, Pro 4), not boosts given free."
+    },
+    "steps": {
+      "eyebrow": "Getting started",
+      "title": "Live in four steps.",
+      "accent": "four steps."
+    },
+    "banner": {
+      "eyebrow": "Ready?",
+      "title": "Open your shop this week.",
+      "accent": "this week.",
+      "text": "Install the app, choose Vendor, and the app walks you through the rest.",
+      "cta": {
+        "label": "Start selling",
+        "href": "/get-the-app#vendor"
+      },
+      "secondary": {
+        "label": "Ask us first",
+        "href": "/contact"
+      }
+    }
+  },
+  "deliver": {
+    "meta": {
+      "title": "Deliver with QuickLocal",
+      "description": "Keep the whole delivery fee — {base} for any trip up to {freeKm} km and about ₹{perKm} a kilometre beyond — on a motorbike, scooter, auto or bicycle."
+    },
+    "hero": {
+      "eyebrow": "For riders",
+      "title": "Ride your own streets. Keep the whole fee.",
+      "accent": "Keep the whole fee.",
+      "intro": "See the shop, the customer and both distances before you accept. Deliver it, and the order's entire delivery fee is yours — paid after every drop.",
+      "cta": {
+        "label": "Apply to deliver",
+        "href": "/get-the-app#partner"
+      },
+      "secondary": {
+        "label": "What you need",
+        "href": "/deliver#documents"
+      }
+    },
+    "earnings": {
+      "eyebrow": "What a delivery pays",
+      "title": "Slide it. That is your fee.",
+      "accent": "That is your fee.",
+      "intro": "The same arithmetic the platform runs on every order. The platform takes none of it.",
+      "calcTitle": "Try a distance",
+      "calcLabel": "Distance",
+      "calcResult": "You earn"
+    },
+    "vehicles": {
+      "eyebrow": "What you ride",
+      "title": "Pick your vehicle. See your list.",
+      "accent": "See your list.",
+      "intro": "The papers depend on what you ride — a bicycle needs no licence and no registration, because the state issues neither for one.",
+      "label": "Your vehicle",
+      "everyone": "Every rider",
+      "motorised": "Because it has an engine",
+      "count": "{count} things to have ready",
+      "payout": "Before any of it: a bank account or a UPI id — either is enough — so there is somewhere to pay you.",
+      "photos": "Three photographs — front, side and back — prove it is the vehicle you declared, in the condition you declared."
+    },
+    "tiers": {
+      "eyebrow": "Tiers",
+      "title": "Badges that only go up.",
+      "accent": "only go up.",
+      "intro": "Promoted on deliveries and stars together, the moment either changes. A job is offered to the highest tier nearby first, then the nearest rider — and a bad week never takes a badge away on its own.",
+      "deliveries": "Deliveries",
+      "rating": "Rating"
+    },
+    "rules": {
+      "eyebrow": "Fair rules",
+      "title": "Rules that respect your time.",
+      "accent": "your time.",
+      "items": [
+        {
+          "icon": "route",
+          "title": "Every distance, before you accept",
+          "text": "You to the shop, the shop to the customer, you to the customer — on the screen before you say yes."
+        },
+        {
+          "icon": "clock",
+          "title": "Thirty minutes to collect",
+          "text": "An accepted job is yours for thirty minutes. Miss it and it passes on, without leaving you stuck holding it."
+        },
+        {
+          "icon": "bike",
+          "title": "One order at a time",
+          "text": "Nobody stacks a second job on your bike. One active delivery, then the next."
+        },
+        {
+          "icon": "key",
+          "title": "Codes at both ends",
+          "text": "A code at the counter and a code at the door, so the delivery that pays you is one nobody can fake."
+        },
+        {
+          "icon": "wallet",
+          "title": "Paid after every drop",
+          "text": "The fee is paid out once the order is delivered — to your bank or UPI, reconciled automatically."
+        },
+        {
+          "icon": "refresh",
+          "title": "No overnight demotions",
+          "text": "A dip in rating does not take a badge away on its own. Where it matters, a person looks at it."
+        }
+      ]
+    },
+    "banner": {
+      "eyebrow": "Ready?",
+      "title": "Start riding this week.",
+      "accent": "this week.",
+      "text": "Install the app, choose Delivery Partner, and tell it what you ride.",
+      "cta": {
+        "label": "Apply to deliver",
+        "href": "/get-the-app#partner"
+      },
+      "secondary": {
+        "label": "Ask us first",
+        "href": "/contact"
+      }
+    }
+  },
+  "safety": {
+    "meta": {
+      "title": "Trust & Safety",
+      "description": "How {name} keeps an order honest — verified shops and riders, codes at both ends, and money that only moves when it should."
+    },
+    "hero": {
+      "eyebrow": "Trust & safety",
+      "title": "Built so nothing rests on a promise.",
+      "accent": "nothing rests on a promise.",
+      "intro": "Every guarantee on this page is a rule the platform runs in code — not a policy somebody has to remember on a busy day."
+    },
+    "pillars": [
+      {
+        "key": "verified",
+        "icon": "shield-check",
+        "eyebrow": "Before day one",
+        "title": "Verified, document by document.",
+        "text": "Every shop and every rider is checked before taking an order — against the papers their role and vehicle actually call for. Each document is decided on its own, with the reason for any rejection written down, so nobody re-uploads five papers to fix one.",
+        "art": [
+          "Aadhaar card",
+          "PAN card",
+          "Bank proof",
+          "Shop licence"
+        ]
+      },
+      {
+        "key": "codes",
+        "icon": "key",
+        "eyebrow": "At both ends",
+        "title": "A code at the counter, and at your door.",
+        "text": "The rider confirms pickup with a one-time code at the shop, and delivery with the code in your app. Five wrong attempts lock it for fifteen minutes — so a delivered order is one that really was.",
+        "art": [
+          "4",
+          "8",
+          "1",
+          "7"
+        ]
+      },
+      {
+        "key": "money",
+        "icon": "lock",
+        "eyebrow": "Money",
+        "title": "Money that waits for the order.",
+        "text": "Shops and riders are paid only after an order is delivered. A refund is marked done only once Razorpay has accepted it, and every payout carries a key that makes a retried request unable to pay twice.",
+        "art": [
+          "Order delivered",
+          "Shop paid",
+          "Rider paid"
+        ]
+      }
+    ],
+    "clocks": {
+      "eyebrow": "When something goes wrong",
+      "title": "Nothing is left waiting.",
+      "accent": "left waiting.",
+      "intro": "Every stuck state has a clock on it, and every clock ends in something happening — automatically, without a phone call."
+    },
+    "more": {
+      "eyebrow": "And quietly, all the time",
+      "title": "The checks you never see.",
+      "accent": "never see.",
+      "items": [
+        {
+          "icon": "radius",
+          "title": "Nothing beyond {maxRadius} km",
+          "text": "Checkout refuses an order beyond {maxRadius} km, the same edge as search — so no rider is handed an absurd trip."
+        },
+        {
+          "icon": "phone",
+          "title": "A rider's number, masked",
+          "text": "On your tracking screen a rider's number shows only its last four digits — enough to recognise, not enough to keep."
+        },
+        {
+          "icon": "sparkle",
+          "title": "Abuse checks every fifteen minutes",
+          "text": "Automated detectors look for patterns of abuse every fifteen minutes — seeing pseudonyms, not names — and a person reviews what they find."
+        },
+        {
+          "icon": "headset",
+          "title": "Complaints that escalate",
+          "text": "A complaint is assigned to a person and escalated, not closed quietly to tidy a dashboard."
+        }
+      ]
+    },
+    "banner": {
+      "eyebrow": "Still wondering?",
+      "title": "Ask a person, not a page.",
+      "accent": "a person",
+      "text": "Every message reaches someone who can answer it.",
+      "cta": {
+        "label": "Contact us",
+        "href": "/contact"
+      },
+      "secondary": {
+        "label": "Help centre",
+        "href": "/help"
+      }
+    }
+  },
+  "help": {
+    "meta": {
+      "title": "Help Centre",
+      "description": "Answers about ordering, selling and delivering on {name} — every one drawn from a rule the platform enforces."
+    },
+    "hero": {
+      "eyebrow": "Help centre",
+      "title": "Ask anything. Get the real rule.",
+      "accent": "the real rule.",
+      "intro": "Every answer here is a rule the platform runs, not a hopeful line — so when it says fifteen minutes, it means fifteen minutes."
+    },
+    "search": {
+      "label": "Search the help centre",
+      "placeholder": "Try “refund” or “bicycle”",
+      "results": "{count} answers",
+      "resultsOne": "1 answer",
+      "emptyTitle": "Nothing matches “{query}”.",
+      "emptyText": "Try a shorter word, or ask us directly.",
+      "clear": "Clear search",
+      "topics": "Topics"
+    },
+    "contact": {
+      "title": "Still stuck?",
+      "text": "Write to {email} or call {phone}. A person reads every message.",
+      "cta": {
+        "label": "Contact us",
+        "href": "/contact"
+      }
+    }
   }
 }

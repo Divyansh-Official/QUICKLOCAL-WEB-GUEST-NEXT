@@ -9,7 +9,7 @@ Every route prerenders to static HTML; nothing talks to the backend.
 ```bash
 npm install
 npm run dev     # http://localhost:3000
-npm run build   # 16 static routes
+npm run build   # 23 static pages
 npm run lint
 ```
 
@@ -36,6 +36,31 @@ Copy refers to figures as **`{tokens}`** — `"₹{riderMin} floor for every rid
 changed in `fees.json` changes in every sentence that quotes it. The token list
 is `tokens` in the same file.
 
+### Where the figures come from
+
+The platform files mirror the backend's **latest** branch (`Phase-06`), not its
+default branch, which is far behind. The ones that matter most:
+
+- **Six permanent categories** — Grocery 2%, Hardware 3%, Furniture 3%,
+  Fashion 3%, **Toys**, Others 1%. Toys was created in the admin console, so
+  its fee is not in any repository: **3% is assumed** — see `_toysFee` in
+  `categories.json` and change one number if the console says otherwise.
+- **The customer never pays a platform fee.** It is a share of the sale,
+  charged to the shop.
+- **A rider is paid the order's whole delivery fee**: ₹30 for the first 4 km,
+  then petrol ÷ mileage × 2.5 per km beyond, rounded up
+  (`SplitPayoutService.driverAmount`). The ₹20 + ₹5/km figures in app_config
+  are only a fallback for an order with no fee, so the site never quotes them.
+- **Radius**: 4 km by default, widened in steps of 4 up to 20 km; checkout
+  refuses anything farther.
+- **Plans**: Free ₹0 / 5 products, Starter ₹99 / 25, Growth ₹299 / 100,
+  Pro ₹499 / unlimited. A plan's boosts are how many **paid** boosts it may
+  run a month (0 / 0 / 1 / 4), not boosts given free.
+
+The money arithmetic lives once, in `src/lib/fees.ts`, as pure functions that
+copy the services line for line — the estimator, the rider slider and the
+shop's planner all run it, and the server uses it for the figures it prints.
+
 `testimonials.json` is empty on purpose: there are no real reviews yet, and the
 section renders itself the day one is added.
 
@@ -44,9 +69,14 @@ section renders itself the day one is added.
 | Route | Sections |
 |---|---|
 | `/` | Hero with a 3D phone tracking a real order → guarantees ribbon → scroll-lit statement → category shelf → bento → numbers band → how it works → every order state → cost estimator → three audiences → rider tiers → about → app band → FAQ → newsletter |
-| `/services` | Category cards → how delivery works → refer & earn |
+| `/how-it-works` | **One order as a scroll story** — a sticky handset whose screen changes scene as each of eight steps crosses the middle of the screen, turning as you go → every order state → the four clocks on every order |
+| `/services` | Six category cards → how delivery works → refer & earn |
 | `/services/[slug]` | **The page a category card zooms open into** — 3D slab, fee, what shops list, what a shop keeps, the aisle's numbers, other aisles |
-| `/for-business` | Vendor and rider tracks → earnings with a distance slider |
+| `/sell` | For shops — the **free-delivery planner** (the backend's profit simulator, in the browser) → documents → plans → paid boosts → four steps to live |
+| `/deliver` | For riders — what a delivery pays, on a slider → **pick your vehicle, see your papers** → 3D tier medals → the rules that protect a rider's time |
+| `/safety` | Verification, the codes at both ends, money that waits for the order (each with scroll-driven art) → the clocks → the checks nobody sees |
+| `/help` | **Help Centre** — every question, searchable as you type, filtered by who is asking, shareable as `?q=…&topic=…`, published as FAQPage data |
+| `/for-business` | Both partner tracks side by side, linking to `/sell` and `/deliver` |
 | `/pricing` | Plan cards → full comparison → platform fee by category |
 | `/get-the-app` | Store badges (marked *Soon* until `app.json` says otherwise) → onboarding for each role |
 | `/about`, `/contact` | Story, principles · channels with copy buttons, FAQ |
@@ -107,6 +137,10 @@ No animation library. Motion is CSS, Web Animations and View Transitions:
 | Figures count up on arrival | one-shot observer | `ui/CountUp` |
 | Springs on presses, menus, segmented pills | SwiftUI curves sampled into `linear()` | `--spring-*` in `globals.css` |
 | Tab bar minimises while scrolling down | one passive listener | `layout/TabBar` |
+| The How It Works handset changes scene and turns as the story scrolls | one IntersectionObserver + a named view timeline | `sections/how/Journey` |
+| Clock rings fill; documents fan out and tick; a code types itself; money moves in order | view timelines | `sections/shared/Clocks`, `sections/safety/Pillars` |
+| Tier medals flip a full turn on hover | CSS 3D on a spring | `art/Medal3D` |
+| A help search re-flows its results; a vehicle's papers fold away | View Transitions; grid rows `1fr → 0fr` | `sections/help/HelpCentre`, `sections/partners/VehiclePicker` |
 
 Nothing is hidden waiting for JavaScript. With scripts off, with reduced motion,
 or with `?nomotion` in the URL (clean screenshots), every element renders in
@@ -122,10 +156,10 @@ src/
     motion/       Enter, Reveal, MorphLink, MorphBack, MorphProvider, PageTransition, HeadScript
     glass/        LiquidGlass, GlassFilter
     ui/           Button, Icon, Slab3D, Tilt, SegmentedControl, Shelf, Accordion, CountUp, ThemeToggle…
-    art/          Phone3D, Trio
-    sections/     home/* and shared/*
+    art/          Phone3D, PhoneShell, Medal3D, Trio
+    sections/     home/*, how/*, partners/*, safety/*, help/* and shared/*
   data/           the JSON above
-  lib/            data (tokens, fill), morph, liquidGlass, liquidMotion, hooks, format
+  lib/            data (tokens, fill), fees, morph, liquidGlass, liquidMotion, hooks, format
 legacy/           the previous site, excluded from build, lint and type-check
 ```
 

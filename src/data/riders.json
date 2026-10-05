@@ -1,11 +1,6 @@
 {
-  "_source": "DeliveryBadgeService — the exact thresholds it promotes on — and BadgeLevel.java. Payout figures come from app_config: delivery.base_payout_inr, delivery.payout_per_km_inr, delivery.min_payout_inr.",
+  "_source": "DeliveryBadgeService — the exact thresholds it promotes on — and BadgeLevel.java. Pay is not here: a rider is paid the order's whole delivery fee (fees.json, _rider). Documents: VerificationGateService, which computes the list from the vehicle.",
   "_why": "A rider deciding whether to sign up wants two numbers: what a drop pays, and what changes if they stick around. Both exist in the platform and neither is usually published.",
-  "payout": {
-    "baseInr": 20,
-    "perKmInr": 5,
-    "minimumInr": 30
-  },
   "tiers": [
     {
       "level": "BRONZE",
@@ -41,12 +36,90 @@
     }
   ],
   "_ratingNote": "A rating that dips below a threshold does not demote automatically — that is an administrator's decision, not a nightly job.",
-  "documents": [
-    { "type": "DRIVING_LICENSE", "label": "Driving licence" },
-    { "type": "VEHICLE_RC", "label": "Vehicle registration" },
-    { "type": "AADHAAR_CARD", "label": "Aadhaar" },
-    { "type": "PAN_CARD", "label": "PAN" },
-    { "type": "BANK_PROOF", "label": "Bank proof, for payouts" }
+  "vehicles": [
+    {
+      "type": "BIKE",
+      "label": "Motorbike",
+      "icon": "bike",
+      "motorised": true
+    },
+    {
+      "type": "SCOOTER",
+      "label": "Scooter",
+      "icon": "scooter",
+      "motorised": true
+    },
+    {
+      "type": "BICYCLE",
+      "label": "Bicycle",
+      "icon": "bicycle",
+      "motorised": false
+    },
+    {
+      "type": "AUTO",
+      "label": "Auto",
+      "icon": "auto",
+      "motorised": true
+    },
+    {
+      "type": "CNG_AUTO",
+      "label": "CNG auto",
+      "icon": "auto",
+      "motorised": true
+    }
   ],
-  "_documents": "DocumentType.java — the delivery-partner subset. Verified through Surepass before a partner can take a job."
+  "_vehicles": "VehicleType.java. VerificationGateService.MOTORISED = BIKE, SCOOTER, AUTO, CNG_AUTO — a bicycle is the one that is not.",
+  "documents": {
+    "everyone": [
+      {
+        "type": "AADHAAR_CARD",
+        "label": "Aadhaar card",
+        "icon": "id"
+      },
+      {
+        "type": "PAN_CARD",
+        "label": "PAN card",
+        "icon": "id"
+      },
+      {
+        "type": "BANK_PROOF",
+        "label": "Bank proof",
+        "icon": "wallet"
+      },
+      {
+        "type": "VEHICLE_FRONT",
+        "label": "Vehicle, from the front",
+        "icon": "camera"
+      },
+      {
+        "type": "VEHICLE_SIDE",
+        "label": "Vehicle, from the side",
+        "icon": "camera"
+      },
+      {
+        "type": "VEHICLE_BACK",
+        "label": "Vehicle, from behind",
+        "icon": "camera"
+      }
+    ],
+    "motorised": [
+      {
+        "type": "DRIVING_LICENSE",
+        "label": "Driving licence",
+        "icon": "id"
+      },
+      {
+        "type": "VEHICLE_RC",
+        "label": "Registration certificate",
+        "icon": "receipt"
+      },
+      {
+        "type": "NUMBER_PLATE",
+        "label": "Vehicle number",
+        "icon": "tag"
+      }
+    ],
+    "_note": "A bicycle owes no licence, RC or plate — the state issues none for one. Three vehicle photographs, because one proves a photograph was taken and three prove it is the vehicle claimed. A bank account or a UPI id is required before documents are even looked at; either one is enough.",
+    "_plate": "NUMBER_PLATE is not an upload: the plate is declared on the profile, required of a motorised vehicle and never of a bicycle."
+  }
 }

@@ -8,6 +8,7 @@ const HUES: Record<string, string> = {
   butter: 'hue-butter',
   rose: 'hue-rose',
   green: 'hue-green',
+  sky: 'hue-sky',
 };
 
 /**

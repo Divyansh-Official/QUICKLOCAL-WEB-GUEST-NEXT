@@ -32,8 +32,8 @@
         },
         {
           "icon": "bike",
-          "title": "Rider earns ₹{riderMin}+",
-          "text": "On every order",
+          "title": "Rider keeps 100%",
+          "text": "Of every delivery fee",
           "position": "r"
         },
         {
@@ -45,16 +45,16 @@
       ],
       "fees": [
         {
-          "label": "Delivery fee",
-          "value": "₹{minFee}"
+          "label": "Delivery, first {freeKm} km",
+          "value": "{base}"
         },
         {
-          "label": "Platform fee",
-          "value": "₹{platformFee}"
+          "label": "Platform fee for you",
+          "value": "₹0"
         },
         {
           "label": "Rider earns",
-          "value": "₹{riderMin}+",
+          "value": "{base}",
           "strong": true
         }
       ],
@@ -75,20 +75,24 @@
       "text": "Delivered within {hours} hours"
     },
     {
+      "icon": "key",
+      "text": "A one-time code at every door"
+    },
+    {
       "icon": "radius",
-      "text": "{radius} km delivery radius"
+      "text": "Shops within {radius} km — or up to {maxRadius}"
     },
     {
       "icon": "tag",
-      "text": "Platform fee from {lowestFee}%"
+      "text": "Platform fee from {lowestFee}%, paid by the shop"
     },
     {
       "icon": "bike",
-      "text": "₹{riderMin} floor for every rider"
+      "text": "Riders keep the whole delivery fee"
     },
     {
       "icon": "gift",
-      "text": "₹{referral} for every friend who orders"
+      "text": "₹{referral} off for every friend who orders"
     },
     {
       "icon": "headset",
@@ -102,7 +106,7 @@
   },
   "categories": {
     "eyebrow": "What we offer",
-    "title": "Five aisles. One neighbourhood.",
+    "title": "{Aisles} aisles. One neighbourhood.",
     "accent": "One neighbourhood.",
     "intro": "Every category a local shop can open under — each with the platform fee it actually pays. Tap one to step inside.",
     "cta": {
@@ -121,7 +125,7 @@
         "size": "large",
         "icon": "radius",
         "title": "Your neighbourhood, not the whole city.",
-        "text": "Shops within {radius} km by default, up to {maxRadius} km where a vendor covers it. Close enough that it arrives fresh.",
+        "text": "Shops within {radius} km by default — widen it to {maxRadius} km, four kilometres at a time. Close enough that it arrives fresh.",
         "stat": "{radius} km"
       },
       {
@@ -137,8 +141,8 @@
         "kind": "stat",
         "size": "wide",
         "icon": "tag",
-        "title": "Shops keep up to 98%.",
-        "text": "Platform fees start at {lowestFee}% on grocery and never exceed 3%.",
+        "title": "Shops keep up to {bestKeep}%.",
+        "text": "Platform fees start at {lowestFee}% and never exceed {highestFee}% — and the customer never pays one.",
         "stat": "{lowestFee}%",
         "statLabel": "Lowest platform fee"
       },
@@ -147,21 +151,21 @@
         "size": "small",
         "icon": "shield-check",
         "title": "Verified before they sell.",
-        "text": "Every shop and every rider clears document checks first."
+        "text": "Every shop and every rider clears document checks before a single order."
       },
       {
         "kind": "plain",
         "size": "small",
         "icon": "lock",
         "title": "Payments that close the loop.",
-        "text": "Razorpay, with refunds tracked end to end."
+        "text": "Razorpay, with a refund marked done only once it has actually gone through."
       },
       {
         "kind": "stat",
         "size": "wide",
         "icon": "gift",
-        "title": "Bring a friend, earn ₹{referral}.",
-        "text": "Lands when their first order does.",
+        "title": "Bring a friend, save ₹{referral}.",
+        "text": "Off your next order, once their first one lands.",
         "stat": "₹{referral}",
         "statLabel": "For every friend who orders"
       }
@@ -175,7 +179,11 @@
   "how": {
     "eyebrow": "How it works",
     "title": "Four taps from shelf to doorstep.",
-    "accent": "shelf to doorstep."
+    "accent": "shelf to doorstep.",
+    "cta": {
+      "label": "Follow an order, end to end",
+      "href": "/how-it-works"
+    }
   },
   "lifecycle": {
     "eyebrow": "Every state, named",
@@ -232,8 +240,8 @@
         "icon": "store",
         "title": "Sell to your own neighbourhood.",
         "cta": {
-          "label": "See vendor plans",
-          "href": "/pricing"
+          "label": "Start selling",
+          "href": "/sell"
         }
       },
       {
@@ -243,25 +251,34 @@
         "title": "Know what a job pays before you take it.",
         "cta": {
           "label": "Ride with us",
-          "href": "/for-business#partners"
+          "href": "/deliver"
         }
       }
     ]
   },
   "riders": {
     "eyebrow": "Ride with us",
-    "title": "What a delivery actually pays.",
-    "accent": "actually pays.",
-    "intro": "₹{riderBase} a job before distance, ₹{riderPerKm} a kilometre on top, and never less than ₹{riderMin} however short the drop. The whole delivery fee reaches the rider, whoever funded it.",
+    "title": "The delivery fee is the rider's.",
+    "accent": "the rider's.",
+    "intro": "{base} for any delivery up to {freeKm} km, about ₹{perKm} for every kilometre past it, and all of it reaches the rider — whichever side paid for it.",
     "figures": [
-      "Base, every job",
-      "Per kilometre",
-      "Floor, whatever happens"
+      "Any trip up to {freeKm} km",
+      "Each km beyond it",
+      "Of the fee, the rider's"
+    ],
+    "figureValues": [
+      "{base}",
+      "₹{perKm}",
+      "100%"
     ],
     "deliveries": "Deliveries",
     "rating": "Rating",
     "documentsTitle": "What you bring",
-    "documentsNote": "Checked against the issuing authority before your first job, not after.",
+    "documentsNote": "Depends on what you ride — a bicycle needs no licence or RC. Checked before your first job, not after.",
+    "documentsCta": {
+      "label": "See the list for your vehicle",
+      "href": "/deliver#documents"
+    },
     "caveatTitle": "A bad week is a bad week",
     "caveatText": "A rating that dips below a tier's line does not demote you overnight — no nightly job takes a badge away. Where it matters, a person looks at it."
   },
@@ -276,7 +293,7 @@
     "eyebrow": "The app",
     "title": "Get the {name} app.",
     "accent": "app.",
-    "text": "{slogan}. Track every order to your door, and earn ₹{referral} for each friend who orders.",
+    "text": "{slogan}. Track every order to your door, and take ₹{referral} off your next order for each friend who orders.",
     "points": [
       {
         "icon": "truck",
@@ -313,7 +330,11 @@
   "faq": {
     "eyebrow": "Questions",
     "title": "Asked before you order.",
-    "accent": "before you order."
+    "accent": "before you order.",
+    "cta": {
+      "label": "All questions",
+      "href": "/help"
+    }
   },
   "testimonials": {
     "eyebrow": "What customers say",

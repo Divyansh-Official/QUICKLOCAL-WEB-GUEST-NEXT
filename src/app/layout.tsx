@@ -16,7 +16,7 @@ import TabBar from '@/components/layout/TabBar';
 import HeadScript from '@/components/motion/HeadScript';
 import MorphProvider from '@/components/motion/MorphProvider';
 import ScrollProgress from '@/components/motion/ScrollProgress';
-import { allNav, contact, fill, footerColumns, info, isEnabled, mailHref, nav, site, siteUrl, telHref, ui } from '@/lib/data';
+import { contact, fill, footerColumns, info, isEnabled, mailHref, menuNav, nav, secondaryNav, site, siteUrl, telHref, ui } from '@/lib/data';
 
 /* The variable font: one file, and every weight between 200 and 800 —
    headings sit at weights a static family does not ship. */
@@ -96,7 +96,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <SiteHeader
           items={nav}
-          all={allNav}
+          all={menuNav}
+          secondary={secondaryNav}
           cta={ui.header.cta}
           contact={contactProps}
           showTheme={showTheme}

@@ -18,10 +18,15 @@
     "perMonth": "/month",
     "free": "Free",
     "platformFee": "platform fee",
-    "explore": "Explore"
+    "explore": "Explore",
+    "more": "More"
   },
   "header": {
-    "cta": { "label": "Get the app", "href": "/get-the-app", "icon": "download" },
+    "cta": {
+      "label": "Get the app",
+      "href": "/get-the-app",
+      "icon": "download"
+    },
     "ctaShort": "Get app"
   },
   "theme": {
@@ -34,18 +39,43 @@
   "tabBar": {
     "label": "Quick navigation",
     "items": [
-      { "label": "Home", "href": "/", "icon": "home" },
-      { "label": "Shops", "href": "/services", "icon": "basket" },
-      { "label": "Pricing", "href": "/pricing", "icon": "tag" },
-      { "label": "Get app", "href": "/get-the-app", "icon": "download", "primary": true }
+      {
+        "label": "Home",
+        "href": "/",
+        "icon": "home"
+      },
+      {
+        "label": "Shops",
+        "href": "/services",
+        "icon": "basket"
+      },
+      {
+        "label": "How",
+        "href": "/how-it-works",
+        "icon": "route"
+      },
+      {
+        "label": "Help",
+        "href": "/help",
+        "icon": "info"
+      },
+      {
+        "label": "Get app",
+        "href": "/get-the-app",
+        "icon": "download",
+        "primary": true
+      }
     ]
   },
   "footer": {
-    "blurb": "Connecting {city} with trusted local shops and reliable riders — inside {radius} km, within {hours} hours.",
+    "blurb": "Connecting {city} with trusted local shops and fairly paid riders — inside {radius} km, within {hours} hours.",
     "contactHeading": "Contact",
     "copyright": "© {year} {name}. All rights reserved.",
     "madeFor": "Made with care for local communities",
-    "cta": { "label": "Get the app", "href": "/get-the-app" },
+    "cta": {
+      "label": "Get the app",
+      "href": "/get-the-app"
+    },
     "ctaTitle": "Your street, delivered.",
     "ctaText": "Shops you already trust, riders paid fairly, and every fee written down."
   },
@@ -59,8 +89,14 @@
     "title": "This street isn't on our map.",
     "accent": "on our map.",
     "body": "The page you asked for does not exist — perhaps it moved, perhaps it was never here. Everything else is a tap away.",
-    "cta": { "label": "Back to home", "href": "/" },
-    "secondary": { "label": "Browse categories", "href": "/services" }
+    "cta": {
+      "label": "Back to home",
+      "href": "/"
+    },
+    "secondary": {
+      "label": "Browse categories",
+      "href": "/services"
+    }
   },
   "error": {
     "eyebrow": "Something went wrong",

@@ -1,12 +1,146 @@
 {
-  "_source": "Answers drawn only from rules the platform enforces (app_config, fees.json, lifecycle.json, riders.json). If a rule changes there, change the answer here.",
+  "_source": "Answers drawn only from rules the platform enforces — app_config, fees.json, plans.json, riders.json, lifecycle.json and the services each of those names. If a rule changes there, change the answer here.",
+  "_fields": "audience picks the Help Centre tab (customers, shops, riders, general). home: true also puts the question on the home page.",
+  "audiences": [
+    {
+      "key": "all",
+      "label": "All",
+      "icon": "users"
+    },
+    {
+      "key": "customers",
+      "label": "Ordering",
+      "icon": "basket"
+    },
+    {
+      "key": "shops",
+      "label": "Selling",
+      "icon": "store"
+    },
+    {
+      "key": "riders",
+      "label": "Delivering",
+      "icon": "bike"
+    },
+    {
+      "key": "general",
+      "label": "QuickLocal",
+      "icon": "info"
+    }
+  ],
   "items": [
-    { "q": "Where does QuickLocal deliver?", "a": "{city} for now. Shops deliver within {radius} km by default, and up to {maxRadius} km where a vendor chooses to cover it. We would rather start in one city properly than in fifteen badly." },
-    { "q": "How long does an order take?", "a": "Never more than {hours} hours — that ceiling is enforced by the platform on every order. Most are much quicker, because the shop is a few streets away." },
-    { "q": "What does delivery cost?", "a": "A flat {base} base covers the first {freeKm} km. Beyond that, a per-km charge derived from the day's fuel price is added. Cross the shop's free-delivery threshold and the shop pays the base instead of you. The estimator on the home page works out any order to the rupee." },
-    { "q": "What happens if something goes wrong?", "a": "An order can be cancelled before pickup and anything authorised is released. Refunds are raised against the original payment with a reference you can quote, and complaints are escalated rather than closed quietly." },
-    { "q": "How much does a shop pay to sell?", "a": "Listing is free for up to 25 products. On top of the monthly plan, the platform takes {lowestFee}–3% of each sale depending on the category — the lowest is grocery." },
-    { "q": "How are riders paid?", "a": "₹{riderBase} a job, ₹{riderPerKm} a kilometre on top, and never less than ₹{riderMin} per order. The whole delivery fee reaches the rider whoever funded it, paid out weekly to their bank." },
-    { "q": "When will the apps be in the stores?", "a": "Soon. The listings are not published yet, which is why the store buttons say so instead of linking to a page that does not exist. Leave your email at the foot of the home page and we will tell you the day they land." }
+    {
+      "audience": "customers",
+      "q": "Where does QuickLocal deliver?",
+      "a": "{city} for now. You see shops within {radius} km by default, and you can widen that to 8, 12, 16 or {maxRadius} km for each saved address. Nothing beyond {maxRadius} km can be ordered, so search never shows you a shop that cannot reach you.",
+      "home": true
+    },
+    {
+      "audience": "customers",
+      "q": "How long does an order take?",
+      "a": "Never more than {hours} hours — that ceiling is set on every order, and the platform checks for late ones every five minutes. Most arrive much sooner, because the shop is a few streets away.",
+      "home": true
+    },
+    {
+      "audience": "customers",
+      "q": "What does delivery cost?",
+      "a": "A flat {base} base covers the first {freeKm} km. Beyond that, a per-km charge derived from the day's fuel price is added. Cross the shop's free-delivery threshold and the shop pays the base instead of you. The estimator on the home page works out any order to the rupee.",
+      "home": true
+    },
+    {
+      "audience": "customers",
+      "q": "Do I pay a platform fee?",
+      "a": "No. The platform fee is a percentage of the sale that the shop pays — {lowestFee}% to {highestFee}% depending on the aisle. You pay for your basket and your share of delivery, and nothing else.",
+      "home": true
+    },
+    {
+      "audience": "customers",
+      "q": "Which aisles can I shop?",
+      "a": "{aisleList}. Each is a fixed category in the app, with its own look and its own platform fee for the shop."
+    },
+    {
+      "audience": "customers",
+      "q": "Why does the rider ask me for a code?",
+      "a": "An order is only marked delivered when you give the rider the one-time code from your app. Five wrong attempts lock it for fifteen minutes, so it cannot be guessed — and nothing is ever delivered on a tap."
+    },
+    {
+      "audience": "customers",
+      "q": "What if no rider takes my order?",
+      "a": "If no rider is assigned within fifteen minutes, the order is cancelled and refunded automatically. You are never left waiting on a job nobody accepted."
+    },
+    {
+      "audience": "customers",
+      "q": "What happens if something goes wrong?",
+      "a": "An order can be cancelled before pickup and anything authorised is released. Refunds are raised against the original payment and marked done only once Razorpay has accepted them, and complaints are escalated rather than closed quietly.",
+      "home": true
+    },
+    {
+      "audience": "customers",
+      "q": "What if I do not finish paying?",
+      "a": "An order that is never paid is cancelled after thirty minutes and its stock goes back on the shelf, so it holds nothing up for anyone."
+    },
+    {
+      "audience": "customers",
+      "q": "How does Refer & Earn work?",
+      "a": "Share your code. When a friend's first order qualifies, ₹{referral} comes off your next one. The amount is set by the platform, so it is the same for everybody."
+    },
+    {
+      "audience": "shops",
+      "q": "How much does a shop pay to sell?",
+      "a": "Listing is free for up to {freeProducts} products. Starter is ₹{starterPrice} a month for {starterProducts}, Growth ₹{growthPrice} for {growthProducts}, and Pro ₹{proPrice} for unlimited. On top, the platform takes {lowestFee}–{highestFee}% of each sale, depending on the category.",
+      "home": true
+    },
+    {
+      "audience": "shops",
+      "q": "What is a free-delivery threshold?",
+      "a": "The basket size above which you cover the {base} delivery base, so the customer sees free delivery. It is {threshold} until you set your own, per category — and the planner warns you when a threshold would give away more than {absorbCeiling}% of a small order."
+    },
+    {
+      "audience": "shops",
+      "q": "When does a shop get paid?",
+      "a": "After every delivered order, straight to your bank or UPI: the basket, less the platform fee, less the delivery base on orders you made free. Never before the order is delivered."
+    },
+    {
+      "audience": "shops",
+      "q": "What documents does a shop need?",
+      "a": "Aadhaar, PAN, bank proof, a shop licence and two photographs of the shop — outside and inside. A bank account or UPI id and a finished profile come first, and the app names exactly what is still missing."
+    },
+    {
+      "audience": "riders",
+      "q": "How are riders paid?",
+      "a": "You are paid the order's whole delivery fee: {base} for any trip up to {freeKm} km, plus about ₹{perKm} for every kilometre beyond it at the day's fuel price. The platform takes none of it, and it is paid after every delivered order.",
+      "home": true
+    },
+    {
+      "audience": "riders",
+      "q": "Can I deliver on a bicycle?",
+      "a": "Yes. A bicycle needs no licence, registration or number plate — just your Aadhaar, PAN, bank proof and three photographs of the bike. A motorbike, scooter, auto or CNG auto also needs a driving licence and its registration certificate."
+    },
+    {
+      "audience": "riders",
+      "q": "How do the tiers work?",
+      "a": "Bronze from your first day; Silver at 50 deliveries and 3.5 stars; Gold at 200 and 4.0; Platinum at 500 and 4.5. Tiers only ever move up on their own — a dip in rating never demotes you overnight."
+    },
+    {
+      "audience": "riders",
+      "q": "Can I take two jobs at once?",
+      "a": "No — one active delivery at a time, so a customer's order is never riding around behind somebody else's."
+    },
+    {
+      "audience": "riders",
+      "q": "What if I cannot collect an order in time?",
+      "a": "Once you accept, you have thirty minutes to collect. After that the job is released to another rider rather than left waiting, and you are free to take the next one."
+    },
+    {
+      "audience": "general",
+      "q": "When will the apps be in the stores?",
+      "a": "Soon. The listings are not published yet, which is why the store buttons say so instead of linking to a page that does not exist. Leave your email at the foot of the home page and we will tell you the day they land.",
+      "home": true
+    },
+    {
+      "audience": "general",
+      "q": "Why are there no customer numbers on this site?",
+      "a": "Because we are early, and a figure like 50,000 customers would be a claim our own database contradicts. Every number here is a rule the platform enforces, not a boast."
+    }
   ]
 }

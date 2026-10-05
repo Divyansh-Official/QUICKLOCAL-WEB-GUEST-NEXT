@@ -24,6 +24,8 @@ export type MenuProps = {
   onClose: () => void;
   toggleRef: RefObject<HTMLButtonElement | null>;
   items: { label: string; href: string }[];
+  /** Smaller links under the main list — pages a visitor looks for, not browses to. */
+  secondary: { label: string; href: string }[];
   cta: { label: string; href: string; icon?: string };
   contact: { phone: string; phoneHref: string; email: string; emailHref: string; address: string };
   labels: {
@@ -47,7 +49,7 @@ function setOutsideInert(dialog: HTMLDialogElement | null, inert: boolean) {
   });
 }
 
-export default function MobileMenu({ id, open, onClose, toggleRef, items, cta, contact, labels, isActive, pathname, showTheme }: MenuProps) {
+export default function MobileMenu({ id, open, onClose, toggleRef, items, secondary, cta, contact, labels, isActive, pathname, showTheme }: MenuProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const firstPath = useRef(pathname);
 
@@ -119,22 +121,39 @@ export default function MobileMenu({ id, open, onClose, toggleRef, items, cta, c
                 );
               })}
             </ul>
+            {secondary.length ? (
+              <ul className="menu-item mt-4 grid grid-cols-2 gap-x-4 gap-y-1" style={{ ['--i' as string]: items.length }}>
+                {secondary.map(item => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      onClick={onClose}
+                      aria-current={isActive(item.href) ? 'page' : undefined}
+                      className={`flex min-h-11 items-center text-[16px] font-bold tracking-[-0.015em] transition-colors ${
+                        isActive(item.href) ? 'text-primary-ink' : 'text-fg-2 hover:text-fg'
+                      }`}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </nav>
 
-          <div className="menu-item mt-7" style={{ ['--i' as string]: items.length }}>
+          <div className="menu-item mt-7" style={{ ['--i' as string]: items.length + 1 }}>
             <Button href={cta.href} size="lg" block iconStart={cta.icon}>
               {cta.label}
             </Button>
           </div>
 
           {showTheme ? (
-            <div className="menu-item mt-6 flex flex-col items-start gap-3 min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between" style={{ ['--i' as string]: items.length + 1 }}>
+            <div className="menu-item mt-6 flex flex-col items-start gap-3 min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between" style={{ ['--i' as string]: items.length + 2 }}>
               <span className="text-[14px] font-bold text-fg-2">{labels.theme.label}</span>
               <ThemeSegmented labels={labels.theme} />
             </div>
           ) : null}
 
-          <div className="menu-item mt-6 space-y-2.5 border-t border-hair pt-5 text-[15px] text-fg-2" style={{ ['--i' as string]: items.length + 2 }}>
+          <div className="menu-item mt-6 space-y-2.5 border-t border-hair pt-5 text-[15px] text-fg-2" style={{ ['--i' as string]: items.length + 3 }}>
             <a href={contact.phoneHref} className="flex items-center gap-3 hover:text-fg">
               <Icon name="phone" size={16} className="text-primary" />
               {contact.phone}

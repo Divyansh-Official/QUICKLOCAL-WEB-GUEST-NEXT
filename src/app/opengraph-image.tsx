@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
-import { contact, fees, info, inr } from '@/lib/data';
+import { contact, fees, info, inr, tokens } from '@/lib/data';
 
 /**
  * The link preview for WhatsApp, iMessage, X and the rest: the promise, the
@@ -25,7 +25,7 @@ export default async function OpenGraphImage() {
     `${info.delivery.defaultRadiusKm} km radius`,
     `${info.delivery.maxHours} hrs, maximum`,
     `${inr(fees.baseFeeInr)} base delivery`,
-    `From ${info.fees.lowestCategoryFeePercent}% platform fee`,
+    `From ${tokens.lowestFee}% platform fee`,
   ];
 
   return new ImageResponse(

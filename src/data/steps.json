@@ -1,5 +1,5 @@
 {
-  "_source": "The real order lifecycle — these are the OrderStatus values the backend moves an order through: PLACED → VENDOR_ACCEPTED → DELIVERY_ASSIGNED / OUT_FOR_DELIVERY → DELIVERED.",
+  "_source": "The real order lifecycle — OrderStatus values the backend moves an order through: PLACED → VENDOR_ACCEPTED → DELIVERY_ASSIGNED → DELIVERY_PICKED → IN_TRANSIT → DELIVERED. Payment is online: cash on delivery is a feature flag (feature.payment.cod_enabled) seeded off.",
   "items": [
     {
       "n": 1,
@@ -10,7 +10,7 @@
     {
       "n": 2,
       "title": "Place your order",
-      "body": "Pay securely, or on delivery where the vendor allows it.",
+      "body": "Pay securely online through Razorpay, with every fee shown before you do.",
       "status": "PLACED"
     },
     {
@@ -23,7 +23,7 @@
       "n": 4,
       "title": "A rider brings it",
       "body": "Assigned to a partner near the shop and tracked to your door.",
-      "status": "OUT_FOR_DELIVERY"
+      "status": "IN_TRANSIT"
     }
   ]
 }

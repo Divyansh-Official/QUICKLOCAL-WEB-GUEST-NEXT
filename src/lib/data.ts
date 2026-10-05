@@ -38,6 +38,7 @@ import stepsJson from '@/data/steps.json';
 import testimonialsJson from '@/data/testimonials.json';
 import trustJson from '@/data/trust.json';
 import uiJson from '@/data/ui.json';
+import { deliveryFee, perKmRate } from '@/lib/fees';
 
 // ── shapes ──────────────────────────────────────────────────────────────────
 
@@ -76,14 +77,10 @@ export const contact = contactJson;
 export const fees = feesJson;
 export const riders = ridersJson;
 export const lifecycle: { happy: OrderStep[]; unhappy: OrderStep[] } = lifecycleJson;
-export const features = featuresJson;
-export const about = aboutJson;
 export const site = siteJson;
 export const ui = uiJson;
 export const home = homeJson;
 export const pages = pagesJson;
-export const trust = trustJson.items;
-export const stats = statsJson.items;
 export const steps = [...stepsJson.items].sort((a, b) => a.n - b.n);
 export const plans: Plan[] = plansJson.items;
 export const featureLabels: Record<string, string> = plansJson.featureLabels;
@@ -93,7 +90,6 @@ export const appStores: { android: StoreListing; ios: StoreListing } = {
   android: appJson.android,
   ios: appJson.ios,
 };
-export const appRoles = appJson.roles;
 
 export const categories: Category[] = [...categoriesJson.items].sort(
   (a, b) => a.displayOrder - b.displayOrder,
@@ -107,6 +103,9 @@ export const getCategory = (slug: string) => categories.find(c => c.slug === slu
  */
 export const nav: Link[] = navJson.primary.filter(item => item.href !== '/' && item.href !== uiJson.header.cta.href);
 export const allNav: Link[] = navJson.primary;
+/** The phone menu: every primary page, less the one its own button opens. */
+export const menuNav: Link[] = navJson.primary.filter(item => item.href !== uiJson.header.cta.href);
+export const secondaryNav: Link[] = navJson.secondary;
 export const footerColumns: FooterColumn[] = navJson.footer;
 
 export const isEnabled = (flag: keyof typeof siteJson.features) => siteJson.features[flag] !== false;
@@ -128,7 +127,14 @@ export const mailHref = (email: string) => `mailto:${email}`;
 
 // ── copy tokens ─────────────────────────────────────────────────────────────
 
-const freePlan = plans.find(p => p.priceMonthly === 0);
+const plan = (name: string) => plans.find(p => p.name === name);
+const feesByCategory = categories.map(c => c.platformFeePercent);
+const lowestFee = Math.min(...feesByCategory);
+const highestFee = Math.max(...feesByCategory);
+const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+const aisleWord = NUMBER_WORDS[categories.length] ?? String(categories.length);
+const names = categories.map(c => c.name);
+const sample = deliveryFee(fees, 6);
 
 /** Every {token} a sentence in the JSON may use. */
 export const tokens: Record<string, string> = {
@@ -144,21 +150,32 @@ export const tokens: Record<string, string> = {
   radius: String(info.delivery.defaultRadiusKm),
   maxRadius: String(info.delivery.maxRadiusKm),
   hours: String(info.delivery.maxHours),
-  minFee: String(info.delivery.minFeeInr),
-  platformFee: String(info.fees.platformFeeInr),
-  lowestFee: String(info.fees.lowestCategoryFeePercent),
+  lowestFee: feePercent(lowestFee).replace('%', ''),
+  highestFee: feePercent(highestFee).replace('%', ''),
+  bestKeep: String(100 - lowestFee),
+  aisles: aisleWord,
+  Aisles: aisleWord.charAt(0).toUpperCase() + aisleWord.slice(1),
+  aisleList: `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`,
   referral: String(info.referral.rewardInr),
-  riderBase: String(riders.payout.baseInr),
-  riderPerKm: String(riders.payout.perKmInr),
-  riderMin: String(riders.payout.minimumInr),
-  twoKm: String(Math.max(riders.payout.minimumInr, riders.payout.baseInr + 2 * riders.payout.perKmInr)),
   freeKm: String(fees.freeRangeKm),
   base: inr(fees.baseFeeInr),
+  baseRaw: String(fees.baseFeeInr),
+  perKm: perKmRate(fees).toFixed(2),
+  sampleKm: '6',
+  sampleFee: inr(sample.total),
+  sampleExtra: inr(sample.extra),
+  sampleExtraKm: String(sample.extraKm),
   threshold: inr(fees.defaultFreeDeliveryThresholdInr),
+  absorbCeiling: String(fees.absorbCeilingPercent),
   petrol: inr(fees.petrolPriceInrPerL),
   mileage: String(fees.bikeMileageKmpl),
   multiplier: String(fees.driverMultiplier),
-  freeProducts: String(freePlan?.maxProducts ?? 25),
+  freeProducts: String(plan('FREE')?.maxProducts ?? ''),
+  starterPrice: String(plan('STARTER')?.priceMonthly ?? ''),
+  starterProducts: String(plan('STARTER')?.maxProducts ?? ''),
+  growthPrice: String(plan('GROWTH')?.priceMonthly ?? ''),
+  growthProducts: String(plan('GROWTH')?.maxProducts ?? ''),
+  proPrice: String(plan('PRO')?.priceMonthly ?? ''),
   year: String(new Date().getFullYear()),
 };
 
@@ -187,7 +204,19 @@ export function fillDeep<T>(node: T, extra: Record<string, string | number> = {}
   return node;
 }
 
-export const faq = fillDeep(faqJson.items);
+// ── filled copy (needs the tokens above) ────────────────────────────────────
+
+export type FaqItem = { audience: string; q: string; a: string; home?: boolean };
+export const faqAll: FaqItem[] = fillDeep(faqJson.items);
+export const faqAudiences = faqJson.audiences;
+/** The questions the home page asks; the Help Centre has every one. */
+export const faq = faqAll.filter(item => item.home);
+
+export const features = fillDeep(featuresJson);
+export const about = fillDeep(aboutJson);
+export const appRoles = fillDeep(appJson.roles);
+export const trust = fillDeep(trustJson.items);
+export const stats = fillDeep(statsJson.items);
 
 // ── urls ────────────────────────────────────────────────────────────────────
 

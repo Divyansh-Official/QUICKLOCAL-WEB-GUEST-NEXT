@@ -57,12 +57,12 @@ export default function HomeHero({
           </Enter>
           <Enter delay={340} className="mt-10">
             <p className="t-caption font-bold uppercase tracking-[0.14em]">{hero.quickLabel}</p>
-            <ul className="mt-3 flex flex-wrap justify-center gap-2 lg:justify-start">
+            <ul className="mt-3 flex flex-wrap justify-center gap-2 lg:grid lg:w-max lg:grid-cols-3 lg:justify-start">
               {categories.map(c => (
                 <li key={c.slug}>
                   <Link
                     href={`/services/${c.slug}`}
-                    className="group glass inline-flex h-9 items-center gap-1.5 rounded-full pl-1.5 pr-3.5 text-[13.5px] font-bold text-fg transition-transform duration-500 ease-[var(--ease-ios)] hover:-translate-y-0.5">
+                    className="group glass inline-flex h-9 items-center gap-1.5 rounded-full pl-1.5 pr-3.5 text-[13.5px] font-bold text-fg lg:w-full transition-transform duration-500 ease-[var(--ease-ios)] hover:-translate-y-0.5">
                     <span className="grid h-6 w-6 place-items-center rounded-full bg-primary-soft text-primary-ink">
                       <Icon name={c.icon} size={14} strokeWidth={1.9} effect="bounce" />
                     </span>

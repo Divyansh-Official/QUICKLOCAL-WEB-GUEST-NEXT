@@ -75,7 +75,7 @@ export default function HomePage() {
         section={h.audiences}
         tabs={h.audiences.tabs.map(t => ({ ...t, items: features[t.key as keyof typeof features] as string[] }))}
       />
-      <RiderTiers section={h.riders} payout={riders.payout} tiers={riders.tiers} documents={riders.documents} />
+      <RiderTiers section={h.riders} tiers={riders.tiers} documents={riders.documents.everyone.filter(d => !d.type.startsWith('VEHICLE_'))} />
       <AboutSplit eyebrow={h.about.eyebrow} heading={about.heading} accent="local communities" paragraphs={about.paragraphs} cta={h.about.cta} />
       <Testimonials section={h.testimonials} items={testimonials} />
       <AppBand

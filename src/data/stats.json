@@ -3,27 +3,27 @@
   "_why": "The mock quotes 50K+ customers, 5K+ vendors, 25K+ daily orders and 15+ cities. None of those exist — the platform has a handful of test records — and printing them would be a claim the database contradicts. These four are facts the platform genuinely commits to, and they fill the same band without inventing a customer.",
   "items": [
     {
-      "value": "5 km",
+      "value": "{radius} km",
       "label": "Default delivery radius",
-      "detail": "Up to 15 km where a vendor covers it",
+      "detail": "Widen it to {maxRadius} km, four kilometres at a time",
       "icon": "radius"
     },
     {
-      "value": "3 hrs",
+      "value": "{hours} hrs",
       "label": "Maximum delivery window",
       "detail": "Every order, enforced by the platform",
       "icon": "clock"
     },
     {
-      "value": "₹15",
-      "label": "Minimum delivery fee",
-      "detail": "Riders earn ₹30 an order at minimum",
+      "value": "{base}",
+      "label": "Delivery, first {freeKm} km",
+      "detail": "All of it goes to the rider",
       "icon": "wallet"
     },
     {
-      "value": "2%",
+      "value": "{lowestFee}%",
       "label": "Lowest platform fee",
-      "detail": "On grocery — the rest cap at 3%",
+      "detail": "Paid by the shop — no aisle above {highestFee}%",
       "icon": "tag"
     }
   ]

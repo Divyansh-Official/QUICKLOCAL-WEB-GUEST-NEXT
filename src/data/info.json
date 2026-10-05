@@ -1,5 +1,5 @@
 {
-  "_source": "app_config table, seeded by V21__seed_app_config.sql and V25__audit_fixes_config_and_index.sql. Every value below is the config_value the backend actually reads at runtime.",
+  "_source": "app_config (V21, V25) and the services that read it. Where code now decides a value instead of app_config, the note on that value names the code.",
   "name": "QuickLocal",
   "tagline": "Your Neighbourhood, Delivered Fast",
   "slogan": "Fresh from local shops to your doorstep",
@@ -10,25 +10,21 @@
   },
   "intro": "QuickLocal connects you with trusted local vendors, fast deliveries, and reliable services — all in one place.",
   "delivery": {
-    "_source": "app_config: app.default_delivery_radius, app.max_delivery_radius, app.max_delivery_time_hours, app.min_delivery_fee",
-    "defaultRadiusKm": 5,
-    "maxRadiusKm": 15,
-    "maxHours": 3,
-    "minFeeInr": 15
-  },
-  "fees": {
-    "_source": "app_config: app.platform_fee (flat, per order) and categories.platform_fee_percent (per category, V34)",
-    "platformFeeInr": 10,
-    "lowestCategoryFeePercent": 2
+    "_source": "SearchService / HomeFeedService: the customer's browse radius defaults to 4 km and is clamped to 4–20 km; V112__address_delivery_radius.sql stores the customer's own choice per address as one of 4/8/12/16/20; checkout refuses anything beyond 20 km (fees.json maxDistanceKm). app.max_delivery_time_hours is the 3-hour ceiling.",
+    "defaultRadiusKm": 4,
+    "maxRadiusKm": 20,
+    "radiusStepsKm": [
+      4,
+      8,
+      12,
+      16,
+      20
+    ],
+    "maxHours": 3
   },
   "referral": {
-    "_source": "app_config: referral.reward_amount_inr",
+    "_source": "app_config: referral.reward_amount_inr (V25), read live by ReferralService. Applied as a discount on the referrer's next order once the friend's first order qualifies.",
     "rewardInr": 50
   },
-  "riderPayout": {
-    "_source": "app_config: delivery.base_payout_inr, delivery.payout_per_km_inr, delivery.min_payout_inr",
-    "baseInr": 20,
-    "perKmInr": 5,
-    "minimumInr": 30
-  }
+  "_removed": "app.min_delivery_fee (₹15) and app.platform_fee (₹10 flat) are still rows in app_config, but no code reads either any more: delivery starts at the ₹30 base in fees.json, and the platform fee is a per-category percentage charged to the shop — the customer never pays one. The rider fallback payout (20 / 5 / 30) is explained in fees.json _rider."
 }
