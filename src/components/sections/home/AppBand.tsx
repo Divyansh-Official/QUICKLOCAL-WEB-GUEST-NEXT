@@ -22,7 +22,7 @@ export default function AppBand({
     <section className="tone-base section-tight">
       <div className="shell">
         <Reveal>
-          <div className="tone-night relative overflow-hidden rounded-[var(--radius-panel)] px-5 py-14 xs:px-7 sm:px-12 sm:py-16 lg:px-16">
+          <div className="tone-night relative overflow-hidden rounded-[var(--radius-panel)] px-4 py-6 xs:px-5 sm:px-12 sm:py-16 lg:px-16">
             <Aurora variant="night" />
             <div className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
               <div>
@@ -31,7 +31,7 @@ export default function AppBand({
                   <AccentText text={copy.title} accent={copy.accent} />
                 </h2>
                 <p className="t-lead mt-5 max-w-lg">{copy.text}</p>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-8 flex flex-wrap gap-2 sm:gap-3">
                   <StoreBadge listing={stores.android} icon="play" top={labels.googleTop} soon={labels.soon} soonTitle={labels.soonTitle} />
                   <StoreBadge listing={stores.ios} icon="apple" top={labels.appleTop} soon={labels.soon} soonTitle={labels.soonTitle} />
                 </div>
@@ -43,17 +43,17 @@ export default function AppBand({
                 </div>
               </div>
               <div className="group grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center lg:grid-cols-1 lg:justify-items-center">
-                <div className="flex justify-center">
+                <div className="flex justify-center max-sm:hidden">
                   <Slab3D icon="download" hue="tangerine" size={200} phoneSize={120} />
                 </div>
-                <ul className="grid w-full gap-3">
+                <ul className="grid w-full grid-cols-2 gap-2 sm:grid-cols-1 sm:gap-3">
                   {copy.points.map((p, i) => (
                     <Reveal as="li" key={p.text} index={i}>
-                      <div className="glass flex items-center gap-3.5 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3.5">
+                      <div className="glass flex h-full flex-col items-start gap-2 rounded-2xl p-3 sm:flex-row sm:items-center sm:gap-3.5 sm:px-4 sm:py-3.5">
                         <span className="icon-tile" style={{ ['--s' as string]: '38px' }}>
                           <Icon name={p.icon} size={18} strokeWidth={1.9} />
                         </span>
-                        <span className="text-[15px] font-bold text-fg">{p.text}</span>
+                        <span className="text-[12.5px] font-bold leading-snug text-fg sm:text-[15px]">{p.text}</span>
                       </div>
                     </Reveal>
                   ))}

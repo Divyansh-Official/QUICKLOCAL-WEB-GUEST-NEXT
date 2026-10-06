@@ -1,5 +1,17 @@
 {
   "_source": "Copy for the home page, section by section, top to bottom. Figures are {tokens}, never typed numbers, so they follow info.json, fees.json and riders.json.",
+  "jump": [
+    { "id": "shops", "label": "Shops" },
+    { "id": "events", "label": "Events" },
+    { "id": "why", "label": "Why us" },
+    { "id": "how", "label": "How it works" },
+    { "id": "tracking", "label": "Tracking" },
+    { "id": "costs", "label": "Costs" },
+    { "id": "for-you", "label": "For you" },
+    { "id": "riders", "label": "Riders" },
+    { "id": "app", "label": "The app" },
+    { "id": "faq", "label": "FAQ" }
+  ],
   "hero": {
     "pill": "Now delivering in {city}",
     "pillDetail": "within {radius} km",

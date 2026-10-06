@@ -67,7 +67,7 @@ export default function OrderLifecycle({
         <div className="m-rail m-rail-wide mx-auto mt-14 grid max-w-[1080px] gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-5">
           <Reveal className="glass glass-raised rounded-[var(--radius-panel)] p-4 sm:p-6">
             {/* The progress rail across the top: it fills as the order moves. */}
-            <div className="flex items-center gap-3 px-2 pb-5 pt-1">
+            <div className="flex items-center gap-3 px-2 pb-3 pt-1 sm:pb-5">
               <span className="relative h-1.5 flex-1 overflow-hidden rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]">
                 <span
                   className="absolute inset-y-0 left-0 origin-left rounded-full bg-gradient-to-r from-[#e0721a] to-[#f2a53c] transition-[width] duration-700 ease-[var(--ease-out)]"
@@ -79,7 +79,7 @@ export default function OrderLifecycle({
               </span>
             </div>
             <ol className="relative">
-              <span aria-hidden="true" className="absolute bottom-6 left-[27px] top-6 w-[2px] rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]" />
+              <span aria-hidden="true" className="absolute bottom-6 left-[23px] top-6 w-[2px] sm:left-[27px] rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]" />
               {happy.map((step, i) => {
                 const done = i < active;
                 const now = i === active;
@@ -92,17 +92,17 @@ export default function OrderLifecycle({
                         setActive(i);
                       }}
                       aria-current={now ? 'step' : undefined}
-                      className={`relative flex w-full items-start gap-4 rounded-[20px] px-2 py-2 text-left transition-colors duration-300 ${
+                      className={`relative flex w-full items-start gap-3 rounded-[16px] px-2 py-1.5 sm:gap-4 sm:rounded-[20px] sm:py-2 text-left transition-colors duration-300 ${
                         now ? 'bg-[color-mix(in_oklab,var(--card)_80%,transparent)] shadow-[var(--rim),var(--edge)]' : 'hover:bg-[color-mix(in_oklab,var(--fg)_4%,transparent)]'
                       }`}>
                       <span
-                        className={`relative mt-0.5 grid h-10 w-10 shrink-0 place-items-center rounded-full transition-colors duration-500 ${
+                        className={`relative mt-0.5 grid h-8 w-8 shrink-0 sm:h-10 sm:w-10 place-items-center rounded-full transition-colors duration-500 ${
                           now ? 'live-ring bg-primary text-white' : done ? 'bg-ok text-white' : 'bg-card text-fg-3 shadow-[inset_0_0_0_1.5px_var(--hair)]'
                         }`}>
                         <Icon name={done ? 'check' : step.icon} size={17} strokeWidth={done ? 2.6 : 1.9} />
                       </span>
-                      <span className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2.5 gap-y-1 pt-2">
-                        <span className={`text-[16px] font-extrabold tracking-[-0.02em] transition-colors duration-300 ${now ? 'text-primary-ink' : done ? 'text-fg' : 'text-fg-2'}`}>
+                      <span className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-0.5 pt-1 sm:gap-x-2.5 sm:gap-y-1 sm:pt-2">
+                        <span className={`text-[14.5px] font-extrabold sm:text-[16px] tracking-[-0.02em] transition-colors duration-300 ${now ? 'text-primary-ink' : done ? 'text-fg' : 'text-fg-2'}`}>
                           {step.label}
                         </span>
                         <code className="rounded-md bg-[color-mix(in_oklab,var(--fg)_6%,transparent)] px-1.5 py-0.5 text-[10.5px] font-bold tracking-wide text-fg-3">
@@ -116,7 +116,7 @@ export default function OrderLifecycle({
             </ol>
             {/* The current step, explained. A fixed height, so the walk never
                 moves anything on the page while somebody is reading. */}
-            <div className="mt-4 rounded-[22px] bg-[color-mix(in_oklab,var(--fg)_4.5%,transparent)] px-5 py-4">
+            <div className="mt-3 rounded-[18px] bg-[color-mix(in_oklab,var(--fg)_4.5%,transparent)] px-4 py-3 sm:mt-4 sm:rounded-[22px] sm:px-5 sm:py-4">
               <div className="grid">
                 {happy.map(step => {
                   const on = step.status === current.status;
@@ -124,7 +124,7 @@ export default function OrderLifecycle({
                     <p
                       key={step.status}
                       aria-hidden={on ? undefined : true}
-                      className={`[grid-area:1/1] text-[15px] leading-relaxed text-fg-2 transition-[opacity,transform] duration-500 ease-[var(--ease-out)] ${
+                      className={`[grid-area:1/1] text-[13.5px] leading-relaxed sm:text-[15px] text-fg-2 transition-[opacity,transform] duration-500 ease-[var(--ease-out)] ${
                         on ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-1.5 opacity-0'
                       }`}>
                       <span className="font-extrabold text-fg">{step.label}. </span>
@@ -133,7 +133,7 @@ export default function OrderLifecycle({
                   );
                 })}
               </div>
-              <p className="mt-2 text-[12.5px] font-semibold text-fg-3">{taken ? '\u00a0' : section.hint}</p>
+              <p className="mt-2 text-[12.5px] font-semibold text-fg-3 max-sm:hidden">{taken ? '\u00a0' : section.hint}</p>
             </div>
           </Reveal>
 
@@ -145,7 +145,7 @@ export default function OrderLifecycle({
             <p className="t-small mt-2">{section.unhappyText}</p>
             <ul className="mt-6 flex flex-1 flex-col gap-3">
               {unhappy.map(step => (
-                <li key={step.status} className="flex items-start gap-3.5 rounded-[20px] bg-[color-mix(in_oklab,var(--card)_70%,transparent)] p-4 shadow-[var(--rim),var(--edge)]">
+                <li key={step.status} className="flex items-start gap-3 rounded-[16px] bg-[color-mix(in_oklab,var(--card)_70%,transparent)] p-3 sm:gap-3.5 sm:rounded-[20px] sm:p-4 shadow-[var(--rim),var(--edge)]">
                   <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] text-fg-2">
                     <Icon name={step.icon} size={16} strokeWidth={1.9} />
                   </span>

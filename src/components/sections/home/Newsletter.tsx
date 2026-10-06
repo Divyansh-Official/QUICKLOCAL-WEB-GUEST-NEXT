@@ -128,7 +128,7 @@ export default function Newsletter({ copy, contactEmail }: { copy: Copy; contact
                   aria-describedby="newsletter-note"
                   disabled={sending}
                   autoComplete="email"
-                  className={`h-[3.35rem] min-w-0 flex-1 rounded-full border-0 bg-card px-5 text-[16px] text-fg outline-none transition-shadow placeholder:text-fg-3 ${
+                  className={`h-[2.85rem] min-w-0 flex-none rounded-full sm:h-[3.35rem] sm:flex-1 border-0 bg-card px-5 text-[16px] text-fg outline-none transition-shadow placeholder:text-fg-3 ${
                     error ? 'shadow-[inset_0_0_0_2px_var(--bad)]' : 'shadow-[inset_0_0_0_1px_var(--hair)] focus:shadow-[inset_0_0_0_2px_var(--primary)]'
                   }`}
                 />

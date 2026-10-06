@@ -19,7 +19,7 @@ export default function Occasions({ items }: { items: { name: string; line: stri
               {o.window}
             </span>
             <span className="my-6 flex justify-center">
-              <Slab3D icon={o.icon} hue={HUE[o.tone] ?? 'tangerine'} size={124} />
+              <Slab3D icon={o.icon} hue={HUE[o.tone] ?? 'tangerine'} size={124} phoneSize={84} />
             </span>
             <span className="text-[20px] font-extrabold tracking-[-0.03em] text-fg">{o.name}</span>
             <span className="mt-1.5 text-[14px] leading-snug text-fg-2">{o.line}</span>

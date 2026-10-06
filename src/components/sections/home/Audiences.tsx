@@ -44,13 +44,13 @@ export default function Audiences({ section, tabs }: { section: { eyebrow: strin
             className="glass glass-raised grid items-center gap-8 overflow-hidden rounded-[var(--radius-panel)] p-6 sm:p-10 md:grid-cols-[minmax(0,1fr)_auto] md:gap-12">
             <div key={tab.key}>
               <h3 className="enter t-title max-w-xl">{tab.title}</h3>
-              <ul className="mt-7 grid gap-x-8 gap-y-3.5 sm:grid-cols-2">
+              <ul className="mt-7 grid gap-x-8 gap-y-2.5 sm:grid-cols-2 sm:gap-y-3.5">
                 {tab.items.map((item, i) => (
                   <li key={item} className="enter flex items-start gap-3" style={{ ['--d' as string]: 60 + i * 50 }}>
-                    <span className="mt-0.5 grid h-6 w-6 flex-none place-items-center rounded-full bg-ok text-white">
+                    <span className="mt-0.5 grid h-5 w-5 flex-none sm:h-6 sm:w-6 place-items-center rounded-full bg-ok text-white">
                       <Icon name="check" size={13} strokeWidth={2.8} />
                     </span>
-                    <span className="text-[15.5px] leading-snug text-fg">{item}</span>
+                    <span className="text-[13.5px] leading-snug text-fg sm:text-[15.5px]">{item}</span>
                   </li>
                 ))}
               </ul>

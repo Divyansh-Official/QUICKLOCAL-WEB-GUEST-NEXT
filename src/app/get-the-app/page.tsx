@@ -59,29 +59,29 @@ export default function GetTheAppPage() {
         <div className="shell m-rail m-rail-wide grid gap-5 lg:grid-cols-2">
           {appRoles.map((r, i) => (
             <Reveal key={r.key} index={i} className="group glass glass-raised relative scroll-mt-28 overflow-hidden rounded-[var(--radius-panel)]" id={r.key}>
-              <div className="flex items-center justify-center bg-[color-mix(in_oklab,var(--fg)_4%,transparent)] py-8">
-                <Slab3D icon={r.icon} hue={HUE[r.key] ?? 'tangerine'} size={180} />
+              <div className="flex items-center justify-center bg-[color-mix(in_oklab,var(--fg)_4%,transparent)] py-3 sm:py-8">
+                <Slab3D icon={r.icon} hue={HUE[r.key] ?? 'tangerine'} size={180} phoneSize={96} />
               </div>
               <div className="p-7 sm:p-9">
                 <h2 className="t-title">{r.title}</h2>
                 <p className="t-body mt-3">{r.blurb}</p>
-                <ul className="mt-6 space-y-3">
+                <ul className="mt-6 space-y-2 sm:space-y-3">
                   {r.highlights.map(h => (
                     <li key={h} className="flex items-start gap-3">
-                      <span className="mt-0.5 grid h-6 w-6 flex-none place-items-center rounded-full bg-ok text-white">
+                      <span className="mt-0.5 grid h-5 w-5 flex-none place-items-center rounded-full bg-ok text-white sm:h-6 sm:w-6">
                         <Icon name="check" size={13} strokeWidth={2.8} />
                       </span>
-                      <span className="text-[15.5px] leading-snug text-fg">{h}</span>
+                      <span className="text-[13.5px] leading-snug text-fg sm:text-[15.5px]">{h}</span>
                     </li>
                   ))}
                 </ul>
                 <h3 className="mt-9 text-[12px] font-extrabold uppercase tracking-[0.14em] text-primary-ink">{copy.onboardingTitle}</h3>
-                <ol className="relative mt-5 space-y-5">
-                  <span aria-hidden="true" className="absolute bottom-3 left-[15px] top-3 w-[2px] rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]" />
+                <ol className="relative mt-5 space-y-3 sm:space-y-5">
+                  <span aria-hidden="true" className="absolute bottom-3 left-[13px] top-3 w-[2px] sm:left-[15px] rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]" />
                   {r.steps.map((s, n) => (
                     <li key={s} className="relative flex items-start gap-4">
-                      <span className="grid h-8 w-8 flex-none place-items-center rounded-full bg-fg text-[13px] font-extrabold text-bg shadow-[0_6px_14px_-6px_rgb(0_0_0/0.5)]">{n + 1}</span>
-                      <span className="pt-1 text-[15px] leading-snug text-fg-2">{s}</span>
+                      <span className="grid h-7 w-7 flex-none place-items-center rounded-full bg-fg text-[12px] sm:h-8 sm:w-8 sm:text-[13px] font-extrabold text-bg shadow-[0_6px_14px_-6px_rgb(0_0_0/0.5)]">{n + 1}</span>
+                      <span className="pt-1 text-[13.5px] leading-snug text-fg-2 sm:text-[15px]">{s}</span>
                     </li>
                   ))}
                 </ol>

@@ -25,7 +25,7 @@ const k = (n: number) => ({ '--k': n }) as CSSProperties;
  */
 export default function EventPhone({ screen, width }: { screen: EventScreen; width?: string }) {
   return (
-    <PhoneShell width={width ?? 'clamp(240px, 26vw, 300px)'} className="ev-phone">
+    <PhoneShell width={width ?? 'clamp(176px, 44vw, 300px)'} className="ev-phone">
       <div className="flex h-full flex-col px-[5.5cqw] pb-[6cqw] pt-[14cqw]">
         <div className="flex items-center gap-[2cqw] text-[3.4cqw] font-bold text-fg-2">
           <Icon name="pin" size={12} strokeWidth={2.2} className="text-primary" />

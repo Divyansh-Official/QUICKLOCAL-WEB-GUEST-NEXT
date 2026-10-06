@@ -20,8 +20,8 @@ export default function EventsTeaser({
             <h2 className="t-display mt-4">
               <AccentText text={copy.title} accent={copy.accent} />
             </h2>
-            <p className="t-lead mt-5 max-w-xl">{copy.text}</p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <p className="t-lead mt-5 max-w-xl max-sm:text-[13.5px]">{copy.text}</p>
+            <div className="mt-8 flex flex-wrap gap-2 sm:gap-3">
               <Button href={copy.cta.href} icon="arrow-right">
                 {copy.cta.label}
               </Button>
@@ -31,7 +31,7 @@ export default function EventsTeaser({
             </div>
           </div>
           <div className="flex justify-center">
-            <EventPhone screen={screen} width="clamp(190px, 50vw, 270px)" />
+            <EventPhone screen={screen} width="clamp(150px, 40vw, 270px)" />
           </div>
         </Reveal>
       </div>

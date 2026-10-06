@@ -159,6 +159,18 @@ screen you swipe through rather than a column you scroll past. Add `m-rail`
 (and optionally `m-rail-wide`, or `--rail-w`) to a grid, and put `<RailDots
 count={n} />` straight after it. Tablet and desktop layouts are untouched.
 
+A phone density layer in `globals.css` (the first `max-width: 639.98px`
+block) sets the phone type scale, 44px section rhythm, slimmer buttons and
+card insets for every page at once. Phone-only pieces on top of it:
+
+| What | Where |
+|---|---|
+| A sticky "on this page" chip bar on Home that lights the section in view and glides to any other | `ui/QuickJump`, `home.json → jump` |
+| Long copy folded to its first paragraph with a Read more toggle | `ui/ReadMore` |
+| Footer link columns folded into rows that open in place (native `<details>`) | `layout/SiteFooter` |
+| Home FAQ trimmed to four, with All questions one tap away | `FaqSection phoneLimit` |
+| Hero categories, document lists and fact strips as compact chips and tiles | `HomeHero`, `FactGrid`, `VehiclePicker`, `/sell` |
+
 ## Layout
 
 ```

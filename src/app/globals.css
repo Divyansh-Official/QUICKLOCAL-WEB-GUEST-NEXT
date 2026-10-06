@@ -2857,37 +2857,190 @@ html:not(.no-motion) .ev-tab::after {
    ========================================================================== */
 
 @media (max-width: 639.98px) {
+  /* Phone density. Apple's phone pages fit a section header, its picture and
+     its action inside one screen: smaller type, tighter rhythm, slimmer keys
+     and cards that size to their content. Unlayered, so it outranks the
+     utilities a component was written with for the wider layouts. */
   :root {
-    --section-y: 64px;
-    --radius-panel: 28px;
-    --radius-card: 22px;
+    --section-y: 44px;
+    --radius-panel: 24px;
+    --radius-card: 20px;
+    --gutter: 16px;
   }
 
-  .t-hero {
-    font-size: clamp(2.35rem, 1.6rem + 3.6vw, 2.9rem);
-  }
-
-  .t-display {
-    font-size: clamp(1.75rem, 1.3rem + 2.2vw, 2.15rem);
-    line-height: 1.08;
-  }
-
-  .t-title {
-    font-size: 1.45rem;
-  }
-
-  .t-lead {
-    font-size: 15.5px;
-    line-height: 1.5;
-  }
-
-  .t-body {
+  body {
     font-size: 15px;
   }
 
-  /* Section headers sit closer to what they introduce. */
-  .section [class*='mt-14'] {
-    margin-top: 2rem;
+  .t-hero {
+    font-size: clamp(2.05rem, 1.5rem + 2.8vw, 2.5rem);
+    letter-spacing: -0.045em;
+  }
+
+  .t-display {
+    font-size: clamp(1.5rem, 1.15rem + 1.8vw, 1.8rem);
+    line-height: 1.1;
+    letter-spacing: -0.036em;
+  }
+
+  .t-title {
+    font-size: 1.22rem;
+    line-height: 1.15;
+  }
+
+  .t-headline {
+    font-size: 1.02rem;
+  }
+
+  .t-lead {
+    font-size: 14.5px;
+    line-height: 1.48;
+  }
+
+  .t-body {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .t-small {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .t-caption {
+    font-size: 11.5px;
+  }
+
+  .t-eyebrow {
+    font-size: 10.5px;
+  }
+
+  .t-stat {
+    font-size: clamp(1.6rem, 14cqi, 2.4rem);
+  }
+
+  /* Keys: one size down, so two sit side by side. */
+  .btn-lg {
+    height: 2.85rem;
+    padding-inline: 1.15rem;
+    font-size: 14.5px;
+  }
+
+  .btn-md {
+    height: 2.5rem;
+    padding-inline: 1rem;
+    font-size: 14px;
+  }
+
+  .btn-sm {
+    height: 2.15rem;
+    padding-inline: 0.85rem;
+    font-size: 13px;
+  }
+
+  /* Rhythm: the large desktop gaps collapse to a phone's scale. */
+  main :is(.mt-16, .mt-14, .mt-12) {
+    margin-top: 1.5rem;
+  }
+
+  main :is(.mt-10, .mt-9, .mt-8) {
+    margin-top: 1.15rem;
+  }
+
+  main :is(.mt-7, .mt-6) {
+    margin-top: 0.9rem;
+  }
+
+  main :is(.mt-5, .mt-4) {
+    margin-top: 0.6rem;
+  }
+
+  main :is(.gap-16, .gap-14, .gap-12, .gap-10) {
+    gap: 1.25rem;
+  }
+
+  main :is(.gap-8, .gap-7) {
+    gap: 1rem;
+  }
+
+  main :is(.space-y-5, .space-y-6) > * + * {
+    margin-top: 0.75rem !important;
+  }
+
+  /* Card and panel insets. */
+  main :is(.p-14, .p-12, .p-10, .p-9, .p-8, .p-7, .xs\:p-7, .xs\:p-8) {
+    padding: 1.05rem;
+  }
+
+  main :is(.p-6, .p-5) {
+    padding: 0.95rem;
+  }
+
+  main :is(.py-16, .py-14, .py-12) {
+    padding-block: 1.75rem;
+  }
+
+  main :is(.py-10) {
+    padding-block: 1.25rem;
+  }
+
+  main :is(.px-12, .px-7, .xs\:px-7) {
+    padding-inline: 1.05rem;
+  }
+
+  main .icon-tile {
+    --s: 38px !important;
+  }
+
+  .pillar-art {
+    min-height: 210px !important;
+    padding-block: 1.25rem !important;
+  }
+
+  /* Paragraphs that only restate the heading stay on the wider layouts. */
+  .m-hide {
+    display: none !important;
+  }
+
+  /* Tables: tighter cells; the first column stays readable while the rest
+     scrolls under it. */
+  main table :is(th, td) {
+    padding: 0.7rem 0.75rem !important;
+    font-size: 13px !important;
+  }
+
+  /* A plain list item that becomes a card when it sits in a phone rail. */
+  .m-card {
+    padding: 1rem;
+    border-radius: var(--radius-card);
+    background: color-mix(in oklab, var(--card) 72%, transparent);
+    box-shadow: var(--rim), var(--edge), var(--lift-1);
+  }
+
+  .disclosure > summary {
+    padding-block: 0.95rem;
+    font-size: 15px;
+    gap: 1rem;
+  }
+
+  .disclosure-icon {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  /* Read more: on a phone only the first paragraph shows until asked. */
+  .read-more:not([data-open]) > :not(:first-child, .read-more-toggle) {
+    display: none;
+  }
+
+  /* Rows of chips that scroll sideways rather than wrapping. */
+  .chip-rail {
+    scrollbar-width: none;
+    mask-image: linear-gradient(90deg, transparent, #000 var(--gutter), #000 calc(100% - var(--gutter)), transparent);
+  }
+
+  .chip-rail::-webkit-scrollbar {
+    display: none;
   }
 
   /* ---- swipe rails ---- */
@@ -2901,7 +3054,7 @@ html:not(.no-motion) .ev-tab::after {
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     margin-inline: calc(var(--gutter) * -1);
-    padding: 6px calc((100vw - var(--rail-w, 82vw)) / 2) 14px;
+    padding: 4px calc((100vw - var(--rail-w, 74vw)) / 2) 10px;
     max-width: none !important;
     perspective: 1000px;
   }
@@ -2911,7 +3064,7 @@ html:not(.no-motion) .ev-tab::after {
   }
 
   .m-rail > * {
-    flex: 0 0 var(--rail-w, 82vw);
+    flex: 0 0 var(--rail-w, 74vw);
     min-width: 0;
     scroll-snap-align: center;
     scroll-snap-stop: always;
@@ -2919,7 +3072,7 @@ html:not(.no-motion) .ev-tab::after {
   }
 
   .m-rail-wide {
-    --rail-w: 88vw;
+    --rail-w: 86vw;
   }
 }
 
@@ -2949,6 +3102,76 @@ html:not(.no-motion) .ev-tab::after {
   100% {
     transform: perspective(900px) translate3d(6%, 0, -90px) rotateY(26deg);
     opacity: 0.55;
+  }
+}
+
+/* The home page's local nav on phones (ui/QuickJump). It rides under the
+   header as a sticky strip; the lit chip is a filled capsule that slides. */
+.quick-jump {
+  position: sticky;
+  top: calc(var(--header-h) + 2px);
+  z-index: 60;
+  margin: 6px var(--gutter) 0;
+}
+
+.quick-jump .chip-rail {
+  mask-image: none;
+  scroll-snap-type: x proximity;
+  background: color-mix(in oklab, var(--bg) 84%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(1.7);
+  backdrop-filter: blur(22px) saturate(1.7);
+  box-shadow: var(--rim), var(--edge), var(--lift-1);
+}
+
+.quick-jump-chip {
+  color: var(--fg-2);
+  transition:
+    background-color 0.35s var(--ease-ios),
+    color 0.35s var(--ease-ios),
+    transform var(--snappy-ms) var(--spring-snappy);
+}
+
+.quick-jump-chip:active {
+  transform: scale(0.94);
+}
+
+.quick-jump-chip[aria-current] {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.jump-target {
+  /* html already pads anchors by the header; this nets out the section's own
+     top padding so its heading lands just under the jump bar. */
+  scroll-margin-top: -4px;
+}
+
+/* Footer columns folded on phones. */
+.footer-fold > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.footer-fold > summary::-webkit-details-marker {
+  display: none;
+}
+
+.footer-fold-icon {
+  transition: transform var(--snappy-ms) var(--spring-snappy);
+}
+
+.footer-fold[open] .footer-fold-icon {
+  transform: rotate(180deg);
+}
+
+/* The read-more toggle exists only where text is folded: on a phone. */
+.read-more-toggle {
+  display: none;
+}
+
+@media (max-width: 639.98px) {
+  .read-more-toggle {
+    display: inline-flex;
   }
 }
 
@@ -2988,7 +3211,7 @@ html:not(.no-motion) .ev-tab::after {
 
 @media (max-width: 639.98px) {
   .statement {
-    font-size: clamp(1.5rem, 1.1rem + 2.2vw, 1.85rem);
-    line-height: 1.12;
+    font-size: clamp(1.25rem, 1rem + 1.6vw, 1.5rem);
+    line-height: 1.16;
   }
 }

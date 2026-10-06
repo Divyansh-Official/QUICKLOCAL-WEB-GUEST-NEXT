@@ -56,25 +56,25 @@ export default function PricingPage() {
                   </span>
                 ) : null}
                 <h2 className={`text-[22px] font-extrabold tracking-[-0.03em] ${p.popular ? 'text-primary-ink' : 'text-fg'}`}>{p.label}</h2>
-                <p className="t-small mt-1.5 min-h-[3.1em]">{p.blurb}</p>
+                <p className="t-small mt-1.5 sm:min-h-[3.1em]">{p.blurb}</p>
                 <p className="mt-5 flex items-baseline gap-1.5">
-                  <span className="tnum text-[48px] font-extrabold leading-none tracking-[-0.05em] text-fg">{inr(p.priceMonthly)}</span>
+                  <span className="tnum text-[36px] font-extrabold sm:text-[48px] leading-none tracking-[-0.05em] text-fg">{inr(p.priceMonthly)}</span>
                   <span className="text-[14px] font-semibold text-fg-3">{ui.common.perMonth}</span>
                 </p>
                 <p className="mt-2 text-[12.5px] font-semibold text-fg-3">{p.priceMonthly === 0 ? copy.freeNote : copy.billedNote}</p>
-                <ul className="mt-6 flex-1 space-y-2.5 border-t border-hair pt-6">
+                <ul className="mt-6 flex-1 space-y-2 border-t border-hair pt-4 sm:space-y-2.5 sm:pt-6">
                   <li className="flex items-start gap-2.5 text-[14.5px] text-fg">
                     <Mark ok />
                     {copy.products}: {products(p.maxProducts)}
                   </li>
-                  <li className={`flex items-start gap-2.5 text-[14.5px] ${p.boostsPerMonth > 0 ? 'text-fg' : 'text-fg-3'}`}>
+                  <li className={`flex items-start gap-2.5 text-[14.5px] ${p.boostsPerMonth > 0 ? 'text-fg' : 'text-fg-3 max-sm:hidden'}`}>
                     <Mark ok={p.boostsPerMonth > 0} />
                     {boosts(p.boostsPerMonth)}
                   </li>
                   {ORDER.map(key => {
                     const ok = Boolean(p.features[key]);
                     return (
-                      <li key={key} className={`flex items-start gap-2.5 text-[14.5px] ${ok ? 'text-fg' : 'text-fg-3'}`}>
+                      <li key={key} className={`flex items-start gap-2.5 text-[14.5px] ${ok ? 'text-fg' : 'text-fg-3 max-sm:hidden'}`}>
                         <Mark ok={ok} />
                         <span>
                           {featureLabels[key]}

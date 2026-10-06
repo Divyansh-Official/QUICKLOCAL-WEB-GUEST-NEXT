@@ -498,7 +498,7 @@ export default function Journey({ steps, progress }: { steps: JourneyStep[]; pro
                 {i + 1}
               </span>
               <div className="mb-5 lg:hidden">
-                <div className="glass glass-raised relative mx-auto w-full max-w-[330px] overflow-hidden rounded-[30px] @container" aria-hidden="true">
+                <div className="glass glass-raised relative mx-auto w-full max-w-[210px] overflow-hidden rounded-[24px] @container sm:max-w-[330px] sm:rounded-[30px]" aria-hidden="true">
                   <Scene step={step} active={false} inPhone={false} />
                 </div>
               </div>
@@ -508,7 +508,7 @@ export default function Journey({ steps, progress }: { steps: JourneyStep[]; pro
                   {step.who}
                 </p>
                 <h3 className="t-title mt-3 max-w-[18ch]">{step.title}</h3>
-                <p className="t-body mt-4 max-w-[34rem]">{step.text}</p>
+                <p className="t-body mt-4 max-w-[34rem] max-sm:line-clamp-3">{step.text}</p>
               </div>
             </li>
           ))}

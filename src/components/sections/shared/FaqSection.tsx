@@ -4,7 +4,7 @@ import Button from '@/components/ui/Button';
 import SectionHeader from '@/components/ui/SectionHeader';
 
 /** Questions asked before ordering — answered only from rules the platform enforces. */
-export default function FaqSection({ section, items, tone = 'tone-base' }: { section: { eyebrow: string; title: string; accent: string; cta?: { label: string; href: string } }; items: { q: string; a: string }[]; tone?: string }) {
+export default function FaqSection({ section, items, tone = 'tone-base', phoneLimit }: { section: { eyebrow: string; title: string; accent: string; cta?: { label: string; href: string } }; items: { q: string; a: string }[]; tone?: string; phoneLimit?: number }) {
   return (
     <section className={`${tone} section`}>
       <div className="shell grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
@@ -19,7 +19,7 @@ export default function FaqSection({ section, items, tone = 'tone-base' }: { sec
           ) : null}
         </div>
         <Reveal>
-          <Accordion items={items} group="faq" />
+          <Accordion items={items} group="faq" phoneLimit={phoneLimit} />
         </Reveal>
       </div>
     </section>

@@ -14,19 +14,19 @@ export function CategoryCard({ c }: { c: CategoryCard }) {
   return (
     <MorphLink
       href={`/services/${c.slug}`}
-      className="group glass hover-lift relative flex h-full min-h-[clamp(232px,62vw,300px)] flex-col overflow-hidden rounded-[var(--radius-card)] p-3.5 xs:p-4 sm:h-[clamp(380px,56vh,440px)] sm:p-6">
+      className="group glass hover-lift relative flex h-full min-h-[clamp(196px,50vw,300px)] flex-col overflow-hidden rounded-[var(--radius-card)] p-3.5 xs:p-4 sm:h-[clamp(380px,56vh,440px)] sm:p-6">
       <span className="flex items-center justify-between">
         <span className="chip chip-brand max-sm:hidden">
           <Icon name="truck" size={13} />
           {c.badge}
         </span>
         <span className="sm:hidden" />
-        <span className="grid h-8 w-8 place-items-center rounded-full sm:h-10 sm:w-10 bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] text-fg transition-[transform,background-color,color] duration-500 ease-[var(--ease-ios)] group-hover:translate-x-1 group-hover:bg-primary group-hover:text-white">
+        <span className="grid h-7 w-7 place-items-center rounded-full sm:h-10 sm:w-10 bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] text-fg transition-[transform,background-color,color] duration-500 ease-[var(--ease-ios)] group-hover:translate-x-1 group-hover:bg-primary group-hover:text-white">
           <Icon name="arrow-right" size={17} strokeWidth={1.9} />
         </span>
       </span>
       <span className="flex flex-1 items-center justify-center">
-        <Slab3D icon={c.icon} hue={c.hue} size={150} phoneSize={104} />
+        <Slab3D icon={c.icon} hue={c.hue} size={150} phoneSize={88} />
       </span>
       <span className="block text-[clamp(1.15rem,0.9rem+1.4vw,1.85rem)] font-extrabold leading-tight tracking-[-0.035em] text-fg">{c.name}</span>
       <span className="mt-1 block text-[12.5px] leading-snug text-fg-2 sm:mt-1.5 sm:min-h-[2.75em] sm:text-[15px]">{c.tagline}</span>

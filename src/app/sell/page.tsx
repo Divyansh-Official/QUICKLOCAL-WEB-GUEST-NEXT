@@ -52,18 +52,18 @@ export default function SellPage() {
             <SectionHeader align="left" eyebrow={copy.documents.eyebrow} title={copy.documents.title} accent={copy.documents.accent} intro={copy.documents.intro} />
           </div>
           <div>
-            <Reveal as="p" className="flex items-start gap-3 rounded-[22px] bg-[color-mix(in_oklab,var(--primary)_10%,transparent)] px-5 py-4 text-[14.5px] font-semibold leading-relaxed text-fg">
+            <Reveal as="p" className="flex items-start gap-3 rounded-[22px] bg-[color-mix(in_oklab,var(--primary)_10%,transparent)] px-4 py-3 text-[13.5px] font-semibold leading-relaxed text-fg sm:px-5 sm:py-4 sm:text-[14.5px]">
               <Icon name="wallet" size={19} strokeWidth={2} className="mt-0.5 flex-none text-primary-ink" />
               {copy.documents.first}
             </Reveal>
-            <ul className="mt-4 grid gap-3 xs:grid-cols-2">
+            <ul className="mt-4 grid grid-cols-2 gap-2 sm:gap-3">
               {copy.documents.items.map((d, i) => (
-                <Reveal as="li" key={d.label} index={i % 2} className="glass flex items-center gap-3.5 rounded-[20px] p-4">
+                <Reveal as="li" key={d.label} index={i % 2} className="glass flex items-center gap-2.5 rounded-[16px] p-2.5 sm:gap-3.5 sm:rounded-[20px] sm:p-4">
                   <span className="icon-tile icon-tile-soft" style={{ ['--s' as string]: '40px' }}>
                     <Icon name={d.icon} size={18} strokeWidth={1.9} />
                   </span>
-                  <span className="text-[15.5px] font-bold tracking-[-0.015em] text-fg">{d.label}</span>
-                  <Icon name="check-circle" size={18} strokeWidth={2} className="ml-auto flex-none text-ok" />
+                  <span className="min-w-0 text-[13px] font-bold leading-tight tracking-[-0.015em] text-fg sm:text-[15.5px]">{d.label}</span>
+                  <Icon name="check-circle" size={18} strokeWidth={2} className="ml-auto flex-none text-ok max-sm:hidden" />
                 </Reveal>
               ))}
             </ul>

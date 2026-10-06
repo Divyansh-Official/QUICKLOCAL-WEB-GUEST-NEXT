@@ -19,7 +19,10 @@
     "free": "Free",
     "explore": "Explore",
     "more": "More",
-    "deliveryFrom": "Delivery from {base}"
+    "deliveryFrom": "Delivery from {base}",
+    "readMore": "Read more",
+    "readLess": "Show less",
+    "onThisPage": "On this page"
   },
   "header": {
     "cta": {

@@ -24,7 +24,7 @@ function Track({ id, icon, hue, title, text, items, cta, secondary }: { id: stri
       <span id={id} className="absolute -top-28" />
       <div className="flex items-start justify-between gap-4">
         <h2 className="t-title max-w-[14ch]">{title}</h2>
-        <Slab3D icon={icon} hue={hue} size={120} className="-mr-3 -mt-4 flex-none" />
+        <Slab3D icon={icon} hue={hue} size={120} phoneSize={84} className="-mr-3 -mt-4 flex-none" />
       </div>
       <p className="t-body mt-3">{text}</p>
       <ul className="mt-7 flex-1 space-y-3">

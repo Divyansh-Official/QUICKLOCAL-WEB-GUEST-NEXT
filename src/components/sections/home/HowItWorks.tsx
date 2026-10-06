@@ -24,12 +24,12 @@ export default function HowItWorks({
         <div className="relative mt-16">
           <span
             aria-hidden="true"
-            className="absolute bottom-8 left-[31px] top-8 w-[2px] rounded-full bg-gradient-to-b from-primary/50 via-accent/40 to-transparent lg:bottom-auto lg:left-[12%] lg:right-[12%] lg:top-[31px] lg:h-[2px] lg:w-auto lg:bg-gradient-to-r"
+            className="absolute bottom-8 left-[31px] top-8 w-[2px] max-sm:hidden rounded-full bg-gradient-to-b from-primary/50 via-accent/40 to-transparent lg:bottom-auto lg:left-[12%] lg:right-[12%] lg:top-[31px] lg:h-[2px] lg:w-auto lg:bg-gradient-to-r"
           />
           <ol className="m-rail relative grid grid-cols-1 gap-10 lg:grid-cols-4 lg:gap-6 [--rail-w:70vw]">
             {steps.map((step, i) => (
-              <Reveal as="li" key={step.n} index={i} className="group flex gap-5 lg:flex-col lg:items-center lg:text-center">
-                <span className="glass relative grid h-16 w-16 flex-none place-items-center rounded-[22px] text-primary-ink">
+              <Reveal as="li" key={step.n} index={i} className="m-card group flex gap-3.5 sm:gap-5 lg:flex-col lg:items-center lg:text-center">
+                <span className="glass relative grid h-12 w-12 flex-none place-items-center rounded-[16px] text-primary-ink sm:h-16 sm:w-16 sm:rounded-[22px]">
                   <Icon name={ICONS[i] ?? 'check'} size={26} strokeWidth={1.8} effect="draw" />
                   <span className="absolute -right-2 -top-2 grid h-7 min-w-7 place-items-center rounded-full bg-primary px-1 text-[12px] font-extrabold text-white shadow-[0_6px_14px_-6px_rgb(240_134_38/0.9)]">
                     {step.n}

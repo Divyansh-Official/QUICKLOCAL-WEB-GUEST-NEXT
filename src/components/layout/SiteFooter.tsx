@@ -43,13 +43,13 @@ export default function SiteFooter({
   return (
     <footer className="tone-night relative overflow-clip" data-print="hide">
       <Aurora variant="night" />
-      <div className="shell relative pb-10 pt-16 sm:pt-20">
-        <Reveal className="flex flex-col gap-8 border-b border-hair pb-12 lg:flex-row lg:items-end lg:justify-between">
+      <div className="shell relative pb-6 pt-9 sm:pb-10 sm:pt-20">
+        <Reveal className="flex flex-col gap-5 border-b border-hair pb-7 sm:gap-8 sm:pb-12 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-xl">
-            <p className="t-display text-[clamp(2rem,1.4rem+2.6vw,3.4rem)]">{ctaTitle}</p>
-            <p className="t-lead mt-4">{ctaText}</p>
+            <p className="t-display text-[clamp(1.6rem,1.2rem+2.6vw,3.4rem)]">{ctaTitle}</p>
+            <p className="t-lead mt-2.5 sm:mt-4">{ctaText}</p>
           </div>
-          <div className="flex flex-wrap items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <Button href={cta.href} size="lg" icon="arrow-right">
               {cta.label}
             </Button>
@@ -68,18 +68,49 @@ export default function SiteFooter({
           </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 gap-12 pt-12 lg:grid-cols-12 lg:gap-8">
+        <div className="grid grid-cols-1 gap-7 pt-7 sm:gap-12 sm:pt-12 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-4">
             <Logo size={38} tagline={tagline} label={brandLabel} />
-            <p className="t-small mt-5 max-w-sm">{blurb}</p>
+            <p className="t-small mt-3 max-w-sm sm:mt-5">{blurb}</p>
             {showTheme ? (
-              <div className="mt-7">
+              <div className="mt-4 sm:mt-7">
                 <ThemeSegmented labels={labels.theme} />
               </div>
             ) : null}
           </div>
 
-          <div className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-4 lg:col-span-8">
+          {/* Phones: each column folds into a row that opens in place. */}
+          <div className="border-t border-hair sm:hidden">
+            {columns.map(col => (
+              <details key={col.heading} className="footer-fold border-b border-hair">
+                <summary className="flex h-12 items-center justify-between text-[12px] font-extrabold uppercase tracking-[0.14em] text-primary">
+                  {col.heading}
+                  <Icon name="chevron-down" size={16} strokeWidth={2.2} className="footer-fold-icon text-fg-3" />
+                </summary>
+                <ul className="grid grid-cols-2 gap-x-4 gap-y-2.5 pb-4">
+                  {col.links.map(l => (
+                    <li key={l.href + l.label}>
+                      <Link href={l.href} className="text-[13.5px] text-fg-2 transition-colors hover:text-fg">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
+            <div className="flex flex-wrap gap-2 pt-4 text-[13px] text-fg-2">
+              <a href={contact.phoneHref} className="chip hover:text-fg">
+                <Icon name="phone" size={14} />
+                {contact.phone}
+              </a>
+              <a href={contact.emailHref} className="chip hover:text-fg">
+                <Icon name="mail" size={14} />
+                {contact.email}
+              </a>
+            </div>
+          </div>
+
+          <div className="hidden grid-cols-2 gap-x-6 gap-y-10 sm:grid sm:grid-cols-4 lg:col-span-8">
             {columns.map(col => (
               <nav key={col.heading} aria-label={col.heading}>
                 <h2 className="text-[12px] font-extrabold uppercase tracking-[0.14em] text-primary">{col.heading}</h2>
@@ -113,7 +144,7 @@ export default function SiteFooter({
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-2 border-t border-hair pt-6 text-[12.5px] text-fg-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-6 flex flex-col gap-1.5 border-t border-hair pt-5 sm:mt-14 sm:gap-2 sm:pt-6 text-[12.5px] text-fg-3 sm:flex-row sm:items-center sm:justify-between">
           <p>{copyright}</p>
           <p className="flex items-center gap-1.5">
             <Icon name="heart" size={13} className="text-primary" />

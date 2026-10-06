@@ -33,11 +33,11 @@ export default function VehiclePicker({
 
   return (
     <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-14">
-      <div className="flex min-w-0 flex-col items-center gap-8 lg:sticky lg:top-[calc(var(--header-h)+40px)]">
+      <div className="flex min-w-0 flex-col items-center gap-4 sm:gap-8 lg:sticky lg:top-[calc(var(--header-h)+40px)]">
         <div className="group relative grid place-items-center">
           <span aria-hidden="true" className="absolute inset-[-12%] rounded-full bg-[radial-gradient(closest-side,color-mix(in_oklab,var(--primary)_16%,transparent),transparent)]" />
           <span key={vehicle.type} className="enter-scale relative">
-            <Slab3D icon={vehicle.icon} hue={vehicle.motorised ? 'ink' : 'green'} size={220} phoneSize={170} active />
+            <Slab3D icon={vehicle.icon} hue={vehicle.motorised ? 'ink' : 'green'} size={220} phoneSize={104} active />
           </span>
         </div>
         <div role="group" aria-label={copy.label} className="flex max-w-[400px] flex-wrap justify-center gap-2">
@@ -49,7 +49,7 @@ export default function VehiclePicker({
                 type="button"
                 aria-pressed={on}
                 onClick={() => setType(v.type)}
-                className={`inline-flex h-11 items-center gap-2 rounded-full pl-3 pr-4 text-[14px] font-bold transition-[background-color,color,box-shadow,transform] duration-300 active:scale-95 ${
+                className={`inline-flex h-9 items-center gap-1.5 rounded-full pl-2.5 pr-3.5 text-[13px] sm:h-11 sm:gap-2 sm:pl-3 sm:pr-4 sm:text-[14px] font-bold transition-[background-color,color,box-shadow,transform] duration-300 active:scale-95 ${
                   on ? 'btn-primary' : 'glass text-fg-2 hover:text-fg'
                 }`}>
                 <Icon name={v.icon} size={18} strokeWidth={1.9} />
@@ -64,7 +64,7 @@ export default function VehiclePicker({
       </div>
 
       <div className="min-w-0">
-        <p className="flex items-start gap-3 rounded-[22px] bg-[color-mix(in_oklab,var(--primary)_10%,transparent)] px-5 py-4 text-[14.5px] font-semibold leading-relaxed text-fg">
+        <p className="flex items-start gap-3 rounded-[22px] bg-[color-mix(in_oklab,var(--primary)_10%,transparent)] px-4 py-3 text-[13.5px] font-semibold leading-relaxed text-fg sm:px-5 sm:py-4 sm:text-[14.5px]">
           <Icon name="wallet" size={19} strokeWidth={2} className="mt-0.5 flex-none text-primary-ink" />
           {copy.payout}
         </p>
@@ -86,14 +86,14 @@ export default function VehiclePicker({
 
 function DocGrid({ docs }: { docs: Doc[] }) {
   return (
-    <ul className="mt-3 grid gap-3 xs:grid-cols-2">
+    <ul className="mt-3 grid grid-cols-2 gap-2 sm:gap-3">
       {docs.map((d, i) => (
-        <li key={d.type} className="glass doc-card flex items-center gap-3.5 rounded-[20px] p-4" style={{ ['--k' as string]: i }}>
+        <li key={d.type} className="glass doc-card flex items-center gap-2.5 rounded-[16px] p-2.5 sm:gap-3.5 sm:rounded-[20px] sm:p-4" style={{ ['--k' as string]: i }}>
           <span className="icon-tile icon-tile-soft" style={{ ['--s' as string]: '40px' }}>
             <Icon name={d.icon} size={18} strokeWidth={1.9} />
           </span>
-          <span className="text-[15.5px] font-bold tracking-[-0.015em] text-fg">{d.label}</span>
-          <Icon name="check-circle" size={18} strokeWidth={2} className="ml-auto flex-none text-ok" />
+          <span className="min-w-0 text-[13px] font-bold leading-tight tracking-[-0.015em] text-fg sm:text-[15.5px]">{d.label}</span>
+          <Icon name="check-circle" size={18} strokeWidth={2} className="ml-auto flex-none text-ok max-sm:hidden" />
         </li>
       ))}
     </ul>
