@@ -56,7 +56,7 @@ export default function GetTheAppPage() {
       </PageHero>
 
       <section className="tone-base pb-[var(--section-y)]">
-        <div className="shell grid gap-5 lg:grid-cols-2">
+        <div className="shell m-rail m-rail-wide grid gap-5 lg:grid-cols-2">
           {appRoles.map((r, i) => (
             <Reveal key={r.key} index={i} className="group glass glass-raised relative scroll-mt-28 overflow-hidden rounded-[var(--radius-panel)]" id={r.key}>
               <div className="flex items-center justify-center bg-[color-mix(in_oklab,var(--fg)_4%,transparent)] py-8">

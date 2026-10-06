@@ -25,10 +25,10 @@ export default function StatsBand({
           {stats.map((s, i) => (
             <Reveal as="li" key={s.label} index={i}>
               <div className="glass stat-box flex h-full flex-col rounded-[var(--radius-card)] p-4 xs:p-5 sm:p-7">
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-white/10 text-[#f7b16d]">
+                <span className="grid h-9 w-9 place-items-center rounded-full bg-white/10 text-[#f7b16d] sm:h-11 sm:w-11">
                   <Icon name={s.icon} size={21} strokeWidth={1.9} />
                 </span>
-                <CountUp value={s.value} className="t-stat text-gradient mt-7 block whitespace-nowrap" />
+                <CountUp value={s.value} className="t-stat text-gradient mt-4 block whitespace-nowrap sm:mt-7" />
                 <span className="mt-3 text-[14.5px] font-extrabold sm:text-[16px] tracking-[-0.02em] text-fg">{s.label}</span>
                 <span className="mt-1 text-[13px] leading-snug sm:text-[14px] text-fg-2">{s.detail}</span>
               </div>

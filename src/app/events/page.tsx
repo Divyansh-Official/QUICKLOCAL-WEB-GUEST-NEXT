@@ -92,7 +92,7 @@ export default function EventsPage() {
           <div className="mx-auto mt-14 max-w-[1120px]">
             <OfferTickets items={copy.offers.tickets} note={copy.offers.ticketNote} />
           </div>
-          <ul className="mx-auto mt-10 grid max-w-[1120px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="m-rail mx-auto mt-10 grid max-w-[1120px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {copy.offers.rules.map((r, i) => (
               <Card key={r.title} index={i} {...r} />
             ))}
@@ -112,7 +112,7 @@ export default function EventsPage() {
       <section className="tone-alt section">
         <div className="shell">
           <SectionHeader eyebrow={copy.more.eyebrow} title={copy.more.title} accent={copy.more.accent} />
-          <ul className="mx-auto mt-14 grid max-w-[1080px] gap-4 md:grid-cols-3">
+          <ul className="m-rail mx-auto mt-14 grid max-w-[1080px] gap-4 md:grid-cols-3">
             {copy.more.items.map((m, i) => (
               <Card key={m.title} index={i} {...m} />
             ))}

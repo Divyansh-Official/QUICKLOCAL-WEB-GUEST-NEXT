@@ -12,6 +12,7 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
 import { featureLabels, fill, fillDeep, inr, pages, plans, ui } from '@/lib/data';
+import RailDots from '@/components/ui/RailDots';
 
 const copy = fillDeep(pages.pricing);
 const ORDER = ['sales_dashboard', 'export_orders', 'customer_history', 'priority_support', 'advanced_analytics', 'featured_badge', 'bulk_offers', 'custom_banner'];
@@ -41,7 +42,7 @@ export default function PricingPage() {
       />
 
       <section className="tone-base pb-[var(--section-y)]">
-        <ul className="shell grid gap-5 pt-4 md:grid-cols-2 xl:grid-cols-4">
+        <ul className="shell m-rail grid gap-5 pt-4 md:grid-cols-2 xl:grid-cols-4">
           {plans.map((p, i) => (
             <Reveal as="li" key={p.name} index={i % 4} className="flex">
               <Tilt
@@ -92,6 +93,7 @@ export default function PricingPage() {
             </Reveal>
           ))}
         </ul>
+        <RailDots count={plans.length} />
       </section>
 
       <section className="tone-alt section">

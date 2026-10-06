@@ -74,7 +74,7 @@ export default function SellPage() {
       <section className="tone-alt section">
         <div className="shell">
           <SectionHeader eyebrow={copy.plans.eyebrow} title={copy.plans.title} accent={copy.plans.accent} />
-          <ul className="mx-auto mt-14 grid max-w-[1080px] grid-cols-1 gap-4 xs:grid-cols-2 lg:grid-cols-4">
+          <ul className="m-rail mx-auto mt-14 grid max-w-[1080px] grid-cols-1 gap-4 xs:grid-cols-2 lg:grid-cols-4 [--rail-w:66vw]">
             {plans.map((p, i) => (
               <Reveal as="li" key={p.name} index={i} className="flex">
                 <Tilt max={6} className={`glass hover-lift relative flex w-full flex-col rounded-[var(--radius-card)] p-6 ${p.popular ? 'ring-2 ring-primary/60' : ''}`}>
@@ -100,7 +100,7 @@ export default function SellPage() {
       <section className="tone-base section">
         <div className="shell">
           <SectionHeader eyebrow={copy.boosts.eyebrow} title={copy.boosts.title} accent={copy.boosts.accent} intro={copy.boosts.intro} />
-          <div className="mx-auto mt-14 grid max-w-[880px] gap-4 md:grid-cols-2">
+          <div className="m-rail mx-auto mt-14 grid max-w-[880px] gap-4 md:grid-cols-2">
             {(['product', 'shop'] as const).map((kind, i) => (
               <Reveal key={kind} index={i} className="glass glass-raised rounded-[var(--radius-panel)] p-7">
                 <p className="flex items-center gap-2.5 text-[17px] font-extrabold tracking-[-0.02em] text-fg">
@@ -127,7 +127,7 @@ export default function SellPage() {
         <section className="tone-alt section">
           <div className="shell">
             <SectionHeader eyebrow={copy.steps.eyebrow} title={copy.steps.title} accent={copy.steps.accent} />
-            <ol className="mx-auto mt-14 grid max-w-[1080px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <ol className="m-rail mx-auto mt-14 grid max-w-[1080px] gap-4 sm:grid-cols-2 lg:grid-cols-4 [--rail-w:66vw]">
               {vendor.steps.map((s, i) => (
                 <Reveal as="li" key={s} index={i} className="glass relative flex flex-col rounded-[var(--radius-card)] p-6">
                   <span className="tnum grid h-11 w-11 place-items-center rounded-full bg-primary text-[16px] font-extrabold text-white shadow-[0_8px_18px_-8px_rgb(240_134_38/0.9)]">{i + 1}</span>

@@ -62,7 +62,7 @@ export default function ForBusinessPage() {
       />
 
       <section className="tone-base pb-[var(--section-y)]">
-        <div className="shell grid gap-5 lg:grid-cols-2">
+        <div className="shell m-rail m-rail-wide grid gap-5 lg:grid-cols-2">
           <Reveal className="flex">
             <Track id="vendors" icon="store" hue="butter" title={copy.vendors.title} text={copy.vendors.text} items={features.vendors} cta={copy.vendors.cta} secondary={copy.vendors.secondary} />
           </Reveal>

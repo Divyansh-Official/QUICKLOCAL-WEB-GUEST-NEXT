@@ -141,7 +141,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
         <div className="shell">
           <SectionHeader align="left" title={d.relatedTitle} size="title" />
         </div>
-        <Shelf className="mt-6" label={d.relatedTitle} itemWidth="clamp(268px, 74vw, 310px)" labels={{ previous: ui.common.previous, next: ui.common.next }}>
+        <Shelf className="mt-6" label={d.relatedTitle} itemWidth="clamp(176px, 46vw, 310px)" labels={{ previous: ui.common.previous, next: ui.common.next }}>
           {related.map(r => (
             <CategoryCard key={r.slug} c={{ slug: r.slug, name: r.name, icon: r.icon, hue: r.hue, tagline: r.tagline, badge: fill(ui.common.deliveryFrom), examples: r.examples }} />
           ))}

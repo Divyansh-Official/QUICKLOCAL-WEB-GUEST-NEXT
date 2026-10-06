@@ -1,6 +1,7 @@
 import Reveal from '@/components/motion/Reveal';
 import Icon from '@/components/ui/Icon';
 import Tilt from '@/components/ui/Tilt';
+import RailDots from '@/components/ui/RailDots';
 
 /**
  * The three kinds of shop offer as tear-off tickets: a notched card with a
@@ -10,7 +11,7 @@ import Tilt from '@/components/ui/Tilt';
 export default function OfferTickets({ items, note }: { items: { kind: string; value: string; detail: string; icon: string }[]; note: string }) {
   return (
     <>
-      <ul className="grid gap-4 lg:grid-cols-3">
+      <ul className="m-rail grid gap-4 lg:grid-cols-3">
         {items.map((t, i) => (
           <Reveal as="li" key={t.kind} index={i} className="flex">
             <Tilt max={7} className="ticket hover-lift flex w-full items-stretch">
@@ -28,6 +29,7 @@ export default function OfferTickets({ items, note }: { items: { kind: string; v
           </Reveal>
         ))}
       </ul>
+      <RailDots count={items.length} />
       <p className="t-small mt-4 text-center">{note}</p>
     </>
   );

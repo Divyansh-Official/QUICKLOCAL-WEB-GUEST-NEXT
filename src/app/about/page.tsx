@@ -83,7 +83,7 @@ export default function AboutPage() {
       <section className="tone-alt section">
         <div className="shell">
           <SectionHeader eyebrow={copy.principles.eyebrow} title={copy.principles.title} accent={copy.principles.accent} intro={copy.principles.intro} />
-          <ul className="mt-14 grid gap-4 sm:grid-cols-2">
+          <ul className="m-rail mt-14 grid gap-4 sm:grid-cols-2">
             {copy.principles.items.map((p, i) => (
               <Reveal as="li" key={p.title} index={i % 2} className="flex">
                 <Tilt max={5} className="group glass hover-lift relative flex w-full gap-5 rounded-[var(--radius-card)] p-7">

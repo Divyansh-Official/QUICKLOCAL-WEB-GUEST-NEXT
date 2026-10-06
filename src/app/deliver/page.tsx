@@ -76,7 +76,7 @@ export default function DeliverPage() {
       <section className="tone-base section">
         <div className="shell">
           <SectionHeader eyebrow={copy.rules.eyebrow} title={copy.rules.title} accent={copy.rules.accent} />
-          <ul className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="m-rail mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {copy.rules.items.map((r, i) => (
               <Reveal as="li" key={r.title} index={i % 3} className="flex">
                 <Tilt max={5} className="group glass hover-lift flex w-full flex-col rounded-[var(--radius-card)] p-6 sm:p-7">

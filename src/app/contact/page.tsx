@@ -36,7 +36,7 @@ export default function ContactPage() {
 
       <section className="tone-base pb-[var(--section-y)]">
         <div className="shell">
-          <ul className="grid gap-4 md:grid-cols-3">
+          <ul className="m-rail grid gap-4 md:grid-cols-3">
             {copy.channels.map((c, i) => {
               const r = resolve(c.field);
               return (

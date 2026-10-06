@@ -47,7 +47,7 @@ export default function SafetyPage() {
       <section className="tone-base section">
         <div className="shell">
           <SectionHeader eyebrow={copy.more.eyebrow} title={copy.more.title} accent={copy.more.accent} />
-          <ul className="mx-auto mt-14 grid max-w-[1080px] gap-4 sm:grid-cols-2">
+          <ul className="m-rail mx-auto mt-14 grid max-w-[1080px] gap-4 sm:grid-cols-2">
             {copy.more.items.map((m, i) => (
               <Reveal as="li" key={m.title} index={i % 2} className="glass hover-lift flex gap-5 rounded-[var(--radius-card)] p-6 sm:p-7">
                 <span className="icon-tile flex-none" style={{ ['--s' as string]: '46px' }}>

@@ -30,7 +30,7 @@ export default function ServicesPage() {
       />
 
       <section className="tone-base pb-[var(--section-y)]">
-        <ul className="shell grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="shell grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
           {categories.map((c, i) => (
             <Reveal as="li" key={c.slug} id={c.slug} index={i % 3} className="scroll-mt-28">
               <CategoryCard c={{ slug: c.slug, name: c.name, icon: c.icon, hue: c.hue, tagline: c.tagline, badge: fill(ui.common.deliveryFrom), examples: c.examples }} />

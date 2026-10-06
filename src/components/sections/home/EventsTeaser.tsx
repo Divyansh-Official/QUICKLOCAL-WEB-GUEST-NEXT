@@ -31,7 +31,7 @@ export default function EventsTeaser({
             </div>
           </div>
           <div className="flex justify-center">
-            <EventPhone screen={screen} width="clamp(220px, 60vw, 270px)" />
+            <EventPhone screen={screen} width="clamp(190px, 50vw, 270px)" />
           </div>
         </Reveal>
       </div>

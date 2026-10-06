@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import Reveal from '@/components/motion/Reveal';
 import Icon from '@/components/ui/Icon';
+import RailDots from '@/components/ui/RailDots';
 
 export type Pillar = { key: string; icon: string; eyebrow: string; title: string; text: string; art: string[] };
 
@@ -81,7 +82,8 @@ const ART: Record<string, (p: Pillar) => ReactNode> = {
  */
 export default function Pillars({ items }: { items: Pillar[] }) {
   return (
-    <div className="space-y-5">
+    <>
+    <div className="m-rail m-rail-wide space-y-5">
       {items.map((p, i) => (
         <Reveal key={p.key} className={`pillar glass glass-raised grid grid-cols-1 items-center gap-10 overflow-hidden rounded-[var(--radius-panel)] p-5 xs:p-7 sm:p-10 lg:grid-cols-2 lg:gap-14 lg:p-14`}>
           <div className={`min-w-0 ${i % 2 ? 'lg:order-2' : ''}`}>
@@ -98,5 +100,7 @@ export default function Pillars({ items }: { items: Pillar[] }) {
         </Reveal>
       ))}
     </div>
+      <RailDots count={items.length} />
+    </>
   );
 }

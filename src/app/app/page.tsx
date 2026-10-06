@@ -52,7 +52,7 @@ export default function AppPage() {
       <section className="tone-base section">
         <div className="shell">
           <SectionHeader eyebrow={copy.reviews.eyebrow} title={copy.reviews.title} accent={copy.reviews.accent} />
-          <ul className="mx-auto mt-14 grid max-w-[1080px] gap-4 md:grid-cols-3">
+          <ul className="m-rail mx-auto mt-14 grid max-w-[1080px] gap-4 md:grid-cols-3">
             {copy.reviews.items.map((r, i) => (
               <Reveal as="li" key={r.title} index={i} className="glass hover-lift flex flex-col rounded-[var(--radius-card)] p-6 sm:p-7">
                 <span className="icon-tile" style={{ ['--s' as string]: '46px' }}>

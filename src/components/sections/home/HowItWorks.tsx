@@ -26,7 +26,7 @@ export default function HowItWorks({
             aria-hidden="true"
             className="absolute bottom-8 left-[31px] top-8 w-[2px] rounded-full bg-gradient-to-b from-primary/50 via-accent/40 to-transparent lg:bottom-auto lg:left-[12%] lg:right-[12%] lg:top-[31px] lg:h-[2px] lg:w-auto lg:bg-gradient-to-r"
           />
-          <ol className="relative grid grid-cols-1 gap-10 lg:grid-cols-4 lg:gap-6">
+          <ol className="m-rail relative grid grid-cols-1 gap-10 lg:grid-cols-4 lg:gap-6 [--rail-w:70vw]">
             {steps.map((step, i) => (
               <Reveal as="li" key={step.n} index={i} className="group flex gap-5 lg:flex-col lg:items-center lg:text-center">
                 <span className="glass relative grid h-16 w-16 flex-none place-items-center rounded-[22px] text-primary-ink">

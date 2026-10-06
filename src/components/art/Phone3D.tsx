@@ -106,7 +106,7 @@ export default function Phone3D({
   return (
     <div ref={stage} className="phone-stage select-none" aria-hidden="true">
       <div className="phone-scroll">
-        <div ref={phone} className="phone" style={{ ['--pw' as string]: 'clamp(230px, 62vw, 300px)' }}>
+        <div ref={phone} className="phone" style={{ ['--pw' as string]: 'clamp(196px, 54vw, 300px)' }}>
           {Array.from({ length: 9 }, (_, i) => (
             <span key={i} className="phone-layer" style={{ ['--i' as string]: i + 1 } as CSSProperties} />
           ))}

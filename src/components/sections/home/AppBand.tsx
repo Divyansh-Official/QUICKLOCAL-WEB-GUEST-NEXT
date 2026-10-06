@@ -44,12 +44,12 @@ export default function AppBand({
               </div>
               <div className="group grid gap-6 sm:grid-cols-[auto_1fr] sm:items-center lg:grid-cols-1 lg:justify-items-center">
                 <div className="flex justify-center">
-                  <Slab3D icon="download" hue="tangerine" size={200} />
+                  <Slab3D icon="download" hue="tangerine" size={200} phoneSize={120} />
                 </div>
                 <ul className="grid w-full gap-3">
                   {copy.points.map((p, i) => (
                     <Reveal as="li" key={p.text} index={i}>
-                      <div className="glass flex items-center gap-3.5 rounded-2xl px-4 py-3.5">
+                      <div className="glass flex items-center gap-3.5 rounded-2xl px-3.5 py-2.5 sm:px-4 sm:py-3.5">
                         <span className="icon-tile" style={{ ['--s' as string]: '38px' }}>
                           <Icon name={p.icon} size={18} strokeWidth={1.9} />
                         </span>

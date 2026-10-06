@@ -3,6 +3,7 @@ import CountUp from '@/components/ui/CountUp';
 import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Tilt from '@/components/ui/Tilt';
+import RailDots from '@/components/ui/RailDots';
 
 type Tile = { kind: string; size: string; icon: string; title: string; text: string; stat?: string; statLabel?: string };
 
@@ -87,7 +88,7 @@ export default function Bento({ section, tiles }: { section: { eyebrow: string; 
     <section className="tone-alt section">
       <div className="shell">
         <SectionHeader eyebrow={section.eyebrow} title={section.title} accent={section.accent} intro={section.intro} />
-        <ul className="mt-14 grid grid-flow-dense grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-[minmax(250px,auto)] lg:grid-cols-6 lg:gap-5">
+        <ul className="m-rail mt-14 grid grid-flow-dense grid-cols-1 gap-4 sm:grid-cols-2 lg:auto-rows-[minmax(250px,auto)] lg:grid-cols-6 lg:gap-5">
           {tiles.map((tile, i) => (
             <Reveal as="li" key={tile.title} index={i % 3} className={`flex ${SIZES[tile.size] ?? SIZES.small}`}>
               <Tilt max={4} className="glass hover-lift relative w-full overflow-hidden rounded-[var(--radius-card)]">
@@ -96,6 +97,7 @@ export default function Bento({ section, tiles }: { section: { eyebrow: string; 
             </Reveal>
           ))}
         </ul>
+        <RailDots count={tiles.length} />
       </div>
     </section>
   );

@@ -133,8 +133,9 @@ No animation library. Motion is CSS, Web Animations and View Transitions:
 | What | How | Where |
 |---|---|---|
 | Category card opens into its page — the panel by clip-path, the 3D tile flown by transform to its place; Back reverses it and returns step by step | one fixed panel beneath the header, Web Animations, no layout animation | `lib/morph.ts`, `motion/MorphLink`, `motion/MorphBack` |
-| Content rises in and vanishes under the header | scroll-driven animations on registered properties | `motion/Reveal`, `[data-reveal]` |
-| Hero copy recedes as you scroll | scroll timeline | `[data-vanish]` |
+| Content rises out of depth (translateZ + rotateX) and only tilts away once it is well past the header | scroll-driven animations on registered properties | `motion/Reveal`, `[data-reveal]` |
+| On phones, card grids become swipeable rails: cards snap to centre, the ones beside it recede in 3D (coverflow), and dots track the position | CSS scroll-snap + `view(inline)` timelines | `.m-rail`, `ui/RailDots` |
+| Hero copy tilts back and recedes in Z as you scroll | scroll timeline | `[data-vanish]` |
 | The statement lights up word by word | view timeline | `sections/shared/Statement` |
 | Icons draw themselves / hop on hover (SF Symbols style) | stroke dash on a view timeline | `Icon effect="draw" \| "bounce"` |
 | Figures count up on arrival | one-shot observer | `ui/CountUp` |
@@ -148,6 +149,15 @@ No animation library. Motion is CSS, Web Animations and View Transitions:
 Nothing is hidden waiting for JavaScript. With scripts off, with reduced motion,
 or with `?nomotion` in the URL (clean screenshots), every element renders in
 its final state.
+
+### Phones
+
+Below 640px the type scale, section spacing and tiles are compacted, and the
+repeating card grids (bento, steps, plans, tiers, offers, reviews, guarantees,
+the How It Works story) turn into horizontal rails, so a section reads as one
+screen you swipe through rather than a column you scroll past. Add `m-rail`
+(and optionally `m-rail-wide`, or `--rail-w`) to a grid, and put `<RailDots
+count={n} />` straight after it. Tablet and desktop layouts are untouched.
 
 ## Layout
 

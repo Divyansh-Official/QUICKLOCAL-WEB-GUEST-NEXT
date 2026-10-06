@@ -2073,18 +2073,24 @@ html[data-theme-switching]::view-transition-new(root) {
   /* Scroll-driven motion — no observers, no listeners. Where view timelines
      are missing (Firefox) these never apply and content is simply there. */
   @supports (animation-timeline: view()) {
+    /* Rises out of depth — from behind the page, tipped back — and, only once
+       it is nearly gone under the header, tilts away into the distance. The
+       exit starts in the element's last 30% (so a tall panel is never fading
+       while you read it) and ends as it leaves the screen, not before. */
     html:not(.no-motion) [data-reveal] {
-      opacity: calc(var(--rv-in) * var(--rv-out));
-      transform: translate3d(0, calc((1 - var(--rv-in)) * 56px - (1 - var(--rv-out)) * 34px), 0)
-        scale(calc(1 - (1 - var(--rv-in)) * 0.02 - (1 - var(--rv-out)) * 0.045));
+      opacity: calc(var(--rv-in) * (0.08 + 0.92 * var(--rv-out)));
+      transform: perspective(1200px)
+        translate3d(0, calc((1 - var(--rv-in)) * 44px - (1 - var(--rv-out)) * 18px), calc((1 - var(--rv-in)) * -90px - (1 - var(--rv-out)) * 110px))
+        rotateX(calc((1 - var(--rv-in)) * 9deg + (1 - var(--rv-out)) * 10deg));
+      transform-origin: 50% 0%;
       animation:
         rv-in both,
         rv-out both;
-      animation-timing-function: var(--ease-out), cubic-bezier(0.45, 0, 0.75, 0.55);
+      animation-timing-function: cubic-bezier(0.2, 0.75, 0.25, 1), cubic-bezier(0.5, 0, 0.75, 0.4);
       animation-timeline: view(), view();
       animation-range:
-        entry 0% entry calc(240px + var(--ri, 0) * 60px),
-        cover calc(100% - var(--rv-exit, 260px)) cover calc(100% - var(--header-h));
+        entry 0% entry calc(220px + var(--ri, 0) * 50px),
+        exit 70% exit 100%;
     }
 
     html:not(.no-motion) [data-reveal='fade'] {
@@ -2119,13 +2125,16 @@ html[data-theme-switching]::view-transition-new(root) {
   }
 
   @supports (animation-timeline: scroll()) {
+    /* The opening block recedes as you scroll: it tips back and sinks into
+       the page over a long stretch, fading only at the end. */
     html:not(.no-motion) [data-vanish] {
-      opacity: var(--rv-out);
-      transform: translate3d(0, calc((var(--rv-out) - 1) * 56px), 0) scale(calc(0.94 + 0.06 * var(--rv-out)));
-      transform-origin: 50% 100%;
-      animation: rv-out both cubic-bezier(0.3, 0, 0.7, 1);
+      opacity: calc(0.1 + 0.9 * var(--rv-out));
+      transform: perspective(1200px) translate3d(0, calc((1 - var(--rv-out)) * -28px), calc((1 - var(--rv-out)) * -160px))
+        rotateX(calc((1 - var(--rv-out)) * 12deg));
+      transform-origin: 50% 0%;
+      animation: rv-out both cubic-bezier(0.4, 0, 0.6, 1);
       animation-timeline: scroll(root block);
-      animation-range: 0px var(--vanish, 60vh);
+      animation-range: 0px calc(var(--vanish, 60vh) * 1.5);
     }
 
     html:not(.no-motion) .scroll-progress {
@@ -2837,4 +2846,149 @@ html:not(.no-motion) .ev-tab::after {
   background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.5) 50%, transparent 70%);
   background-size: 250% 100%;
   animation: shimmer 3.2s ease-in-out infinite;
+}
+
+
+/* ==========================================================================
+   Phones. The site is a product you handle, not a document you scroll:
+   tighter rhythm, smaller type, and groups of cards become rails you swipe,
+   each card turning in 3D as it passes the middle — coverflow, done with a
+   scroll-driven view timeline on the inline axis.
+   ========================================================================== */
+
+@media (max-width: 639.98px) {
+  :root {
+    --section-y: 64px;
+    --radius-panel: 28px;
+    --radius-card: 22px;
+  }
+
+  .t-hero {
+    font-size: clamp(2.35rem, 1.6rem + 3.6vw, 2.9rem);
+  }
+
+  .t-display {
+    font-size: clamp(1.75rem, 1.3rem + 2.2vw, 2.15rem);
+    line-height: 1.08;
+  }
+
+  .t-title {
+    font-size: 1.45rem;
+  }
+
+  .t-lead {
+    font-size: 15.5px;
+    line-height: 1.5;
+  }
+
+  .t-body {
+    font-size: 15px;
+  }
+
+  /* Section headers sit closer to what they introduce. */
+  .section [class*='mt-14'] {
+    margin-top: 2rem;
+  }
+
+  /* ---- swipe rails ---- */
+  .m-rail {
+    display: flex !important;
+    flex-wrap: nowrap;
+    gap: 12px !important;
+    overflow-x: auto;
+    overflow-y: visible;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 6px calc((100vw - var(--rail-w, 82vw)) / 2) 14px;
+    max-width: none !important;
+    perspective: 1000px;
+  }
+
+  .m-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .m-rail > * {
+    flex: 0 0 var(--rail-w, 82vw);
+    min-width: 0;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    margin: 0 !important;
+  }
+
+  .m-rail-wide {
+    --rail-w: 88vw;
+  }
+}
+
+@media (max-width: 639.98px) {
+  @supports (animation-timeline: view()) {
+    html:not(.no-motion) .m-rail > * > * {
+      animation: rail-depth linear both;
+      animation-timeline: view(inline);
+      animation-range: cover 0% cover 100%;
+      transform-origin: 50% 50%;
+    }
+  }
+}
+
+@keyframes rail-depth {
+  0% {
+    transform: perspective(900px) translate3d(-6%, 0, -90px) rotateY(-26deg);
+    opacity: 0.55;
+  }
+
+  38%,
+  62% {
+    transform: none;
+    opacity: 1;
+  }
+
+  100% {
+    transform: perspective(900px) translate3d(6%, 0, -90px) rotateY(26deg);
+    opacity: 0.55;
+  }
+}
+
+/* A row of dots under a rail, filled by the rail's own scroll position. */
+.rail-dots {
+  display: none;
+}
+
+@media (max-width: 639.98px) {
+  .rail-dots {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 2px;
+  }
+
+  .rail-dots > i {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--fg) 18%, transparent);
+    transition: width 0.4s var(--ease-out), background-color 0.4s;
+  }
+
+  .rail-dots > i[data-on] {
+    width: 18px;
+    background: var(--primary);
+  }
+}
+
+@media (max-width: 639.98px) {
+  /* A rail that is also the page shell already spans the screen. */
+  .shell.m-rail {
+    margin-inline: 0;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .statement {
+    font-size: clamp(1.5rem, 1.1rem + 2.2vw, 1.85rem);
+    line-height: 1.12;
+  }
 }

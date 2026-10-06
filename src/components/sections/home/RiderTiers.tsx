@@ -5,6 +5,7 @@ import CountUp from '@/components/ui/CountUp';
 import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Tilt from '@/components/ui/Tilt';
+import RailDots from '@/components/ui/RailDots';
 
 export type Tier = { level: string; name: string; deliveries: string; rating: string; detail: string; tone: string };
 
@@ -15,7 +16,8 @@ export type Tier = { level: string; name: string; deliveries: string; rating: st
  */
 export function TierGrid({ tiers, labels }: { tiers: Tier[]; labels: { deliveries: string; rating: string } }) {
   return (
-    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <>
+      <ul className="m-rail grid gap-4 sm:grid-cols-2 lg:grid-cols-4 [--rail-w:72vw]">
       {tiers.map((tier, i) => (
         <Reveal as="li" key={tier.level} index={i} className="flex">
           <Tilt max={8} className="group glass hover-lift relative flex w-full flex-col overflow-hidden rounded-[var(--radius-card)] p-6">
@@ -36,6 +38,8 @@ export function TierGrid({ tiers, labels }: { tiers: Tier[]; labels: { deliverie
         </Reveal>
       ))}
     </ul>
+    <RailDots count={tiers.length} />
+    </>
   );
 }
 
@@ -86,7 +90,7 @@ export default function RiderTiers({
           <TierGrid tiers={tiers} labels={{ deliveries: section.deliveries, rating: section.rating }} />
         </div>
 
-        <div className="mx-auto mt-4 grid max-w-[1080px] gap-4 md:grid-cols-2">
+        <div className="m-rail mx-auto mt-4 grid max-w-[1080px] gap-4 md:grid-cols-2">
           <Reveal className="glass flex flex-col rounded-[var(--radius-card)] p-6 sm:p-7">
             <h3 className="flex items-center gap-2.5 text-[16px] font-extrabold tracking-[-0.02em]">
               <Icon name="shield-check" size={19} className="text-primary" />

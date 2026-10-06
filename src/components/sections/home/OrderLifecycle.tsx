@@ -64,7 +64,7 @@ export default function OrderLifecycle({
       <div className="shell">
         <SectionHeader eyebrow={section.eyebrow} title={section.title} accent={section.accent} intro={section.intro} />
 
-        <div className="mx-auto mt-14 grid max-w-[1080px] gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-5">
+        <div className="m-rail m-rail-wide mx-auto mt-14 grid max-w-[1080px] gap-4 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-5">
           <Reveal className="glass glass-raised rounded-[var(--radius-panel)] p-4 sm:p-6">
             {/* The progress rail across the top: it fills as the order moves. */}
             <div className="flex items-center gap-3 px-2 pb-5 pt-1">

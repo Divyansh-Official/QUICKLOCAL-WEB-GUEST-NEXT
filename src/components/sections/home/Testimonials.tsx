@@ -13,7 +13,7 @@ export default function Testimonials({ section, items }: { section: { eyebrow: s
     <section className="tone-base section">
       <div className="shell">
         <SectionHeader eyebrow={section.eyebrow} title={section.title} accent={section.accent} />
-        <ul className="mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="m-rail mt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {items.map((t, i) => (
             <Reveal as="li" key={t.name + i} index={i % 3} className="glass flex flex-col rounded-[var(--radius-card)] p-7">
               <div className="flex gap-0.5 text-accent">

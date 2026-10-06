@@ -17,6 +17,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import PhoneShell from '@/components/art/PhoneShell';
 import Icon from '@/components/ui/Icon';
+import RailDots from '@/components/ui/RailDots';
 import { fillLive } from '@/lib/format';
 
 export type JourneyStep = {
@@ -444,7 +445,7 @@ export default function Journey({ steps, progress }: { steps: JourneyStep[]; pro
   }, []);
 
   return (
-    <div ref={root} className="journey relative grid gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-20">
+    <div ref={root} className="journey relative grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-20">
       {/* the handset, held still beside the story */}
       <div className="hidden lg:block">
         <div className="sticky top-[calc(var(--header-h)+16px)] flex h-[calc(100svh-var(--header-h)-32px)] items-center justify-center gap-8">
@@ -473,17 +474,17 @@ export default function Journey({ steps, progress }: { steps: JourneyStep[]; pro
       </div>
 
       {/* the story */}
-      <div className="relative">
+      <div className="relative min-w-0">
         <p className="sr-only" aria-live="polite">
           {fillLive(progress, { n: active + 1, total: steps.length })}
         </p>
-        <span aria-hidden="true" className="absolute bottom-6 left-[19px] top-6 w-[2px] overflow-hidden rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]">
+        <span aria-hidden="true" className="absolute bottom-6 left-[19px] top-6 w-[2px] max-sm:hidden overflow-hidden rounded-full bg-[color-mix(in_oklab,var(--fg)_9%,transparent)]">
           <span
             className="journey-fill block h-full w-full origin-top bg-gradient-to-b from-[var(--grad-a)] to-accent transition-transform duration-500 ease-[var(--ease-out)]"
             style={{ transform: `scaleY(${(active + 1) / steps.length})` }}
           />
         </span>
-        <ol>
+        <ol className="m-rail m-rail-wide">
           {steps.map((step, i) => (
             <li
               key={step.key}
@@ -492,11 +493,11 @@ export default function Journey({ steps, progress }: { steps: JourneyStep[]; pro
               }}
               data-index={i}
               data-active={i === active ? '' : undefined}
-              className="journey-step relative py-10 pl-16 lg:flex lg:min-h-[78svh] lg:flex-col lg:justify-center lg:py-0 lg:pl-20">
-              <span className="journey-dot absolute left-0 top-10 grid h-10 w-10 place-items-center rounded-full text-[14px] font-extrabold lg:top-1/2 lg:-translate-y-1/2">
+              className="journey-step relative sm:py-10 sm:pl-16 lg:flex lg:min-h-[78svh] lg:flex-col lg:justify-center lg:py-0 lg:pl-20">
+              <span className="journey-dot absolute left-0 top-10 grid h-10 w-10 max-sm:hidden place-items-center rounded-full text-[14px] font-extrabold lg:top-1/2 lg:-translate-y-1/2">
                 {i + 1}
               </span>
-              <div className="mb-7 lg:hidden">
+              <div className="mb-5 lg:hidden">
                 <div className="glass glass-raised relative mx-auto w-full max-w-[330px] overflow-hidden rounded-[30px] @container" aria-hidden="true">
                   <Scene step={step} active={false} inPhone={false} />
                 </div>
@@ -512,6 +513,7 @@ export default function Journey({ steps, progress }: { steps: JourneyStep[]; pro
             </li>
           ))}
         </ol>
+        <RailDots count={steps.length} />
       </div>
     </div>
   );
