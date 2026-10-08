@@ -12,10 +12,11 @@ import Icon from '@/components/ui/Icon';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
 import { contact, faq, fillDeep, home, mailHref, pages, telHref, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.contact);
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/contact');
 
 const resolve = (field: string) =>
   field === 'phone'

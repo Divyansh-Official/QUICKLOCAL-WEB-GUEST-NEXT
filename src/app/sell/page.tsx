@@ -14,11 +14,12 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
 import { appRoles, deliveryRules, fill, fillDeep, inr, pages, plans, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.sell);
 const vendor = appRoles.find(r => r.key === 'vendor');
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/sell');
 
 export default function SellPage() {
   return (

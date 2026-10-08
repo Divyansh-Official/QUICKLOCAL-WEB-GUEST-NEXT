@@ -1,10 +1,11 @@
 import type { MetadataRoute } from 'next';
-import { allNav, categories, secondaryNav, siteUrl } from '@/lib/data';
+import { allRoutes, categories, siteUrl } from '@/lib/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
+  const aisles = categories.map(c => `/services/${c.slug}`);
   return [
-    ...[...allNav, ...secondaryNav].map(item => ({ url: `${siteUrl}${item.href === '/' ? '' : item.href}`, lastModified: now, priority: item.href === '/' ? 1 : 0.8 })),
-    ...categories.map(c => ({ url: `${siteUrl}/services/${c.slug}`, lastModified: now, priority: 0.7 })),
+    ...allRoutes.filter(href => !aisles.includes(href)).map(href => ({ url: `${siteUrl}${href === '/' ? '' : href}`, lastModified: now, priority: href === '/' ? 1 : 0.8 })),
+    ...aisles.map(href => ({ url: `${siteUrl}${href}`, lastModified: now, priority: 0.7 })),
   ];
 }

@@ -25,6 +25,7 @@ import Testimonials from '@/components/sections/home/Testimonials';
 import FaqSection from '@/components/sections/shared/FaqSection';
 import Statement from '@/components/sections/shared/Statement';
 import QuickJump from '@/components/ui/QuickJump';
+import type { Metadata } from 'next';
 import {
   about,
   appStores,
@@ -44,6 +45,8 @@ import {
   testimonials,
   ui,
 } from '@/lib/data';
+
+export const metadata: Metadata = { alternates: { canonical: '/' } };
 
 export default function HomePage() {
   const h = fillDeep(home);

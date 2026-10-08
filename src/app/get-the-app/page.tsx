@@ -12,11 +12,13 @@ import Icon from '@/components/ui/Icon';
 import Slab3D from '@/components/ui/Slab3D';
 import StoreBadge from '@/components/ui/StoreBadge';
 import { appRoles, appStores, contact, fill, fillDeep, home, lifecycle, pages, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
+import InstallApp from '@/components/pwa/InstallApp';
 
 const copy = fillDeep(pages.getTheApp);
 const phone = fillDeep(home.hero.phone);
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/get-the-app');
 
 const HUE: Record<string, string> = { vendor: 'butter', partner: 'ink' };
 
@@ -54,6 +56,10 @@ export default function GetTheAppPage() {
         }>
         {badges}
       </PageHero>
+
+      <div className="shell -mt-4 mb-8 max-w-3xl empty:hidden sm:-mt-8 sm:mb-12">
+        <InstallApp copy={ui.install} />
+      </div>
 
       <section className="tone-base pb-[var(--section-y)]">
         <div className="shell m-rail m-rail-wide grid gap-5 lg:grid-cols-2">

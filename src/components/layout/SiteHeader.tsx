@@ -20,24 +20,28 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import LiquidGlass from '@/components/glass/LiquidGlass';
 import Button from '@/components/ui/Button';
+import Icon from '@/components/ui/Icon';
+import { openSearch } from '@/components/search/SearchDialog';
 import { ThemeButton } from '@/components/ui/ThemeToggle';
+import type { HeaderEntry, NavGroup } from '@/lib/data';
 import Logo from './Logo';
 import MobileMenu, { type MenuProps } from './MobileMenu';
+import NavFlyout from './NavFlyout';
 
-type Labels = MenuProps['labels'] & { brand: string; ctaShort: string };
+type Labels = MenuProps['labels'] & { brand: string; ctaShort: string; searchShortcut: string };
 
 export default function SiteHeader({
-  items,
-  all,
-  secondary,
+  entries,
+  main,
+  groups,
   cta,
   contact,
   labels,
   showTheme,
 }: {
-  items: { label: string; href: string }[];
-  all: { label: string; href: string }[];
-  secondary: { label: string; href: string }[];
+  entries: HeaderEntry[];
+  main: { label: string; href: string }[];
+  groups: NavGroup[];
   cta: { label: string; href: string; icon?: string };
   contact: MenuProps['contact'];
   labels: Labels;
@@ -106,18 +110,33 @@ export default function SiteHeader({
 
           <nav aria-label={labels.primaryNav} className="hidden flex-1 justify-center nav:flex">
             <ul className="flex items-center gap-0.5">
-              {items.map(item => (
-                <li key={item.href}>
-                  <Link href={item.href} className="nav-link" aria-current={isActive(item.href) ? 'page' : undefined}>
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              {entries.map(entry =>
+                'group' in entry ? (
+                  <li key={entry.group.key}>
+                    <NavFlyout group={entry.group} isActive={isActive} pathname={pathname} headerRef={headerRef} />
+                  </li>
+                ) : (
+                  <li key={entry.href}>
+                    <Link href={entry.href} className="nav-link" aria-current={isActive(entry.href) ? 'page' : undefined}>
+                      {entry.label}
+                    </Link>
+                  </li>
+                ),
+              )}
             </ul>
           </nav>
 
           <div className="flex flex-none items-center gap-1">
-            {showTheme ? <ThemeButton labels={labels.theme} /> : null}
+            <button
+              type="button"
+              onClick={openSearch}
+              className="icon-btn h-10 w-10 text-fg hover:bg-[color-mix(in_oklab,var(--fg)_7%,transparent)]"
+              aria-label={labels.search}
+              aria-keyshortcuts="Meta+K Control+K /"
+              title={`${labels.search} (${labels.searchShortcut})`}>
+              <Icon name="search" size={19} strokeWidth={2} />
+            </button>
+            {showTheme ? <ThemeButton labels={labels.theme} className="max-sm:hidden" /> : null}
             <Button href={cta.href} size="sm" iconStart={cta.icon} className="hidden xs:inline-flex">
               <span className="sm:hidden">{labels.ctaShort}</span>
               <span className="hidden sm:inline">{cta.label}</span>
@@ -145,8 +164,8 @@ export default function SiteHeader({
         open={open}
         onClose={close}
         toggleRef={toggleRef}
-        items={all}
-        secondary={secondary}
+        main={main}
+        groups={groups}
         cta={cta}
         contact={contact}
         labels={labels}

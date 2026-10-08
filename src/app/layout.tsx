@@ -16,7 +16,10 @@ import TabBar from '@/components/layout/TabBar';
 import HeadScript from '@/components/motion/HeadScript';
 import MorphProvider from '@/components/motion/MorphProvider';
 import ScrollProgress from '@/components/motion/ScrollProgress';
-import { contact, fill, footerColumns, info, isEnabled, mailHref, menuNav, nav, secondaryNav, site, siteUrl, telHref, ui } from '@/lib/data';
+import SearchDialog from '@/components/search/SearchDialog';
+import PwaRegister from '@/components/pwa/PwaRegister';
+import { contact, fill, footerColumns, headerNav, info, isEnabled, mailHref, mainNav, navGroups, site, siteUrl, telHref, ui } from '@/lib/data';
+import { searchQuickLinks } from '@/lib/search';
 
 /* The variable font: one file, and every weight between 200 and 800 —
    headings sit at weights a static family does not ship. */
@@ -95,9 +98,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {isEnabled('scrollProgress') ? <ScrollProgress /> : null}
 
         <SiteHeader
-          items={nav}
-          all={menuNav}
-          secondary={secondaryNav}
+          entries={headerNav}
+          main={mainNav}
+          groups={navGroups}
           cta={ui.header.cta}
           contact={contactProps}
           showTheme={showTheme}
@@ -105,6 +108,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             brand: `${info.name} — ${ui.common.home}`,
             menu: ui.common.menu,
             primaryNav: ui.common.primaryNav,
+            search: ui.search.open,
+            searchShortcut: ui.search.shortcut,
+            contactUs: ui.common.contactUs,
+            install: ui.install,
             openMenu: ui.common.openMenu,
             closeMenu: ui.common.closeMenu,
             ctaShort: ui.header.ctaShort,
@@ -132,6 +139,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           showTheme={showTheme}
           labels={{ contact: ui.footer.contactHeading, theme }}
         />
+
+        <SearchDialog copy={ui.search} quickLinks={searchQuickLinks()} />
+        <PwaRegister />
 
         {isEnabled('tabBar') ? <TabBar items={ui.tabBar.items} label={ui.tabBar.label} /> : null}
       </body>

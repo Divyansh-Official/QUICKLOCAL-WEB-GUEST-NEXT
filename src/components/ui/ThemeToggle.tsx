@@ -82,7 +82,7 @@ function useFollowSystem(choice: Choice) {
 const ICON: Record<Choice, string> = { light: 'sun', dark: 'moon', system: 'contrast' };
 
 /** A round button for the header: cycles Light → Dark → Auto. */
-export function ThemeButton({ labels }: { labels: { toggle: string; light: string; dark: string; system: string } }) {
+export function ThemeButton({ labels, className = '' }: { labels: { toggle: string; light: string; dark: string; system: string }; className?: string }) {
   const choice = useChoice();
   useFollowSystem(choice);
   const onClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -95,7 +95,7 @@ export function ThemeButton({ labels }: { labels: { toggle: string; light: strin
     <button
       type="button"
       onClick={onClick}
-      className="icon-btn h-10 w-10 text-fg hover:bg-[color-mix(in_oklab,var(--fg)_7%,transparent)]"
+      className={`icon-btn h-10 w-10 text-fg hover:bg-[color-mix(in_oklab,var(--fg)_7%,transparent)] ${className}`}
       aria-label={`${labels.toggle}: ${labels[choice]}`}
       title={`${labels.toggle}: ${labels[choice]}`}>
       <Icon name={ICON[choice]} size={19} strokeWidth={1.8} />

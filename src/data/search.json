@@ -1,0 +1,117 @@
+{
+  "_source": "What site search knows beyond page titles: the sections worth landing on directly, and the other words people type for each page. Pages, aisles and answers are read from their own files.",
+  "quick": [
+    "/services",
+    "/events",
+    "/how-it-works",
+    "/try",
+    "/sell",
+    "/deliver"
+  ],
+  "pageKeys": {
+    "/": "home",
+    "/services": "services",
+    "/events": "events",
+    "/how-it-works": "howItWorks",
+    "/try": "try",
+    "/app": "app",
+    "/safety": "safety",
+    "/about": "about",
+    "/sell": "sell",
+    "/deliver": "deliver",
+    "/pricing": "pricing",
+    "/for-business": "forBusiness",
+    "/help": "help",
+    "/contact": "contact",
+    "/get-the-app": "getTheApp"
+  },
+  "keywords": {
+    "/": "home start overview",
+    "/services": "categories aisles shops grocery hardware furniture fashion toys others",
+    "/events": "festival sale offers deals discount occasion",
+    "/how-it-works": "order steps process tracking",
+    "/try": "demo sample simulate walkthrough checkout cart basket",
+    "/app": "screens features tour notifications search",
+    "/safety": "trust secure verified otp code refund documents",
+    "/about": "company story mission team",
+    "/sell": "vendor shop seller merchant list sell",
+    "/deliver": "rider driver delivery partner earn job bike bicycle scooter",
+    "/pricing": "plans subscription free pro price cost vendor",
+    "/for-business": "vendor rider partner business",
+    "/help": "faq questions support answers",
+    "/contact": "phone email call support address",
+    "/get-the-app": "download install android ios play store app store onboarding"
+  },
+  "sections": [
+    {
+      "label": "What an order costs",
+      "href": "/#what-it-costs",
+      "icon": "calculator",
+      "text": "Work out the delivery fee for a basket and a distance.",
+      "keywords": "fee estimator calculator delivery charge"
+    },
+    {
+      "label": "Every order state",
+      "href": "/#order-lifecycle",
+      "icon": "route",
+      "text": "Placed, accepted, picked up, delivered — and what happens when it is not.",
+      "keywords": "status tracking cancelled refund"
+    },
+    {
+      "label": "Delivery radius",
+      "href": "/services#radius",
+      "icon": "radius",
+      "text": "How far shops can be, and what delivery costs at each distance.",
+      "keywords": "distance km range area widen"
+    },
+    {
+      "label": "How delivery works",
+      "href": "/services#delivery",
+      "icon": "truck",
+      "text": "The radius, the time limit and the base fee.",
+      "keywords": "delivery time hours"
+    },
+    {
+      "label": "Refer & Earn",
+      "href": "/services#referral",
+      "icon": "gift",
+      "text": "Money off when a friend's first order lands.",
+      "keywords": "referral invite friend code discount"
+    },
+    {
+      "label": "Free-delivery planner",
+      "href": "/sell#planner",
+      "icon": "calculator",
+      "text": "Choose the basket size above which a shop covers delivery.",
+      "keywords": "threshold free delivery vendor"
+    },
+    {
+      "label": "What a delivery pays",
+      "href": "/deliver#earnings",
+      "icon": "wallet",
+      "text": "The whole delivery fee goes to the rider.",
+      "keywords": "rider earnings pay income per km"
+    },
+    {
+      "label": "Rider documents",
+      "href": "/deliver#documents",
+      "icon": "id",
+      "text": "What to have ready for each kind of vehicle.",
+      "keywords": "licence rc aadhaar pan vehicle papers"
+    },
+    {
+      "label": "Rider tiers",
+      "href": "/#ride-with-us",
+      "icon": "star",
+      "text": "Bronze to Platinum, earned on deliveries and rating.",
+      "keywords": "badge level rating bronze silver gold platinum"
+    },
+    {
+      "label": "How offers work",
+      "href": "/events#offers",
+      "icon": "tag",
+      "text": "Percentage or flat amount, set by the shop, applied at checkout.",
+      "keywords": "discount coupon deal"
+    }
+  ]
+}

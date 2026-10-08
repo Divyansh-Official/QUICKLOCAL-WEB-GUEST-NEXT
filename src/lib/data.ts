@@ -105,15 +105,28 @@ export const categories: Category[] = [...categoriesJson.items].sort(
 export const getCategory = (slug: string) => categories.find(c => c.slug === slug) ?? null;
 
 /**
- * Header links: everything but Home (the logo already is it) and the page the
- * header's own button opens — the same destination twice in one bar is noise.
- * The phone menu keeps the full list.
+ * Navigation. The header has five entries; two open a small menu of pages
+ * (`NavGroup`). The phone menu shows `mainNav` large and the groups below.
  */
-export const nav: Link[] = navJson.primary.filter(item => item.href !== '/' && item.href !== uiJson.header.cta.href);
-export const allNav: Link[] = navJson.primary;
-/** The phone menu: every primary page, less the one its own button opens. */
-export const menuNav: Link[] = navJson.primary.filter(item => item.href !== uiJson.header.cta.href);
-export const secondaryNav: Link[] = navJson.secondary;
+export type NavItem = { label: string; href: string; icon: string; text: string };
+export type NavGroup = { key: string; label: string; items: NavItem[] };
+export type HeaderEntry = { label: string; href: string } | { label: string; group: NavGroup };
+
+const groupsJson = navJson.groups as Record<string, { label: string; items: NavItem[] }>;
+export const navGroups: NavGroup[] = Object.entries(groupsJson).map(([key, g]) => ({ key, ...g }));
+export const headerNav: HeaderEntry[] = navJson.header.map(entry =>
+  'group' in entry && entry.group ? { label: entry.label, group: navGroups.find(g => g.key === entry.group)! } : { label: entry.label, href: (entry as Link).href },
+);
+export const mainNav: Link[] = navJson.main;
+
+/** Every page on the site once — for the sitemap and the search index. */
+export const allRoutes: string[] = [
+  ...new Set(
+    ['/', ...mainNav.map(l => l.href), ...navGroups.flatMap(g => g.items.map(i => i.href)), ...navJson.footer.flatMap(c => c.links.map(l => l.href)), uiJson.header.cta.href, '/contact'].map(
+      href => href.split('#')[0] || '/',
+    ),
+  ),
+];
 export const footerColumns: FooterColumn[] = navJson.footer;
 
 export const isEnabled = (flag: keyof typeof siteJson.features) => siteJson.features[flag] !== false;

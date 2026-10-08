@@ -19,9 +19,11 @@ import Aurora from '@/components/ui/Aurora';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
+import ShareButton from '@/components/ui/ShareButton';
 import Shelf from '@/components/ui/Shelf';
 import Slab3D from '@/components/ui/Slab3D';
 import { categories, fees, fill, fillDeep, getCategory, info, inr, pages, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.services);
 
@@ -34,7 +36,7 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const c = getCategory((await params).slug);
   if (!c) return {};
-  return { title: `${c.name} — ${copy.meta.title}`, description: `${c.tagline} ${c.blurb}.` };
+  return pageMetadata({ title: `${c.name} — ${copy.meta.title}`, description: `${c.tagline} ${c.blurb}.` }, `/services/${c.slug}`);
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -53,8 +55,9 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
       <section className="tone-night">
         <div data-morph-target className="detail-hero">
           <Aurora variant="night" />
-          <div className="shell relative pt-[calc(var(--header-h)+16px)]">
+          <div className="shell relative flex items-center justify-between gap-3 pt-[calc(var(--header-h)+16px)]">
             <MorphBack href="/services" label={ui.common.back} />
+            <ShareButton copy={ui.share} />
           </div>
           <div className="detail-hero-body shell relative my-auto grid items-center gap-8 pt-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-10">
             <div className="relative flex justify-center lg:order-2">

@@ -17,12 +17,13 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
 import { deliveryRules, fillDeep, pages, riders, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.deliver);
 const earnings = fillDeep(pages.forBusiness.earnings);
 const docs = fillDeep(riders.documents);
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/deliver');
 
 export default function DeliverPage() {
   return (

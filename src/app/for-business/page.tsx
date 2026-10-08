@@ -13,10 +13,11 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
 import { deliveryRules, features, fillDeep, pages, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.forBusiness);
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/for-business');
 
 function Track({ id, icon, hue, title, text, items, cta, secondary }: { id: string; icon: string; hue: string; title: string; text: string; items: string[]; cta: { label: string; href: string }; secondary?: { label: string; href: string } }) {
   return (

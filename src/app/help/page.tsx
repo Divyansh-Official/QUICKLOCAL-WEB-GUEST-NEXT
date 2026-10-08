@@ -11,10 +11,11 @@ import PageHero from '@/components/sections/shared/PageHero';
 import Button from '@/components/ui/Button';
 import Icon from '@/components/ui/Icon';
 import { faqAll, faqAudiences, fillDeep, pages, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.help);
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/help');
 
 export default function HelpPage() {
   return (

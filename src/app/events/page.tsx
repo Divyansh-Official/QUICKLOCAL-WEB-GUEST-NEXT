@@ -18,10 +18,11 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
 import { fillDeep, pages, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.events);
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/events');
 
 function Card({ icon, title, text, index }: { icon: string; title: string; text: string; index: number }) {
   return (

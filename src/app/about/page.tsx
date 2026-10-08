@@ -16,10 +16,11 @@ import Icon from '@/components/ui/Icon';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Tilt from '@/components/ui/Tilt';
 import { about, categories, contact, fillDeep, pages, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.about);
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/about');
 
 export default function AboutPage() {
   return (

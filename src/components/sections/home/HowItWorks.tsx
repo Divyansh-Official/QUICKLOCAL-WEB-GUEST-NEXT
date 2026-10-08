@@ -14,7 +14,7 @@ export default function HowItWorks({
   section,
   steps,
 }: {
-  section: { eyebrow: string; title: string; accent: string; cta?: { label: string; href: string } };
+  section: { eyebrow: string; title: string; accent: string; cta?: { label: string; href: string }; secondary?: { label: string; href: string } };
   steps: { n: number; title: string; body: string; status: string }[];
 }) {
   return (
@@ -47,7 +47,12 @@ export default function HowItWorks({
           </ol>
         </div>
         {section.cta ? (
-          <Reveal className="mt-14 flex justify-center">
+          <Reveal className="mt-14 flex flex-wrap justify-center gap-2 sm:gap-3">
+            {section.secondary ? (
+              <Button href={section.secondary.href} icon="arrow-right">
+                {section.secondary.label}
+              </Button>
+            ) : null}
             <Button href={section.cta.href} variant="glass" icon="arrow-right">
               {section.cta.label}
             </Button>

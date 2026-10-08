@@ -9,17 +9,23 @@ import OrderLifecycle from '@/components/sections/home/OrderLifecycle';
 import Clocks from '@/components/sections/shared/Clocks';
 import CtaBanner from '@/components/sections/shared/CtaBanner';
 import PageHero from '@/components/sections/shared/PageHero';
+import Button from '@/components/ui/Button';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { fillDeep, lifecycle, pages, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.howItWorks);
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/how-it-works');
 
 export default function HowItWorksPage() {
   return (
     <>
-      <PageHero {...copy.hero} crumbs={[{ label: copy.meta.title }]} labels={{ home: ui.common.home, breadcrumb: ui.common.breadcrumb }} />
+      <PageHero {...copy.hero} crumbs={[{ label: copy.meta.title }]} labels={{ home: ui.common.home, breadcrumb: ui.common.breadcrumb }}>
+        <Button href={copy.hero.cta.href} size="lg" icon="arrow-right">
+          {copy.hero.cta.label}
+        </Button>
+      </PageHero>
 
       <section className="tone-base pb-[var(--section-y)]">
         <div className="shell">

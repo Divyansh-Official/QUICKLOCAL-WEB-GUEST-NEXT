@@ -13,11 +13,12 @@ import Slab3D from '@/components/ui/Slab3D';
 import Tilt from '@/components/ui/Tilt';
 import { featureLabels, fill, fillDeep, inr, pages, plans, ui } from '@/lib/data';
 import RailDots from '@/components/ui/RailDots';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.pricing);
 const ORDER = ['sales_dashboard', 'export_orders', 'customer_history', 'priority_support', 'advanced_analytics', 'featured_badge', 'bulk_offers', 'custom_banner'];
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/pricing');
 
 const products = (max: number) => (max < 0 ? copy.unlimited : String(max));
 const boosts = (n: number) => (n <= 0 ? copy.noBoosts : fill(n === 1 ? copy.boosts : copy.boostsPlural, { count: n }));

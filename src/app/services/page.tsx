@@ -1,6 +1,6 @@
 /**
  * /services — PageHero → every category as a card that zooms open into its
- * page → how delivery works → refer a friend. The old #slug anchors still
+ * page → how delivery works → the radius explorer → refer a friend. The old #slug anchors still
  * resolve: each card carries its category's id.
  */
 import type { Metadata } from 'next';
@@ -13,11 +13,13 @@ import PageHero from '@/components/sections/shared/PageHero';
 import SectionHeader from '@/components/ui/SectionHeader';
 import AccentText from '@/components/ui/AccentText';
 import Button from '@/components/ui/Button';
-import { categories, fill, fillDeep, pages, ui } from '@/lib/data';
+import RadiusExplorer from '@/components/sections/services/RadiusExplorer';
+import { categories, deliveryRules, fill, fillDeep, info, pages, ui } from '@/lib/data';
+import { pageMetadata } from '@/lib/seo';
 
 const copy = fillDeep(pages.services);
 
-export const metadata: Metadata = { title: copy.meta.title, description: copy.meta.description };
+export const metadata: Metadata = pageMetadata(copy.meta, '/services');
 
 export default function ServicesPage() {
   return (
@@ -63,6 +65,15 @@ export default function ServicesPage() {
           <div className="mt-14">
             <FactGrid items={copy.delivery.items} />
           </div>
+        </div>
+      </section>
+
+      <section id="radius" className="tone-base section scroll-mt-24">
+        <div className="shell">
+          <SectionHeader eyebrow={copy.radius.eyebrow} title={copy.radius.title} accent={copy.radius.accent} intro={copy.radius.intro} />
+          <Reveal className="mt-14">
+            <RadiusExplorer copy={copy.radius} stepsKm={info.delivery.radiusStepsKm} rules={deliveryRules} hours={info.delivery.maxHours} />
+          </Reveal>
         </div>
       </section>
 

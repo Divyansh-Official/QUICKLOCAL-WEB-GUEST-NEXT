@@ -1,13 +1,6 @@
 {
-  "primary": [
-    {
-      "label": "Home",
-      "href": "/"
-    },
-    {
-      "label": "How It Works",
-      "href": "/how-it-works"
-    },
+  "_source": "Navigation. The header carries five entries — two of them open a small menu — so the bar stays short. The phone menu shows the four most-used pages large and the rest in two labelled groups. Every page is also in the footer and in search.",
+  "header": [
     {
       "label": "Services",
       "href": "/services"
@@ -17,26 +10,102 @@
       "href": "/events"
     },
     {
-      "label": "The App",
-      "href": "/app"
+      "label": "Explore",
+      "group": "explore"
     },
     {
-      "label": "Sell",
-      "href": "/sell"
-    },
-    {
-      "label": "Deliver",
-      "href": "/deliver"
+      "label": "Partners",
+      "group": "partners"
     },
     {
       "label": "Help",
       "href": "/help"
-    },
-    {
-      "label": "Get the App",
-      "href": "/get-the-app"
     }
   ],
+  "main": [
+    {
+      "label": "Services",
+      "href": "/services"
+    },
+    {
+      "label": "Events",
+      "href": "/events"
+    },
+    {
+      "label": "How It Works",
+      "href": "/how-it-works"
+    },
+    {
+      "label": "Help",
+      "href": "/help"
+    }
+  ],
+  "groups": {
+    "explore": {
+      "label": "Explore",
+      "items": [
+        {
+          "label": "How It Works",
+          "href": "/how-it-works",
+          "icon": "route",
+          "text": "One order, from shelf to doorstep"
+        },
+        {
+          "label": "Try a Sample Order",
+          "href": "/try",
+          "icon": "basket",
+          "text": "Tap through one, start to finish"
+        },
+        {
+          "label": "Inside the App",
+          "href": "/app",
+          "icon": "smartphone",
+          "text": "The screens a customer sees"
+        },
+        {
+          "label": "Trust & Safety",
+          "href": "/safety",
+          "icon": "shield-check",
+          "text": "The rules that keep an order honest"
+        },
+        {
+          "label": "About Us",
+          "href": "/about",
+          "icon": "heart",
+          "text": "Who we are, and why"
+        }
+      ]
+    },
+    "partners": {
+      "label": "Partners",
+      "items": [
+        {
+          "label": "Sell on QuickLocal",
+          "href": "/sell",
+          "icon": "store",
+          "text": "Open your shop to your street"
+        },
+        {
+          "label": "Deliver with QuickLocal",
+          "href": "/deliver",
+          "icon": "bike",
+          "text": "Keep the whole delivery fee"
+        },
+        {
+          "label": "Pricing",
+          "href": "/pricing",
+          "icon": "tag",
+          "text": "Shop plans, from free"
+        },
+        {
+          "label": "For Business",
+          "href": "/for-business",
+          "icon": "users",
+          "text": "Selling and delivering, side by side"
+        }
+      ]
+    }
+  },
   "_removed": "The mock has a Blog entry. There are no posts and no CMS behind this site, so a Blog link would open an empty page — it is left out until there is something to read.",
   "footer": [
     {
@@ -45,6 +114,10 @@
         {
           "label": "How It Works",
           "href": "/how-it-works"
+        },
+        {
+          "label": "Try a Sample Order",
+          "href": "/try"
         },
         {
           "label": "Inside the App",
@@ -69,6 +142,10 @@
         {
           "label": "About Us",
           "href": "/about"
+        },
+        {
+          "label": "Contact Us",
+          "href": "/contact"
         }
       ]
     },
@@ -78,6 +155,10 @@
         {
           "label": "What an Order Costs",
           "href": "/#what-it-costs"
+        },
+        {
+          "label": "Delivery Radius",
+          "href": "/services#radius"
         },
         {
           "label": "Delivery Information",
@@ -125,29 +206,6 @@
           "href": "/for-business"
         }
       ]
-    }
-  ],
-  "_primary": "The header shows primary minus Home (the logo is Home) and minus the header button's own destination. The phone menu shows primary large and secondary small.",
-  "secondary": [
-    {
-      "label": "Pricing",
-      "href": "/pricing"
-    },
-    {
-      "label": "About",
-      "href": "/about"
-    },
-    {
-      "label": "Trust & Safety",
-      "href": "/safety"
-    },
-    {
-      "label": "For Business",
-      "href": "/for-business"
-    },
-    {
-      "label": "Contact",
-      "href": "/contact"
     }
   ]
 }

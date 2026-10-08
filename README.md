@@ -79,6 +79,8 @@ section renders itself the day one is added.
 | `/deliver` | For riders — what a delivery pays, on a slider → **pick your vehicle, see your papers** → 3D tier medals → the rules that protect a rider's time |
 | `/safety` | Verification, the codes at both ends, money that waits for the order (each with scroll-driven art) → the clocks → the checks nobody sees |
 | `/help` | **Help Centre** — every question, searchable as you type, filtered by who is asking, shareable as `?q=…&topic=…`, published as FAQPage data |
+| `/try` | **Try a sample order** — a working phone: pick an aisle, fill a basket, choose the shop's distance and pay; then every real order state, both codes and where the money went. Made-up shop and prices, labelled; nothing is sent |
+| `/offline` | What the service worker shows for a page never opened on this device, when there is no signal. Not indexed |
 | `/for-business` | Both partner tracks side by side, linking to `/sell` and `/deliver` |
 | `/pricing` | Plan cards → full comparison |
 | `/get-the-app` | Store badges (marked *Soon* until `app.json` says otherwise) → onboarding for each role |
@@ -87,6 +89,16 @@ section renders itself the day one is added.
 Plus `sitemap.xml`, `robots.txt`, a 404, an error boundary, and a generated
 1200×630 social card (`app/opengraph-image.tsx`) built from the same JSON, so a
 shared link never quotes a stale fee.
+
+## Finding your way
+
+| What | Where |
+|---|---|
+| The header has five entries — Services, Events, **Explore ▾**, **Partners ▾**, Help — the two menus opening as glass flyouts (hover, click or ↓ from the keyboard). The phone menu shows four pages large and the rest in the same two groups. Every page is also in the footer and in search | `data/nav.json`, `layout/NavFlyout`, `layout/MobileMenu` |
+| Search: ⌘K / Ctrl+K or `/` anywhere, the magnifier in the header, or the field at the top of the phone menu. Pages, sections, aisles and every Help answer, matched as you type. The index is one static file, `/search-index.json`, fetched only when search opens | `search/SearchDialog`, `lib/search.ts`, `data/search.json` |
+| Share: a chip beside every page's breadcrumb — the system share sheet where there is one, otherwise the link is copied | `ui/ShareButton` |
+| Installable: a web app manifest, and a small service worker — pages network-first and kept for offline, build assets cache-first. An Install card on Get the App and in the phone menu appears only where installing works | `app/manifest.ts`, `public/sw.js`, `pwa/*` |
+| Link previews: every page and every aisle has its own Open Graph card, title, description and canonical URL; breadcrumbs and Help publish structured data | `lib/og.tsx`, `lib/seo.ts`, `*/opengraph-image.tsx` |
 
 ## Design
 

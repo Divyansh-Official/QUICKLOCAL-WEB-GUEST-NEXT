@@ -22,7 +22,8 @@
     "deliveryFrom": "Delivery from {base}",
     "readMore": "Read more",
     "readLess": "Show less",
-    "onThisPage": "On this page"
+    "onThisPage": "On this page",
+    "contactUs": "Contact us"
   },
   "header": {
     "cta": {
@@ -106,5 +107,59 @@
     "title": "That did not load.",
     "body": "A part of this page failed to render. Try again — and if it keeps happening, write to us.",
     "retry": "Try again"
+  },
+  "search": {
+    "open": "Search",
+    "label": "Search QuickLocal",
+    "placeholder": "Search pages, aisles and answers",
+    "shortcut": "⌘K",
+    "close": "Close search",
+    "popular": "Popular",
+    "suggestions": [
+      "Delivery fee",
+      "Refund",
+      "Bicycle",
+      "Toys",
+      "Events",
+      "Free delivery"
+    ],
+    "groups": {
+      "page": "Pages",
+      "section": "On a page",
+      "category": "Aisles",
+      "faq": "Answers"
+    },
+    "results": "{n} results",
+    "resultsOne": "1 result",
+    "emptyTitle": "Nothing matches “{q}”",
+    "emptyText": "Try a shorter word — or ask a person.",
+    "emptyCta": "Contact us",
+    "hintMove": "to move",
+    "hintOpen": "to open",
+    "hintClose": "to close",
+    "loading": "Loading…",
+    "error": "Search could not load. Check your connection and try again.",
+    "cancel": "Cancel"
+  },
+  "share": {
+    "label": "Share",
+    "copy": "Copy link",
+    "copied": "Link copied",
+    "failed": "Could not copy — the link is in the address bar"
+  },
+  "install": {
+    "title": "Put QuickLocal on your home screen",
+    "text": "This site installs like an app — its own icon, full screen, and the pages you opened still there without a signal.",
+    "button": "Install",
+    "iosTitle": "On iPhone or iPad",
+    "iosSteps": "In Safari, tap Share, then Add to Home Screen.",
+    "installed": "On your home screen",
+    "note": "The store apps for ordering, selling and delivering are on their way; this is the website, installed."
+  },
+  "offline": {
+    "title": "You are offline",
+    "text": "This page has not been opened on this device yet, so there is no copy of it to show. Pages you have visited before still open without a signal.",
+    "retry": "Try again",
+    "home": "Go home"
   }
 }

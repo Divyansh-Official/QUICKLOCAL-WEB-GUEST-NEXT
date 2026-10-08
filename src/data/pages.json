@@ -162,6 +162,22 @@
         "label": "Events & offers",
         "href": "/events"
       }
+    },
+    "radius": {
+      "eyebrow": "Your radius",
+      "title": "Choose how far your street reaches.",
+      "accent": "how far your street reaches.",
+      "intro": "Every saved address starts at {radius} km. Widen it, a step at a time, up to {maxRadius} km — and see what that means for the area you can order from and for delivery.",
+      "label": "Delivery radius",
+      "area": "Area you can order from",
+      "areaUnit": "km²",
+      "edge": "Delivery from a shop at the edge",
+      "edgeNote": "{base} base + {extra} for {extraKm} km beyond {freeKm}",
+      "edgeNoteBase": "The {base} base covers it all",
+      "time": "Longest any order may take",
+      "times": "{hours} hours, at every radius",
+      "steps": "Steps of {step} km, saved per address",
+      "note": "Delivery is worked out per order from the shop's real distance to you; a shop nearer than your edge costs less. The per-km rate follows the day's fuel price."
     }
   },
   "forBusiness": {
@@ -323,7 +339,11 @@
       "eyebrow": "How it works",
       "title": "From the shelf to your door, step by step.",
       "accent": "step by step.",
-      "intro": "One order, followed end to end — what you see, what the shop and the rider see, and the rules the platform holds everyone to along the way."
+      "intro": "One order, followed end to end — what you see, what the shop and the rider see, and the rules the platform holds everyone to along the way.",
+      "cta": {
+        "label": "Try a sample order",
+        "href": "/try"
+      }
     },
     "journey": {
       "eyebrow": "One order",
@@ -1352,6 +1372,266 @@
       "secondary": {
         "label": "Events & offers",
         "href": "/events"
+      }
+    }
+  },
+  "try": {
+    "meta": {
+      "title": "Try a Sample Order",
+      "description": "Walk one order through {name} from aisle to doorstep — the real steps, the real delivery arithmetic and both codes. Nothing is ordered, charged or sent."
+    },
+    "hero": {
+      "eyebrow": "Try it",
+      "title": "Place an order that goes nowhere.",
+      "accent": "goes nowhere.",
+      "intro": "A sample order you can tap through, start to finish — the same steps, fees and codes the app uses. No shop, rider or payment is involved, and nothing leaves this page."
+    },
+    "demo": {
+      "label": "Sample order",
+      "illustrative": "Sample shop · prices are made up",
+      "shop": "A {aisle} shop near you",
+      "shopMeta": "Verified · {km} km away",
+      "add": "Add",
+      "basket": "Basket",
+      "empty": "Add something to carry on.",
+      "subtotal": "Basket",
+      "delivery": "Delivery",
+      "deliveryNote": "{base} base{extra}",
+      "deliveryExtra": " + {extra} for {extraKm} km beyond {freeKm} km",
+      "shopCovers": "Shop covers the {base} base",
+      "freeFrom": "Free delivery from {threshold} at this shop",
+      "freeLeft": "{left} more and the shop covers the base",
+      "total": "You pay",
+      "distance": "Shop distance",
+      "distances": [
+        2,
+        4,
+        6,
+        9
+      ],
+      "pay": "Pay {total}",
+      "waitingShop": "Waiting for the shop…",
+      "waitingRider": "Offering the job to a rider…",
+      "riderOffer": "Offered to one rider at a time",
+      "riderMasked": "Calls are masked — neither side sees a number",
+      "pickupCode": "Pickup code at the counter",
+      "deliveryCode": "Your delivery code",
+      "deliveryCodeNote": "Give it only when the rider is at your door.",
+      "eta": "Arriving in {min} min",
+      "enterCode": "Rider enters your code",
+      "delivered": "Delivered",
+      "receipt": "Where the money went",
+      "youPaid": "You paid",
+      "shopFunded": "Shop funded the base",
+      "riderEarns": "Rider earns",
+      "riderNote": "the whole delivery fee",
+      "rate": "Rate the shop and the rider",
+      "back": "Back",
+      "next": "Next",
+      "restart": "Start again",
+      "stepOf": "Step {n} of {total}",
+      "codes": {
+        "pickup": [
+          "2",
+          "9",
+          "0",
+          "3"
+        ],
+        "delivery": [
+          "4",
+          "8",
+          "1",
+          "7"
+        ]
+      },
+      "minutes": 18,
+      "yourBasket": "Your basket",
+      "deliveryPaid": "Delivery you paid"
+    },
+    "aisleItems": {
+      "grocery": [
+        {
+          "name": "Toned milk, 1 L",
+          "price": 68
+        },
+        {
+          "name": "Brown bread",
+          "price": 45
+        },
+        {
+          "name": "Tomatoes, 1 kg",
+          "price": 40
+        },
+        {
+          "name": "Basmati rice, 1 kg",
+          "price": 140
+        }
+      ],
+      "hardware": [
+        {
+          "name": "LED bulb, 9 W",
+          "price": 120
+        },
+        {
+          "name": "Extension board",
+          "price": 349
+        },
+        {
+          "name": "Screwdriver set",
+          "price": 249
+        },
+        {
+          "name": "Wall hooks, 6",
+          "price": 90
+        }
+      ],
+      "furniture": [
+        {
+          "name": "Folding stool",
+          "price": 799
+        },
+        {
+          "name": "Wall shelf",
+          "price": 649
+        },
+        {
+          "name": "Shoe rack",
+          "price": 1299
+        },
+        {
+          "name": "Bedside table",
+          "price": 2499
+        }
+      ],
+      "fashion": [
+        {
+          "name": "Cotton kurta",
+          "price": 899
+        },
+        {
+          "name": "Cotton socks, 3",
+          "price": 249
+        },
+        {
+          "name": "Dupatta",
+          "price": 399
+        },
+        {
+          "name": "Denim jeans",
+          "price": 1299
+        }
+      ],
+      "toys": [
+        {
+          "name": "Building blocks",
+          "price": 599
+        },
+        {
+          "name": "Jigsaw puzzle",
+          "price": 349
+        },
+        {
+          "name": "Toy car",
+          "price": 249
+        },
+        {
+          "name": "Colouring kit",
+          "price": 199
+        }
+      ],
+      "others": [
+        {
+          "name": "Notebooks, 3",
+          "price": 180
+        },
+        {
+          "name": "Phone charger",
+          "price": 499
+        },
+        {
+          "name": "Diya set, 6",
+          "price": 120
+        },
+        {
+          "name": "Gift wrap",
+          "price": 60
+        }
+      ]
+    },
+    "steps": [
+      {
+        "key": "aisle",
+        "title": "Pick an aisle",
+        "text": "Six aisles, and every shop in them can reach you — {radius} km out by default, up to {maxRadius} km if you widen it.",
+        "rule": "Search never shows a shop that cannot deliver to you."
+      },
+      {
+        "key": "basket",
+        "title": "Fill a basket",
+        "text": "Shops list what they really have on the shelf, at their own prices. These four are made up for the demo.",
+        "rule": ""
+      },
+      {
+        "key": "checkout",
+        "title": "See every rupee first",
+        "text": "Delivery is worked out the way the platform does it: {base} covers the first {freeKm} km, and each kilometre beyond is charged at the day's per-km rate, rounded up to the rupee. At or over the shop's free-delivery amount, the shop pays the {base} base.",
+        "rule": "There is no other line on the bill — what you see here is what you pay."
+      },
+      {
+        "key": "placed",
+        "status": "PLACED",
+        "title": "Pay — and the shop is told",
+        "text": "",
+        "rule": "Payment has to be finished within 30 minutes, or the order is cancelled and the stock released."
+      },
+      {
+        "key": "shop",
+        "status": "VENDOR_ACCEPTED",
+        "title": "The shop says yes",
+        "text": "",
+        "rule": "Only now is any rider asked."
+      },
+      {
+        "key": "rider",
+        "status": "DELIVERY_ASSIGNED",
+        "title": "A rider says yes",
+        "text": "",
+        "rule": "Offered to one rider at a time, for a minute each. If nobody takes it within 15 minutes, the order is cancelled and refunded."
+      },
+      {
+        "key": "pickup",
+        "status": "DELIVERY_PICKED",
+        "title": "Picked up, with a code",
+        "text": "",
+        "rule": "An accepted order that is not collected within 30 minutes passes to another rider."
+      },
+      {
+        "key": "transit",
+        "status": "IN_TRANSIT",
+        "title": "On its way",
+        "text": "",
+        "rule": "No order may take longer than {hours} hours from placing to your door."
+      },
+      {
+        "key": "delivered",
+        "status": "DELIVERED",
+        "title": "Your code, then it's done",
+        "text": "",
+        "rule": "The shop and the rider are paid only after delivery — the rider gets the whole delivery fee."
+      }
+    ],
+    "after": {
+      "eyebrow": "That's the whole of it",
+      "title": "Now do it for real.",
+      "accent": "for real.",
+      "text": "The apps are on their way to the stores. Until then, here is how each step works in more detail.",
+      "cta": {
+        "label": "Get the app",
+        "href": "/get-the-app"
+      },
+      "secondary": {
+        "label": "How it works",
+        "href": "/how-it-works"
       }
     }
   }
