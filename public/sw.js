@@ -5,8 +5,11 @@
  * visitor has opened still open without a signal; one never opened shows the
  * offline page instead. Nothing is served stale while online.
  * Build assets (/_next/static, hashed and immutable) and images: cache first.
+ *
+ * It is registered as /sw.js?v=<deploy>, so every deploy installs it afresh:
+ * the offline page is re-fetched and the previous deploy's caches are cleared.
  */
-const VERSION = 'ql-v1';
+const VERSION = `ql-${new URL(self.location.href).searchParams.get('v') || 'local'}`;
 const PAGES = `${VERSION}-pages`;
 const ASSETS = `${VERSION}-assets`;
 const OFFLINE = '/offline';

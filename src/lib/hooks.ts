@@ -1,22 +1,13 @@
 'use client';
 
-import { useSyncExternalStore } from 'react';
-
+let locks = 0;
 /**
- * A media query read the way React wants an external value read: the server
- * snapshot is fixed, so hydration always matches, and the real value lands in
- * the same commit rather than a render later.
+ * Holds the page still behind a sheet (the phone menu, search). Counted, so a
+ * sheet opened from another keeps the page locked until both have closed.
  */
-export function useMediaQuery(query: string, serverValue = false) {
-  return useSyncExternalStore(
-    onChange => {
-      const list = window.matchMedia(query);
-      list.addEventListener('change', onChange);
-      return () => list.removeEventListener('change', onChange);
-    },
-    () => window.matchMedia(query).matches,
-    () => serverValue,
-  );
+export function lockPage(on: boolean) {
+  locks = Math.max(0, locks + (on ? 1 : -1));
+  document.documentElement.classList.toggle('page-locked', locks > 0);
 }
 
 /** Reduced motion, or ?nomotion for screenshots. */
@@ -26,10 +17,4 @@ export function prefersCalm() {
     window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
     document.documentElement.classList.contains('no-motion')
   );
-}
-
-const NO_SUBSCRIBE = () => () => {};
-/** False on the server and in the hydrating render, true after. */
-export function useHydrated() {
-  return useSyncExternalStore(NO_SUBSCRIBE, () => true, () => false);
 }

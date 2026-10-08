@@ -9,7 +9,7 @@
  * A non-modal <dialog> so it can sit beneath the header, doing the modal work
  * itself: everything outside the header and the menu goes inert, Escape and a
  * tap on the backdrop close it, focus returns to the button, and the page
- * behind holds still (html:has(dialog[open])).
+ * behind holds still (lockPage).
  */
 import { useEffect, useRef, type RefObject } from 'react';
 import Link from 'next/link';
@@ -19,7 +19,7 @@ import InstallApp from '@/components/pwa/InstallApp';
 import { openSearch } from '@/components/search/SearchDialog';
 import { ThemeSegmented } from '@/components/ui/ThemeToggle';
 import type { NavGroup } from '@/lib/data';
-import { prefersCalm } from '@/lib/hooks';
+import { lockPage, prefersCalm } from '@/lib/hooks';
 
 export type MenuProps = {
   id: string;
@@ -66,12 +66,14 @@ export default function MobileMenu({ id, open, onClose, toggleRef, main, groups,
     if (open && !dialog.open) {
       dialog.removeAttribute('data-closing');
       dialog.show();
+      lockPage(true);
       setOutsideInert(dialog, true);
       dialog.querySelector<HTMLElement>('a, button')?.focus({ preventScroll: true });
       return;
     }
     if (!open && dialog.open) {
       setOutsideInert(dialog, false);
+      lockPage(false);
       if (dialog.contains(document.activeElement)) toggleRef.current?.focus({ preventScroll: true });
       if (prefersCalm()) {
         dialog.close();

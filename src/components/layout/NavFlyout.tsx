@@ -108,6 +108,16 @@ export default function NavFlyout({
 
   const focusFirst = () => requestAnimationFrame(() => panel.current?.querySelector<HTMLElement>('a')?.focus());
 
+  /* The panel lives at the end of the header, not after its button, so Tab is
+     routed by hand: into the open panel from the button, and on from its last
+     row to whatever followed the button in the bar. */
+  const focusAfterButton = () => {
+    const header = headerRef.current;
+    if (!header || !button.current) return;
+    const all = Array.from(header.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')).filter(el => !panel.current?.contains(el) && el.offsetParent !== null);
+    all[all.indexOf(button.current) + 1]?.focus();
+  };
+
   const leaving = (e: React.FocusEvent) => {
     const next = e.relatedTarget as Node | null;
     if (next && (button.current?.contains(next) || panel.current?.contains(next))) return;
@@ -135,7 +145,7 @@ export default function NavFlyout({
         }}
         onPointerLeave={e => e.pointerType === 'mouse' && hide(180)}
         onKeyDown={e => {
-          if (e.key === 'ArrowDown') {
+          if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey && open)) {
             e.preventDefault();
             show();
             focusFirst();
@@ -158,10 +168,21 @@ export default function NavFlyout({
               onPointerLeave={e => e.pointerType === 'mouse' && hide(180)}
               onBlur={leaving}
               onKeyDown={e => {
-                if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-                e.preventDefault();
                 const links = Array.from(panel.current?.querySelectorAll<HTMLElement>('a') ?? []);
                 const at = links.indexOf(document.activeElement as HTMLElement);
+                if (e.key === 'Tab') {
+                  if (e.shiftKey && at === 0) {
+                    e.preventDefault();
+                    button.current?.focus();
+                  } else if (!e.shiftKey && at === links.length - 1) {
+                    e.preventDefault();
+                    setOpen(false);
+                    focusAfterButton();
+                  }
+                  return;
+                }
+                if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+                e.preventDefault();
                 links[(at + (e.key === 'ArrowDown' ? 1 : -1) + links.length) % links.length]?.focus();
               }}>
               <p className="px-3 pb-1.5 pt-2 text-[11px] font-extrabold uppercase tracking-[0.14em] text-fg-3">{group.label}</p>

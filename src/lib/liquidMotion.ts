@@ -66,25 +66,3 @@ export class Spring {
   }
 }
 
-/**
- * How hard the glass is deforming, 0 to 1, from how fast it is moving.
- *
- * Saturating rather than linear: a droplet deforms less and less the faster it
- * goes, because surface tension is what resists it and that does not scale with
- * speed. A linear map keeps stretching without bound and reads as rubber.
- */
-export function flexFromSpeed(speed: number, knee = 900): number {
-  return speed / (speed + knee);
-}
-
-/**
- * Reduce Motion is about oscillation, not speed.
- *
- * Forcing at least critical damping keeps the tracking responsive while
- * removing overshoot entirely. Suppressing only the stretch would leave the
- * glass still rocking past its target, which is the part that actually causes
- * trouble for vestibular users.
- */
-export function dampFor(damping: number, reduceMotion: boolean): number {
-  return reduceMotion ? Math.max(1, damping) : damping;
-}

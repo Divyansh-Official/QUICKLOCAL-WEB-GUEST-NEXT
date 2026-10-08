@@ -14,6 +14,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNod
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Icon from '@/components/ui/Icon';
+import { lockPage } from '@/lib/hooks';
 import type { SearchEntry, SearchKind } from '@/lib/search';
 
 const EVENT = 'ql:search';
@@ -146,10 +147,12 @@ export default function SearchDialog({ copy, quickLinks }: { copy: Copy; quickLi
     if (open && !dialog.open) {
       dialog.removeAttribute('inert');
       dialog.showModal();
+      lockPage(true);
       /* The last search stays, selected — typing replaces it, Enter reopens it. */
       requestAnimationFrame(() => input.current?.select());
     } else if (!open && dialog.open) {
       dialog.close();
+      lockPage(false);
       opener.current?.focus?.({ preventScroll: true });
     }
   }, [open]);
@@ -233,7 +236,7 @@ export default function SearchDialog({ copy, quickLinks }: { copy: Copy; quickLi
             type="search"
             role="combobox"
             aria-expanded={count > 0}
-            aria-controls={listId}
+            aria-controls={count ? listId : undefined}
             aria-activedescendant={count ? optionId(active) : undefined}
             aria-autocomplete="list"
             aria-label={copy.label}

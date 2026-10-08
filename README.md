@@ -97,7 +97,7 @@ shared link never quotes a stale fee.
 | The header has five entries — Services, Events, **Explore ▾**, **Partners ▾**, Help — the two menus opening as glass flyouts (hover, click or ↓ from the keyboard). The phone menu shows four pages large and the rest in the same two groups. Every page is also in the footer and in search | `data/nav.json`, `layout/NavFlyout`, `layout/MobileMenu` |
 | Search: ⌘K / Ctrl+K or `/` anywhere, the magnifier in the header, or the field at the top of the phone menu. Pages, sections, aisles and every Help answer, matched as you type. The index is one static file, `/search-index.json`, fetched only when search opens | `search/SearchDialog`, `lib/search.ts`, `data/search.json` |
 | Share: a chip beside every page's breadcrumb — the system share sheet where there is one, otherwise the link is copied | `ui/ShareButton` |
-| Installable: a web app manifest, and a small service worker — pages network-first and kept for offline, build assets cache-first. An Install card on Get the App and in the phone menu appears only where installing works | `app/manifest.ts`, `public/sw.js`, `pwa/*` |
+| Installable: a web app manifest, and a small service worker — pages network-first and kept for offline, build assets cache-first. It is registered as `/sw.js?v=<commit>`, so each deploy installs a fresh one and clears the last deploy's caches. An Install card on Get the App and in the phone menu appears only where installing works (not in in-app browsers) | `app/manifest.ts`, `public/sw.js`, `pwa/*` |
 | Link previews: every page and every aisle has its own Open Graph card, title, description and canonical URL; breadcrumbs and Help publish structured data | `lib/og.tsx`, `lib/seo.ts`, `*/opengraph-image.tsx` |
 
 ## Design
@@ -203,5 +203,14 @@ legacy/           the previous site, excluded from build, lint and type-check
 ## Verified
 
 At 320, 375, 390, 768, 1024, 1280, 1440 and 2560 px, in light and dark, on
-every route: no horizontal page scroll, no console errors. Type-check, lint and
+every route: no horizontal page scroll, no console errors. Every route has one
+h1, no skipped heading levels, no duplicate ids, no unnamed links or buttons,
+its own title, description, canonical URL and preview card, and every internal
+link and #anchor resolves.
+
+Performance: the page's own style rules, not its scripts, are the main-thread
+cost, so avoid `:has()` on `html` or `body` — one such rule
+(`html:has(dialog[open])`) re-styled the whole page for every streamed chunk of
+HTML and cost about 40% of the home page's blocking time. Sheets lock the page
+with `lockPage()` instead. Type-check, lint and
 production build run in CI on every push (`.github/workflows/ci.yml`).

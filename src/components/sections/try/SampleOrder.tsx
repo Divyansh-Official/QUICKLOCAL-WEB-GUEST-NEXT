@@ -140,7 +140,7 @@ export default function SampleOrder({
       announced.current = true;
       return;
     }
-    panel.current?.querySelector<HTMLElement>('h3')?.focus({ preventScroll: true });
+    panel.current?.querySelector<HTMLElement>('h2')?.focus({ preventScroll: true });
   }, [at]);
 
   const current = aisles.find(a => a.slug === aisle) ?? aisles[0];
@@ -492,9 +492,9 @@ export default function SampleOrder({
               <code className="ml-1 rounded-md bg-[color-mix(in_oklab,var(--fg)_6%,transparent)] px-1.5 py-0.5 text-[10.5px] font-bold tracking-wide text-fg-3">{step.status}</code>
             ) : null}
           </p>
-          <h3 tabIndex={-1} className="t-display mt-3 outline-none">
+          <h2 tabIndex={-1} className="t-display mt-3 outline-none">
             {step.title}
-          </h3>
+          </h2>
           <p className="t-lead mt-4 max-w-xl">{step.text}</p>
           {step.rule ? (
             <p className="mt-5 flex max-w-xl items-start gap-3 rounded-[18px] bg-[color-mix(in_oklab,var(--primary)_9%,transparent)] px-4 py-3 text-[14px] font-semibold leading-relaxed text-fg">

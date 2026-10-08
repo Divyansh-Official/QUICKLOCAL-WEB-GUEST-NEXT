@@ -19,7 +19,9 @@ function detect(): Mode {
   if (window.__qlInstall) return 'prompt';
   const ua = navigator.userAgent;
   const ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  return ios ? 'ios' : 'none';
+  /* In-app browsers (Instagram, Facebook, LINE…) have no Add to Home Screen. */
+  const inApp = /FBAN|FBAV|Instagram|Line\/|Snapchat|; wv\)/.test(ua);
+  return ios && !inApp ? 'ios' : 'none';
 }
 
 export default function InstallApp({ copy, compact = false }: { copy: Copy; compact?: boolean }) {

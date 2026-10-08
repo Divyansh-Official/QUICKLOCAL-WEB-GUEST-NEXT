@@ -3,7 +3,8 @@
 /**
  * Registers the service worker (production only) and keeps hold of the
  * browser's install offer, which fires once, early, and is gone if nobody is
- * listening — InstallApp may mount long after it.
+ * listening — InstallApp may mount long after it. The worker's URL carries
+ * the deploy, so a new deploy replaces it and its caches.
  */
 import { useEffect } from 'react';
 
@@ -16,7 +17,7 @@ declare global {
 
 export const INSTALL_EVENT = 'ql:installable';
 
-export default function PwaRegister() {
+export default function PwaRegister({ version }: { version: string }) {
   useEffect(() => {
     const onPrompt = (e: Event) => {
       e.preventDefault();
@@ -31,7 +32,7 @@ export default function PwaRegister() {
     window.addEventListener('appinstalled', onInstalled);
 
     if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
-      const register = () => navigator.serviceWorker.register('/sw.js').catch(() => {});
+      const register = () => navigator.serviceWorker.register(`/sw.js?v=${encodeURIComponent(version)}`).catch(() => {});
       if (document.readyState === 'complete') register();
       else window.addEventListener('load', register, { once: true });
     }
@@ -39,6 +40,6 @@ export default function PwaRegister() {
       window.removeEventListener('beforeinstallprompt', onPrompt);
       window.removeEventListener('appinstalled', onInstalled);
     };
-  }, []);
+  }, [version]);
   return null;
 }

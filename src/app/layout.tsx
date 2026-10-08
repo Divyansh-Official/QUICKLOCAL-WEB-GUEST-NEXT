@@ -141,7 +141,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
 
         <SearchDialog copy={ui.search} quickLinks={searchQuickLinks()} />
-        <PwaRegister />
+        <PwaRegister version={(process.env.VERCEL_GIT_COMMIT_SHA || process.env.VERCEL_DEPLOYMENT_ID || 'local').slice(0, 12)} />
 
         {isEnabled('tabBar') ? <TabBar items={ui.tabBar.items} label={ui.tabBar.label} /> : null}
       </body>

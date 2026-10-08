@@ -209,7 +209,10 @@
     background: var(--bg);
   }
 
-  html:has(dialog[open]) {
+  /* Set by the menu and by search while open (lib/hooks lockPage). Not
+     html:has(dialog[open]): a :has() on the root is re-checked on every
+     insertion and cost a full-page restyle per streamed chunk of HTML. */
+  html.page-locked {
     overflow: hidden;
   }
 
@@ -2517,38 +2520,6 @@ html:not(.no-motion) :is(.scene[data-active], .scene-inline) .sc-pulse {
   }
 }
 
-/* ---- A switch, iOS-shaped (Sell planner) ---- */
-
-.ql-switch {
-  position: relative;
-  flex: none;
-  width: 52px;
-  height: 32px;
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--fg) 16%, transparent);
-  transition: background-color 0.3s var(--ease-out);
-}
-
-.ql-switch > span {
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 0.22), 0 0 0 0.5px rgb(0 0 0 / 0.06);
-  transition: transform var(--snappy-ms) var(--spring-snappy);
-}
-
-.ql-switch[data-on] {
-  background: var(--ok);
-}
-
-.ql-switch[data-on] > span {
-  transform: translateX(20px);
-}
-
 /* ---- A group that folds away: grid rows from 1fr to 0fr ---- */
 
 .ql-collapse {
@@ -2997,13 +2968,8 @@ html:not(.no-motion) .ev-tab::after {
     padding-block: 1.25rem !important;
   }
 
-  /* Paragraphs that only restate the heading stay on the wider layouts. */
-  .m-hide {
-    display: none !important;
-  }
-
-  /* Tables: tighter cells; the first column stays readable while the rest
-     scrolls under it. */
+  /* Tables: tighter cells and smaller type; wide ones scroll sideways in
+     their panel. */
   main table :is(th, td) {
     padding: 0.7rem 0.75rem !important;
     font-size: 13px !important;

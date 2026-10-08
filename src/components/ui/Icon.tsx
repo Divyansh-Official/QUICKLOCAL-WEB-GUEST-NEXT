@@ -199,8 +199,6 @@ const ICONS: Record<string, Glyph> = {
   },
 };
 
-export const iconNames = Object.keys(ICONS);
-
 export default function Icon({
   name,
   size = 20,
